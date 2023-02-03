@@ -12,6 +12,7 @@ import '@@widgets/datatables';
 import '@@interfaces/datatables';
 import '@@addons/widgets/profile_photo';
 import '@material/mwc-dialog';
+import '@material/mwc-circular-progress';
 import { CONSTANTS } from '@@addons/constants';
 import { getUserLoginInfoCookie } from '@@addons/functions/login';
 import { getActiveBranchIdCookie } from '@@addons/functions/views/home/branch';
@@ -35,6 +36,10 @@ import { AppSetup } from '@@addons/functions/app_settings';
 import { getAppSettingsExtraSettings } from '@@addons/functions/app_settings/extra_settings';
 import { AppSettingsExtraUserAccess, PageButtonUserAccess } from '@@addons/functions/app_settings/extra_settings/user_access';
 import { PAGE__IDS } from '@@views/attendance/page__id';
+import { DELETE_AttendanceAbsentLeaveAssignment } from '@@addons/network/attendance/absent_leave/assignment/delete';
+import { POST_AttendanceAbsentLeaveAssignmentApproval } from '@@addons/network/attendance/absent_leave/assignment/approvals';
+import { GET_AttendanceAbsentLeaveAssignmentPDFDownload } from '@@addons/network/attendance/absent_leave/assignment/download_pdf';
+import { GET_AttendanceAbsentLeaveAssignmentEXCELDownload } from '@@addons/network/attendance/absent_leave/assignment/download_excel';
 
 
 let _branchGroups: { [branch: string]: GroupingsGroup_I[] } = {};
@@ -82,8 +87,16 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
   @property({ type: Number })
   private selectedGroup: number = 0;
 
+  // @property({ type: String })
+  // private datatablePathUrl: string = "attendance/absent-leave/assignment";
   @property({ type: String })
-  private datatablePathUrl: string = "attendance/absent-leave/assignment";
+  private datatablePathUrl: string = "attendance/absent-leave/assignment/members";
+
+  @property({ type: Boolean })
+  private downloadingFilePdf: boolean = false;
+
+  @property({ type: Boolean })
+  private downloadingFileExcel: boolean = false;
 
   private filterBox: FilterFieldBox;
 
@@ -137,6 +150,11 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     return html`
       <div class="shadow bg-white p-2">
         <span class="flex flex-row md:flex-col w-100"></span>
+        <span class="text-yellow-500">
+          <span class="text-green-500">
+            <span class="text-red-500"></span>
+          </span>
+        </span>
         <div class="block my-1">
           <mwc-button icon="open_with" label="Filters" raised class="primary mt-1"
             filter-section-context="btn" @click="${this.filterBox.toggleFilterFields}">
@@ -146,6 +164,7 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
           ${this.filterForm}<br />
         </div>
         <div class="block my-1">
+          ${this.downloadBtns}
           ${this.table}
         </div>
       </div>
@@ -154,44 +173,69 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
 
   private renderColOne(data: any, type: any, assignmentInfo: AttendanceAbsentLeaveAssignmentModel) {
     const AssignmentInfo = aalamConvert.toAttendanceAbsentLeaveAssignmentModel(JSON.stringify(assignmentInfo)),
-      MEMBER_ID = base64Encode(String(AssignmentInfo.memberID), true);
+      MEMBER_ID = base64Encode(String(AssignmentInfo.memberID), true),
+      ASSIGNMENT_ID = AssignmentInfo.id;;
     
     if (AssignmentInfo.memberInfo.accountType === 1) {
-        return `<div class="flex flex-col whitespace-normal justify-between content-between">
-          <div class="flex m-1 justify-evenly">
-            <user-profile-photo class="w-32 h-32 mr-1" rounded 'click-to-open'=""
-              click-to-open="${this.memberProfileBaseUrl}${MEMBER_ID}" type="member"
-              url="${AssignmentInfo.memberInfo.profilePicture}" size="32"></user-profile-photo>
-          </div>
-          <div class="block m-1">
-            <span class="shadow p-1 block bg-white rounded text-dark">
-              <b>Name</b>: ${AssignmentInfo.memberInfo.firstname} ${AssignmentInfo.memberInfo.middlename} ${AssignmentInfo.memberInfo.surname}
-            </span>
+      return `
+        <div class="flex items-center whitespace-normal mb-0">
+          <input id="assignment_info" name="assignment_info" type="checkbox" value="${ASSIGNMENT_ID}"
+            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <div class="flex flex-col whitespace-normal justify-between content-between">
+            <div class="flex m-1 justify-evenly">
+              <user-profile-photo class="w-32 h-32 mr-1" rounded 'click-to-open'=""
+                click-to-open="${this.memberProfileBaseUrl}${MEMBER_ID}" type="member"
+                url="${AssignmentInfo.memberInfo.profilePicture}" size="32"></user-profile-photo>
+            </div>
+            <div class="block m-1">
+              <span class="shadow p-1 block bg-white rounded text-dark">
+                <b>Name</b>: ${AssignmentInfo.memberInfo.firstname} ${AssignmentInfo.memberInfo.middlename} ${AssignmentInfo.memberInfo.surname}
+              </span>
+            </div>
           </div>
         </div>`;
     } else {
-        return `<div class="flex flex-col whitespace-normal justify-between content-between">
-          <div class="flex m-1 justify-evenly">
-            <user-profile-photo class="w-32 h-32 mr-1" rounded type="member"
-              url="${AssignmentInfo.memberInfo.logo}" size="32"></user-profile-photo>
+      return `
+        <div class="flex items-center whitespace-normal mb-0">
+          <input id="assignment_info" name="assignment_info" type="checkbox" value="${ASSIGNMENT_ID}"
+            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <div class="flex flex-col whitespace-normal justify-between content-between">
+            <div class="flex m-1 justify-evenly">
+              <user-profile-photo class="w-32 h-32 mr-1" rounded type="member"
+                url="${AssignmentInfo.memberInfo.logo}" size="32"></user-profile-photo>
+            </div>
+            <div class="block m-1">
+              <span class="shadow p-1 block bg-white rounded text-dark">
+                <b>Name</b>: ${AssignmentInfo.memberInfo.organizationName}
+              </span>
+            </div>
           </div>
-          <div class="block m-1">
-            <span class="shadow p-1 block bg-white rounded text-dark">
-              <b>Name</b>: ${AssignmentInfo.memberInfo.organizationName}
-            </span>
-          </div>
-        </div>`;
+      </div>`;
     }
   }
 
   private renderColThree(data: any, type: any, assignmentInfo: AttendanceAbsentLeaveAssignmentModel) {
     const AssignmentInfo = aalamConvert.toAttendanceAbsentLeaveAssignmentModel(JSON.stringify(assignmentInfo)),
       ASSIGNMENT_ID = AssignmentInfo.id;
+
+      let stateTextColor: string = ``;
+  
+      if (assignmentInfo.state.id === 0) {
+        stateTextColor = `text-yellow-500`;
+      } else if (assignmentInfo.state.id === 1) {
+        stateTextColor = `text-green-500`;
+      } else {
+        stateTextColor = `text-red-500`;
+      }
     
     return `<div class="flex flex-col whitespace-normal justify-between content-between">
       <div class="block m-1 shadow p-1 bg-white rounded text-dark">
         <h6 class="whitespace-nowrap text-base font-bold mr-1">Leave Type</h6>
         <p class="text-sm ml-1">On ${AssignmentInfo.statusID.status} for ${this.get_days(AssignmentInfo.totalDays)}</p>
+      </div>
+      <div class="block m-1 shadow p-1 bg-white rounded ${stateTextColor}">
+        <h6 class="whitespace-nowrap text-base font-bold mr-1">State</h6>
+        <p class="text-sm ml-1">${AssignmentInfo.state.name}</p>
       </div>
       <div class="block m-1 shadow p-1 bg-white rounded text-dark">
         <h6 class="whitespace-nowrap text-base font-bold mr-1">Period:</h6>
@@ -223,11 +267,28 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     const delete_button = this._pageButtonAccess ? `<mwc-button class="w-full button danger" outlined delete-this-item="${ASSIGNMENT_ID}" onclick="${(e: any)=>console.log({e})}">
       <mwc-icon class="mr-1">delete_forever</mwc-icon> Delete
     </mwc-button>`: '';
+    const approve = `<mwc-button class="w-full button success my-1" outlined approve-this-item="${ASSIGNMENT_ID}" onclick="${(e: any)=>console.log({e})}">
+      <mwc-icon class="mr-1">check_circle_outline</mwc-icon> Approve
+    </mwc-button>`;
+    const cancel = `<mwc-button class="w-full button warning my-1" outlined cancel-this-item="${ASSIGNMENT_ID}" onclick="${(e: any)=>console.log({e})}">
+      <mwc-icon class="mr-1">cancel</mwc-icon> Cancel
+    </mwc-button>`;
+
+    let stateBtn: string = ``;
+
+    if (assignmentInfo.state.id === 0) {
+      stateBtn = `${approve} ${cancel}`;
+    } else if (assignmentInfo.state.id === 1) {
+      stateBtn = `${cancel}`;
+    } else {
+      stateBtn = `${approve}`;
+    }
         
     return `
       <div class="flex flex-col whitespace-normal justify-between content-between">
+        ${stateBtn}
         ${delete_button}
-        <link-button isblockcontent="false" aClass="" raised bClass="w-full button warning mr-2" href="${CONSTANTS.URLS.PDB_CLIENT}absent-leave/edit-al-assignment?view-assignment=${ASSIGNMENT_CODE}"
+        <link-button isblockcontent="false" aClass="" raised bClass="w-full button warning mr-2 my-1" href="${CONSTANTS.URLS.PDB_CLIENT}absent-leave/edit-al-assignment?view-assignment=${ASSIGNMENT_CODE}"
           label="Update">
         </link-button>
       </div>
@@ -239,9 +300,11 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     filterNameId_branchId = "branchId",
     filterNameId_group = "groupId",
     filterNameId_subGroup = "subgroupId",
-    filterNameId_search = "search",
-    filterNameId_fromDate = "from_date",
-    filterNameId_toDate = "to_date";
+    filterNameId_search = "search_field",
+    filterNameId_reason = "reason",
+    filterNameId_fromDate = "fromDate",
+    filterNameId_toDate = "toDate",
+    filterNameId_state = "state";
 
     let newObject:any = {};
 
@@ -249,7 +312,8 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       let value = String(_urlQueryParams[key]);
       if ((key === filterNameId_branchId) || (key === filterNameId_group)
         || (key === filterNameId_subGroup) || (key === filterNameId_search)
-        || (key === filterNameId_fromDate) || (key === filterNameId_toDate)) {
+        || (key === filterNameId_reason) || (key === filterNameId_fromDate)
+        || (key === filterNameId_toDate) || (key === filterNameId_state)) {
         // console.log({value, });
         
         newObject[key] = value;
@@ -292,12 +356,18 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       }
     }
 
+    if (filterNameId_reason in newObject) {
+      if (newObject[filterNameId_reason].length < 1 || newObject[filterNameId_reason] === "") {
+        delete newObject[filterNameId_reason];
+      }
+    }
+
     if (filterNameId_fromDate in newObject && filterNameId_toDate in newObject) {
-      if (newObject[filterNameId_fromDate].length < 1 || newObject[filterNameId_fromDate] === "") {
+      if (newObject[filterNameId_fromDate] === undefined || newObject[filterNameId_fromDate] === "") {
         delete newObject[filterNameId_fromDate];
         delete newObject[filterNameId_toDate];
       }
-      if (newObject[filterNameId_toDate].length < 1 || newObject[filterNameId_toDate] === "") {
+      if (newObject[filterNameId_toDate] === undefined || newObject[filterNameId_toDate] === "") {
         delete newObject[filterNameId_fromDate];
         delete newObject[filterNameId_toDate];
       }
@@ -322,16 +392,20 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       filterNameId_branchId = "branchId",
       filterNameId_group = "groupId",
       filterNameId_subGroup = "subgroupId",
-      filterNameId_search = "search",
-      filterNameId_fromDate = "from_date",
-      filterNameId_toDate = "to_date";
+      filterNameId_search = "search_field",
+      filterNameId_reason = "reason",
+      filterNameId_fromDate = "fromDate",
+      filterNameId_toDate = "toDate",
+      filterNameId_state = "state";
 
     let filterNameId_branchIdVal: number = userBranch,
       filterNameId_groupVal: number = null,
       filterNameId_subGroupVal: number = null,
       filterNameId_searchVal: string = null,
+      filterNameId_reasonVal: string = null,
       filterNameId_fromDateVal: Date = null,
-      filterNameId_toDateVal: Date = null;
+      filterNameId_toDateVal: Date = null,
+      filterNameId_stateVal: number = null;
 
     for (const key in _urlQueryParams) {
         let value = String(_urlQueryParams[key]);
@@ -345,21 +419,30 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
         if (key === filterNameId_subGroup) {
           filterNameId_subGroupVal = Number(value);
         }
+        if (key === filterNameId_state) {
+          filterNameId_stateVal = Number(value);
+        }
         if (key === filterNameId_search) {
           filterNameId_searchVal = String(value);
           if (filterNameId_searchVal === "null") {
             filterNameId_searchVal = "";
           }
         }
+        if (key === filterNameId_reason) {
+          filterNameId_reasonVal = String(value);
+          if (filterNameId_reasonVal === "null") {
+            filterNameId_reasonVal = "";
+          }
+        }
         if (key === filterNameId_fromDate) {
-          console.log({"filterNameId_fromDate-value": value});
+          // console.log({"filterNameId_fromDate-value": value});
           
-          filterNameId_fromDateVal = new Date(value);
+          if (value !== null) filterNameId_fromDateVal = new Date(value);
         }
         if (key === filterNameId_toDate) {
-          console.log({"filterNameId_toDate-value": value});
+          // console.log({"filterNameId_toDate-value": value});
           
-          filterNameId_toDateVal = new Date(value);
+          if (value !== null) filterNameId_toDateVal = new Date(value);
         }
     }
     
@@ -427,6 +510,31 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
           </mwc-select>
         </div>
       </div>`;
+    
+    const states = [
+      {id: 0, name: "Unassigned"},
+      {id: 1, name: "Approved"},
+      {id: 2, name: "Canceled"},
+    ]
+
+    const stateField = html`
+      <div class="col-xl-4 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select State</h4>
+          <mwc-select class="w-full" label="Select State"
+            name="${filterNameId_state}" id="${filterNameId_state}"
+            outlined required value="${filterNameId_stateVal}">
+            <mwc-list-item value="null">Select State</mwc-list-item>
+            ${states.map((value) => {
+              if (filterNameId_stateVal === value.id) {
+                return html`<mwc-list-item value="${value.id}" selected>${value.name}</mwc-list-item>`;
+              } else {
+                return html`<mwc-list-item value="${value.id}">${value.name}</mwc-list-item>`;
+              }
+            })}
+          </mwc-select>
+        </div>
+      </div>`;
 
     const searchField = html`
       <div class="col-xl-4 col-md-6">
@@ -434,6 +542,16 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
           <h4 class="font-semibold my-2">Search <span class="text-yellow-400 uppercase">[name/ ref-id/ id/ phone/ email]</span></h4>
           <mwc-textfield name="${filterNameId_search}" id="${filterNameId_search}" label="Enter Search Term"
             outlined required value="${filterNameId_searchVal === null? "": filterNameId_searchVal}">
+          </mwc-textfield>
+        </div>
+      </div>`;
+
+    const searchReasonField = html`
+      <div class="col-xl-4 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Search <span class="text-yellow-400 uppercase">[Reason]</span></h4>
+          <mwc-textfield name="${filterNameId_reason}" id="${filterNameId_reason}" label="Enter Search Reason"
+            outlined required value="${filterNameId_reasonVal === null? "": filterNameId_reasonVal}">
           </mwc-textfield>
         </div>
       </div>`;
@@ -460,7 +578,7 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       returnHtml = html`<form method="get" class="form" make-general-posts="submit_filter_form" filter-section-context="container" hidden>
           <div class="container">
             <div class="row">
-              ${branchField} ${groupField} ${subGroupField} ${searchField} ${filterByDateFields}
+              ${branchField} ${groupField} ${subGroupField} ${searchField} ${searchReasonField} ${stateField} ${filterByDateFields}
               <div class="col-xl-12 col-md-10">
                 <div class="form-input-container mt-1">
                   <mwc-button label="Clear" @click="${this.filterBox.clear_filter}"></mwc-button>
@@ -491,6 +609,32 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       groupId
     );
 
+  }
+
+  private get table_header() {
+    return html`
+      <div class="flex flex-col p-2 mb-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 pb-5">
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2">
+          <label class="flex justify-between items-center">
+            <b>CHECK ALL: </b>
+            <input id="assignment_info_all" name="assignment_info_all" type="checkbox"
+              class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              @change="${this.check_all_assignment}" />
+          </label>
+        </div>
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2">
+          <mwc-button class="success" raised assignment_info_all="approve" @click="${this.approveMultipleMemberAction}">
+            Approve All Selected</mwc-button>
+        </div>
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2">
+          <mwc-button class="danger" raised assignment_info_all="cancel"
+            @click="${this.cancelMultipleMemberAction}">Cancel All Selected</mwc-button>
+        </div>
+      </div>
+    `;
   }
 
   private get __tableHeaders(): DataTables_ColumnSettings_I[] {
@@ -526,6 +670,7 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     const _get_cookie = getUserLoginInfoCookie();
     ajaxHeader.Authorization = "Token " + _get_cookie.token;
     return html`
+      ${this.table_header}
       <datatables-new .datatable="${__dataTable}" .ajaxHeader="${ajaxHeader}" .dt_body="${this.__tableBody}"
         .dt_foot="${this.__tableFoot}" .dt_head="${this.__tableHeaders}"></datatables-new>
     `;
@@ -556,6 +701,25 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     });   
   }
 
+  private get downloadBtns() {
+    return html`
+      <div class="flex mb-4">
+        <div class="flex flex-col justify-center items-center mb-4">
+          <mwc-button icon="download" class="danger mr-2" 
+            label="Download Pdf File" raised @click="${this.downloadAssignmentPdf}">
+          </mwc-button> 
+          ${this.downloadingFilePdf? html`<mwc-circular-progress indeterminate></mwc-circular-progress>`: nothing}
+        </div>
+        <div class="flex flex-col justify-center items-center mb-4">
+          <mwc-button icon="download" class="success mr-2" 
+            label="Download Excel File" raised @click="${this.downloadAssignmentExcel}">
+          </mwc-button> 
+          ${this.downloadingFileExcel? html`<mwc-circular-progress indeterminate></mwc-circular-progress>`: nothing}
+        </div>
+      </div>
+    `
+  }
+
   private __dataTable(url: string): DataTables_Settings_I {
     const __this = this;
 
@@ -566,6 +730,7 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       'processing': true,
       'serverSide': true,
       'ajax': {
+        // @ts-ignore
         url: url,
         dataSrc: 'data',
         apiType: "akwaabaApp",
@@ -603,6 +768,8 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
         const aoData = e.aoData;
         // console.log({ aoData })
         __this.deleteMemberFx();
+        __this.approveMemberFx();
+        __this.cancelMemberFx()
         __this.dialog();
       },
       "responsive": false,
@@ -635,6 +802,28 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
         // console.log({e})
         // e.preventDefault();
         this.deleteItemFromList(e);
+      })
+    });
+  }
+
+  private approveMemberFx() {
+    document.querySelectorAll('[approve-this-item]').forEach((btn) => {
+      // console.log({btn})
+      btn.addEventListener('click', (e) => {
+        // console.log({e})
+        // e.preventDefault();
+        this.approveItemFromList(e);
+      })
+    });
+  }
+
+  private cancelMemberFx() {
+    document.querySelectorAll('[cancel-this-item]').forEach((btn) => {
+      // console.log({btn})
+      btn.addEventListener('click', (e) => {
+        // console.log({e})
+        // e.preventDefault();
+        this.cancelItemFromList(e);
       })
     });
   }
@@ -766,13 +955,84 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     return `${num} days`
   }
 
+  private async check_all_assignment(e: any) {
+    e.preventDefault();
+
+    document.querySelectorAll('[id="assignment_info_all"][name="assignment_info_all"]').forEach((input: HTMLInputElement) => {
+      if (input.checked) {
+        document.querySelectorAll('[id="assignment_info"][name="assignment_info"]').forEach((_input_: HTMLInputElement) => {
+          _input_.checked = true;
+        })
+      } else {
+        document.querySelectorAll('[id="assignment_info"][name="assignment_info"]').forEach((_input_: HTMLInputElement) => {
+          _input_.checked = false;
+        })
+      }
+    })
+  }
+
   async deleteItemFromList(e: Event) {
     e.preventDefault();
     // console.log({ e });
     // @ts-ignore
     const _itemId = e.currentTarget.getAttribute('delete-this-item'),
       itemId = Number.isNaN(_itemId) ? 0 : Number(_itemId);
-    await DELETE_GroupingsGroup(itemId);
+    await DELETE_AttendanceAbsentLeaveAssignment(itemId);
+  }
+
+  private async approveMultipleMemberAction(e: any) {
+    e.preventDefault();
+
+    let ids: Array<number> = [];
+
+    document.querySelectorAll('[id="assignment_info"][name="assignment_info"]').forEach((input: HTMLInputElement) => {
+      if (input.checked) {
+        if (!Number.isNaN(input.value)) {
+          const value = Number(input.value);
+          if (!ids.includes(value)) {
+            ids.push(value)
+          }
+        }
+      }
+    })
+    await POST_AttendanceAbsentLeaveAssignmentApproval(ids, 1);
+  }
+
+  private async cancelMultipleMemberAction(e: any) {
+    e.preventDefault();
+
+    let ids: Array<number> = [];
+
+    document.querySelectorAll('[id="assignment_info"][name="assignment_info"]').forEach((input: HTMLInputElement) => {
+      if (input.checked) {
+        if (!Number.isNaN(input.value)) {
+          const value = Number(input.value);
+          if (!ids.includes(value)) {
+            ids.push(value)
+          }
+        }
+      }
+    })
+
+    await POST_AttendanceAbsentLeaveAssignmentApproval(ids, 2);
+  }
+
+  async approveItemFromList(e: Event) {
+    e.preventDefault();
+    // console.log({ e });
+    // @ts-ignore
+    const _itemId = e.currentTarget.getAttribute('approve-this-item'),
+      itemId = Number.isNaN(_itemId) ? 0 : Number(_itemId);
+      await POST_AttendanceAbsentLeaveAssignmentApproval([itemId], 1);
+  }
+
+  async cancelItemFromList(e: Event) {
+    e.preventDefault();
+    // console.log({ e });
+    // @ts-ignore
+    const _itemId = e.currentTarget.getAttribute('cancel-this-item'),
+      itemId = Number.isNaN(_itemId) ? 0 : Number(_itemId);
+      await POST_AttendanceAbsentLeaveAssignmentApproval([itemId], 2);
   }
 
   private dialog() {
@@ -872,6 +1132,45 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
     new_data.push(...this._subgroups, ...__subgroups);
     this._subgroups = new_data;
     _branchSubGroups[KEY] = this._subgroups;
+  }
+
+  private async downloadAssignmentPdf() {
+    let branchId = 0;
+    if (this._activeBranchId !== null) {
+      branchId = this._activeBranchId[0].id;
+    }
+
+    let URL = "?branchId=" + branchId + "&order__by=firstname";
+
+    const _urlQueryString = this.urlQueryString;
+    // console.log({_urlQueryString});
+    URL = URL + _urlQueryString;
+    // console.log({URL});
+    
+    this.downloadingFilePdf = true;
+    setTimeout(() => {
+      this.downloadingFilePdf = false;
+    }, 2000);
+    await GET_AttendanceAbsentLeaveAssignmentPDFDownload<any>(URL);
+    this.downloadingFilePdf = false;
+  }
+
+  private async downloadAssignmentExcel() {
+    let branchId = 0;
+    if (this._activeBranchId !== null) {
+      branchId = this._activeBranchId[0].id;
+    }
+
+    let URL = "?branchId=" + branchId + "&order__by=firstname";
+
+    const _urlQueryString = this.urlQueryString;
+    // console.log({_urlQueryString});
+    URL = URL + _urlQueryString;
+    // console.log({URL});
+    
+    this.downloadingFileExcel = true;
+    await GET_AttendanceAbsentLeaveAssignmentEXCELDownload<any>(URL);
+    this.downloadingFileExcel = false;
   }
 
   createRenderRoot() {
