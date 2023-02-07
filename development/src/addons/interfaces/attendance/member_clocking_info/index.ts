@@ -18,7 +18,8 @@ export interface MemberClockingInfo_I {
   clockedBy?: number,
   clockingMethod?: number,
   clockingMethodName?: string,
-  date?: Date
+  date?: Date,
+  justification?: string,
 }
 
 export function MemberClockingInfo_S(data: any): MemberClockingInfo_I {
@@ -49,6 +50,7 @@ export function MemberClockingInfo_S(data: any): MemberClockingInfo_I {
     clockingMethod: Number(data['clockingMethod']),
     clockingMethodName: String(data['clockingMethodName']),
     date: new Date(data['date']),
+    justification: data['justification']
   };
 
   return memberClockingInfo_S;

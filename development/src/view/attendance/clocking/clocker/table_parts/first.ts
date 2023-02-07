@@ -91,11 +91,12 @@ export class ClockerTablePartsFirst extends LitElement {
     if (clockingInfo !== null && clockingInfoFull !== null) {
       // console.log({ "clockingInfo": clockingInfo });
       // console.log({ "clockingInfoFull": clockingInfoFull });
-      const clockingMethodName = fullInfo ? clockingInfoFull.attendance.clockingMethodName : clockingInfo.clockingMethodName;
+      const clockingMethodName = fullInfo ? clockingInfoFull.attendance.clockingMethodName : clockingInfo.clockingMethodName,
+        lastSeen = fullInfo ? clockingInfoFull.lastSeen : null;
       if (fullInfo ? InstanceOfOrganizationMember(clockingInfoFull.additionalInfo.memberInfo): InstanceOfOrganizationMember(clockingInfo.memberId)) {
-        return html`<clocker-table-parts-first-organization clockingMethodName="${clockingMethodName}" .memberData=${fullInfo? clockingInfoFull.additionalInfo.memberInfo: clockingInfo.memberId}></clocker-table-parts-first-organization>`;
+        return html`<clocker-table-parts-first-organization .lastSeen="${lastSeen}" clockingMethodName="${clockingMethodName}" .memberData=${fullInfo? clockingInfoFull.additionalInfo.memberInfo: clockingInfo.memberId}></clocker-table-parts-first-organization>`;
       } else {
-        return html`<clocker-table-parts-first-individual clockingMethodName="${clockingMethodName}" .memberData=${fullInfo? clockingInfoFull.additionalInfo.memberInfo: clockingInfo.memberId}></clocker-table-parts-first-individual>`;
+        return html`<clocker-table-parts-first-individual .lastSeen="${lastSeen}" clockingMethodName="${clockingMethodName}" .memberData=${fullInfo? clockingInfoFull.additionalInfo.memberInfo: clockingInfo.memberId}></clocker-table-parts-first-individual>`;
       }
       
     }

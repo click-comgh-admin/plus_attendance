@@ -118,6 +118,7 @@ export class ClockerTablePartsThird extends LitElement {
       // const atBreakTime = endBreak !== null ? getLocalTime(endBreak, {timeStyle: "short"}): "--:--"; // 07:39 AM
       const atBreakTime = endBreak !== null ? getDateTime(endBreak, { dateStyle: "medium", timeStyle: "short" }) : "--:--"; // 07:39 AM
       const HAS_BREAKTIME = fullInfo ? clockingInfoFull.attendance.meetingEventId.hasBreakTime : clockingInfo.meetingEventId.hasBreakTime;
+      const JUSTIFICATION = fullInfo ? clockingInfoFull.attendance.justification : clockingInfo.justification;
       const CLOCK_ID_ENC = base64Encode(String(CLOCK_ID), true);
       // console.log({ HAS_BREAKTIME, clockingInfo });
       return html`
@@ -146,8 +147,11 @@ export class ClockerTablePartsThird extends LitElement {
         </div>
         `: nothing}
         <div class="text-center whitespace-nowrap">
-          <a href="${this.excuseBaseUrl}${CLOCK_ID_ENC}" class="btn btn-info btn-sm" target="_blank" type="button">Enter/ View
-            Excuse</a>
+          ${/** <a href="${this.excuseBaseUrl}${CLOCK_ID_ENC}" class="btn btn-info btn-sm" target="_blank" type="button">Enter/ View
+            Excuse</a> */ ""}
+            ${JUSTIFICATION === null ? nothing: html`<span class="badge badge-light shadow p-2 m-1">
+              <b>Justification</b>: ${JUSTIFICATION}
+            </span>`}
           <a href="${this.followUpBaseUrl}${CLOCK_ID_ENC}" class="btn btn-primary btn-sm" target="_blank" type="button">Follow-Up</a>
         </div>
         ${CLOCKED && (outTime !== null) ? html`

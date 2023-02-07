@@ -1,7 +1,8 @@
 import { base64Encode } from '@@addons/functions/base64';
+import { getDateTime } from '@@addons/functions/date_time';
 import { MembershipUser_I } from '@@addons/interfaces/members/user';
 import '@@addons/widgets/profile_photo';
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js'
 
 
@@ -11,6 +12,9 @@ export class ClockerTablePartsFirstIndividual extends LitElement {
 
   @property({ type: String })
   private clockingMethodName: string = "???";
+
+  @property({ type: Date })
+  private lastSeen?: Date = null;
 
   private _memberData: MembershipUser_I = null;
 
@@ -38,7 +42,12 @@ export class ClockerTablePartsFirstIndividual extends LitElement {
   ];
 
   render() {
-    const MEMBER_ID = base64Encode(String(this._memberData.id), true);
+    const MEMBER_ID = base64Encode(String(this._memberData.id), true),
+    lastSeen = html`<div class="text-center whitespace-nowrap">
+      <span class="badge badge-light shadow p-2 m-1">
+        <b>Last Seen</b>: ${getDateTime(this.lastSeen, { dateStyle: "medium", timeStyle: "short" })}
+      </span>
+    </div>`;
       return html`<div class="flex flex-col whitespace-normal justify-between content-between">
         <div class="d-block m-1">
           <span class="badge badge-info shadow-lg p-2 m-1">
@@ -55,6 +64,7 @@ export class ClockerTablePartsFirstIndividual extends LitElement {
             <b>Name</b>: ${this._memberData.firstname} ${this._memberData.middlename} ${this._memberData.surname}
           </span>
         </div>
+        ${this.lastSeen === null || this.lastSeen === undefined? nothing : lastSeen}
       </div>`;
   }
 

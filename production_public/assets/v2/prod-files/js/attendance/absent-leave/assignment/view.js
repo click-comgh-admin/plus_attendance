@@ -105,7 +105,7 @@
             name="${h}" id="${h}"
             outlined required value="${w}">
             <mwc-list-item value="null">Select State</mwc-list-item>
-            ${[{id:0,name:"Unassigned"},{id:1,name:"Approved"},{id:2,name:"Canceled"}].map((e=>w===e.id?i.dy`<mwc-list-item value="${e.id}" selected>${e.name}</mwc-list-item>`:i.dy`<mwc-list-item value="${e.id}">${e.name}</mwc-list-item>`))}
+            ${[{id:0,name:"Unpproved"},{id:1,name:"Approved"},{id:2,name:"Canceled"}].map((e=>w===e.id?i.dy`<mwc-list-item value="${e.id}" selected>${e.name}</mwc-list-item>`:i.dy`<mwc-list-item value="${e.id}">${e.name}</mwc-list-item>`))}
           </mwc-select>
         </div>
       </div>`,A=i.dy`

@@ -23,7 +23,6 @@ import { MeetingEventScheduleAttachment_I } from '@@addons/interfaces/attendance
 import { ClientUsers_I } from '@@addons/interfaces/clients/users';
 import { GET_ClientUsers } from '@@addons/network/clients/users';
 import '@@addons/widgets/form/new/select';
-import { CONSTANTS } from '@@addons/constants';
 import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
 import { QueryOptions } from 'select2';
 // import { Select } from '@material/mwc-select';
@@ -235,7 +234,7 @@ export class AttendanceSetupFormAttachment extends LitElement {
         return html`
           <tr class="mdc-data-table__row">
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              <a href="${CONSTANTS.URLS.FILE_BUCKET_BASE_URL}files${item.attachment}" target="_blank">Open File ${i + 1}</a>
+              <a href="${item.attachment}" target="_blank">Open File ${i + 1}</a>
             </th>
             <td class="mdc-data-table__cell mdc-data-table__cell--numeric !py-1" scope="row">
               <mwc-icon-button class="ml-1 danger" icon="delete_forever" delete-this-item="${item.id}" @click="${this.deleteQuestionnaireMeetingAttendanceAttachment}"></mwc-icon-button>

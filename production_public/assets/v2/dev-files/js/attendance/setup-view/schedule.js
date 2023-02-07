@@ -197,7 +197,7 @@
       ${this._scheduleAttachments.results.map(((e,t,n)=>a.html`
           <tr class="mdc-data-table__row">
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              <a href="${c.CONSTANTS.URLS.FILE_BUCKET_BASE_URL}files${e.attachment}" target="_blank">Open File ${t+1}</a>
+              <a href="${e.attachment}" target="_blank">Open File ${t+1}</a>
               ${t+1==n.length?"...":""}
             </th>
           </tr>

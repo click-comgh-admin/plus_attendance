@@ -512,7 +512,7 @@ export class AttendanceAbsentLeaveAssignmentView extends LitElement {
       </div>`;
     
     const states = [
-      {id: 0, name: "Unassigned"},
+      {id: 0, name: "Unpproved"},
       {id: 1, name: "Approved"},
       {id: 2, name: "Canceled"},
     ]
