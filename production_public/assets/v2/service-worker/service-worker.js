@@ -1,5 +1,5 @@
-const STATIC_CACHE_NAME = 'akwaaba-attendance-site-base-static-v1.001.03';
-const DYNAMIC_CACHE_NAME = 'akwaaba-attendance-site-dynamic-requests-v1.001.03';
+const STATIC_CACHE_NAME = 'akwaaba-attendance-site-base-static-v1.001.06';
+const DYNAMIC_CACHE_NAME = 'akwaaba-attendance-site-dynamic-requests-v1.001.06';
 const ASSETS = []; // DYNAMICALLY GENERATED IN PHP VIEW
 const UNCACHEABLE_URLS = []; // DYNAMICALLY GENERATED IN PHP VIEW
 

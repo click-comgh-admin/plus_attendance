@@ -30,6 +30,7 @@ import './group';
 import './admin';
 import './break';
 import './member';
+import './agenda';
 import './subgroup';
 import './location';
 import './attachment';
@@ -120,6 +121,11 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
             meetingEventId="${this.meetingEventId}">
           </attendance-setup-view-one-attachment>
         </div>
+        ${ /* <div class="col-md-6 my-2">
+          <attendance-setup-view-one-agenda CLIENT_ID="${this.CLIENT_ID}" 
+            meetingEventId="${this.meetingEventId}">
+          </attendance-setup-view-one-agenda>
+          </div> */ " " }
         ${DATA.hasBreakTime? html`
           <div class="col-md-6 my-2">
             <attendance-setup-view-one-break CLIENT_ID="${this.CLIENT_ID}" 
@@ -352,6 +358,16 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
               html`<a href="${CONSTANTS.URLS.FILE_BUCKET_BASE_URL}files/${DATA.agendaFile}" target="_blank">Open File</a>
               <mwc-icon-button class="ml-4 danger" icon="delete_forever" delete-this-item="${this.meetingEventId}"
                 @click="${this.deleteMeetingEventAgendaFile}"></mwc-icon-button>`}
+          </td>
+        </tr>
+        <tr class="mdc-data-table__row">
+          <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
+            Meeting Day Agenda
+          </th>
+          <td class="mdc-data-table__cell" scope="row">
+            <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
+              href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"
+              label="Agenda(s)"></link-button>
           </td>
         </tr>
       `;

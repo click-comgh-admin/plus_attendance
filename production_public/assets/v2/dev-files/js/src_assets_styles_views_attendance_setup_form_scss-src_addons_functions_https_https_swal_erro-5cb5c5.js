@@ -22,7 +22,10 @@
         label="Edit Admin(s)"></link-button>
       <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
         href="${o.CONSTANTS.URLS.PDB_CLIENT}settings/edit/attachments?meeting-event-id=${this.meetingEventId}"
-        label="Edit Attachment(s)"></link-button>
+        label="Edit Agenda(s)"></link-button>
+      <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
+        href="${o.CONSTANTS.URLS.PDB_CLIENT}settings/edit/agenda?meeting-event-id=${this.meetingEventId}"
+        label="Edit Agenda(s)"></link-button>
       <link-button isblockcontent="false" aClass="" bClass="button info mr-2"
         href="${o.CONSTANTS.URLS.PDB_CLIENT}settings/edit/break?meeting-event-id=${this.meetingEventId}"
         label="Edit Break"></link-button>

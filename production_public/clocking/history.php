@@ -24,7 +24,7 @@
             $cssFiles .= $cssFile;
         }
         define('WEB_PACK_CSS_FILES', $cssFiles);
-        require_once '../assets/php/page_components/header/head.php';
+        require_once '../assets/php/page_components/header/v2/head.php';
     ?>
     <body class="overflow-y-scroll">
         <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -72,7 +72,7 @@
                 $jsFiles .= $jsFile;
             }
             define('WEB_PACK_JS_FILES', $jsFiles);
-            require_once '../assets/php/page_components/footer/js.php';
+            require_once '../assets/php/page_components/footer/v2/js.php';
         ?>
     </body>
 </html>

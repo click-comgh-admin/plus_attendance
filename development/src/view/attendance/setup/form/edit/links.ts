@@ -38,6 +38,9 @@ export class AttendanceSetupFormEditLinks extends LitElement {
       <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
         href="${CONSTANTS.URLS.PDB_CLIENT}settings/edit/attachments?meeting-event-id=${this.meetingEventId}"
         label="Edit Attachment(s)"></link-button>
+      <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
+        href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"
+        label="Agenda(s)"></link-button>
       <link-button isblockcontent="false" aClass="" bClass="button info mr-2"
         href="${CONSTANTS.URLS.PDB_CLIENT}settings/edit/break?meeting-event-id=${this.meetingEventId}"
         label="Edit Break"></link-button>

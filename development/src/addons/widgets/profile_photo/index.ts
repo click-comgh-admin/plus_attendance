@@ -22,7 +22,7 @@ export class UserProfilePhoto extends LitElement {
   public 'click-to-open'?: 'false' | string = 'false';
 
   @property({ type: Number })
-  public size?: 8 | 16 | 32;
+  public size?: 8 | 16 | 24 | 32;
 
 
   connectedCallback() {

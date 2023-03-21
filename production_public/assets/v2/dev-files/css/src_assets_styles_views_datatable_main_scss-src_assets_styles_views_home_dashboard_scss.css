@@ -722,13 +722,13 @@ img, video {
   height: 0.5rem;
 }
 
-.h-24 {
-  height: 6rem;
-}
-
 .h-fit {
   height: -moz-fit-content;
   height: fit-content;
+}
+
+.h-24 {
+  height: 6rem;
 }
 
 .h-\[400px\] {
@@ -811,6 +811,10 @@ img, video {
 
 .\!w-28 {
   width: 7rem !important;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .\!max-w-full {
@@ -1628,14 +1632,14 @@ img, video {
   color: rgb(22 163 74/var(--tw-text-opacity));
 }
 
-.text-akwaaba-orange-light {
-  --tw-text-opacity:1;
-  color: rgb(255 161 91/var(--tw-text-opacity));
-}
-
 .text-blue-800 {
   --tw-text-opacity:1;
   color: rgb(30 64 175/var(--tw-text-opacity));
+}
+
+.text-akwaaba-orange-light {
+  --tw-text-opacity:1;
+  color: rgb(255 161 91/var(--tw-text-opacity));
 }
 
 .text-blue-500 {
@@ -2580,6 +2584,12 @@ mwc-icon-button.active {
   .md\:h-96 {
     height: 24rem;
   }
+  .md\:w-\[70\%\] {
+    width: 70%;
+  }
+  .md\:w-\[60\%\] {
+    width: 60%;
+  }
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2631,6 +2641,9 @@ mwc-icon-button.active {
 @media (min-width: 1280px) {
   .xl\:m-24 {
     margin: 6rem;
+  }
+  .xl\:w-\[60\%\] {
+    width: 60%;
   }
   .xl\:px-32 {
     padding-left: 8rem;

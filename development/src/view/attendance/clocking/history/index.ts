@@ -11,45 +11,52 @@ import '@material/mwc-circular-progress';
 import "@@addons/widgets/buttons/link-buttons/link-button";
 import '@@views/no_access/account_expired';
 import '@@views/no_access/no_page_entry';
+import '@@addons/widgets/form/new/select';
+import '@@addons/widgets/profile_photo';
+import '../../../membership/members/select-member-type';
+import '@material/mwc-dialog';
+import "@@addons/widgets/accordion/main";
 import { getActiveBranchIdCookie } from '@@addons/functions/views/home/branch';
 import { MembershipUser_I } from '@@addons/interfaces/members/user';
 import { ClientBranchShort_I } from '@@addons/interfaces/clients/branches';
 import { NetworkCallPaginResponse_I, NetworkCallResponse_I } from '@@addons/interfaces/network_calls/response';
-import '@@addons/widgets/profile_photo';
 import { base64Decode, base64Encode } from '@@addons/functions/base64';
 import { CONSTANTS } from '@@addons/constants';
 import { getUserLoginInfoCookie } from '@@addons/functions/login';
-import { urlQueryParams, urlQueryParamsGet, urlQueryParamsJoin } from '@@addons/functions/url_query_params';
+import { urlQueryParams, urlQueryParamsGet, urlQueryParamsGetAll, urlQueryParamsJoin } from '@@addons/functions/url_query_params';
 import { GET_GenericGender } from '@@addons/network/generic/gender';
 import { GenericGenderInfo_I, GenericGenderInfo_S } from '@@addons/interfaces/generic/gender';
 import { FilterFieldBox } from '@@addons/classes/filter_field_box';
 import { Button } from '@material/mwc-button';
-import { MeetingEventScheduleGroup_I } from '@@addons/interfaces/attendance/meeting_event/group';
-import { MeetingEventScheduleSubGroup_I } from '@@addons/interfaces/attendance/meeting_event/subgroup';
-import { GenericMeetingEventClockingTypeInfo_I, GenericMeetingEventClockingTypeInfo_S } from '@@addons/interfaces/generic/meeting_event/clocking_type';
+import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
+import { QueryOptions } from 'select2';
 import { GroupingsMemberCategories_I } from '@@addons/interfaces/members/groupings/member_categories';
-import { GroupingsGroup_I, GroupingsGroup_S } from '@@addons/interfaces/members/groupings/group';
-import { GroupingsSubGroup_I, GroupingsSubGroup_S } from '@@addons/interfaces/members/groupings/subgroup';
-import { GET_AttendanceScheduleGroup } from '@@addons/network/attendance/setup/group';
-import { GET_AttendanceScheduleSubGroup } from '@@addons/network/attendance/setup/subgroup';
-import { GET_GenericMeetingEventClockingType } from '@@addons/network/generic/meeting_event/clocking_type';
 import { GET_MemberGroupingsGroups } from '@@addons/network/members/groupings/group';
 import { GET_MemberGroupingsMemberCategories } from '@@addons/network/members/groupings/member_categories';
 import { GET_MemberGroupingsSubGroups } from '@@addons/network/members/groupings/subgroup';
 import { until } from 'lit/directives/until.js';
-import { MemberClockingHistoryStatisticsInfo_I, MemberClockingHistoryStatisticsInfo_S } from '@@addons/interfaces/attendance/member_clocking_info/history/statistics';
 import '..';
-import '../../../membership/members/select-member-type';
 import { MeetingEventSchedule_I } from '@@addons/interfaces/attendance/meeting_event/schedules';
 import { GET_AttendanceSchedule } from '@@addons/network/attendance/setup/schedule';
-import '@material/mwc-dialog';
 import { GET_AttendanceDownloadHistoryPdf } from '@@addons/network/attendance/clocking/download/pdf/history';
 import { GET_AttendanceDownloadHistoryExcel } from '@@addons/network/attendance/clocking/download/excel/history';
 import { AppSetup } from '@@addons/functions/app_settings';
 import { getAppSettingsExtraSettings } from '@@addons/functions/app_settings/extra_settings';
 import { PageButtonUserAccess, AppSettingsExtraUserAccess } from '@@addons/functions/app_settings/extra_settings/user_access';
 import { PAGE__IDS } from '@@views/attendance/page__id';
+import { GET_MembershipUserIds } from '@@addons/network/members/membership/users/members';
+import { MembershipMixedUserModel, Convert as mmumConvert } from '@@addons/interfaces/members/user/mixed';
+import { MembershipUserModel, Convert as MuMconvert } from '@@addons/interfaces/members/user/model/index2';
+import { MembershipOrganizationUserModel, Convert as MouMconvert } from '@@addons/interfaces/members/user/organization_model';
+import { GroupModel, Convert as gmConvert } from '@@addons/interfaces/members/groupings/group/models';
+import { SubGroupModel, Convert as sgmConvert } from '@@addons/interfaces/members/groupings/subgroup/models';
+import { ClientBranchModel, Convert as cbmConvert } from '@@addons/interfaces/clients/branches/model';
+import { GET_ClientBranches } from '@@addons/network/clients/branches';
+import { MeetingAttendanceHistoryModel, Convert as mahmConvert } from '@@addons/interfaces/attendance/history';
+import './columns/one';
+import './columns/two';
 
+type filterSelectType = { id: number | ""; name: string; isSelected: "true" | "false"; selected: boolean; };
 @customElement("pdb-attendance-clocking-history")
 export class PdbAttendanceClockingHistory extends LitElement {
   constructor() { super(); }
@@ -76,7 +83,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
   private filter_end_date_val: string = "";
 
   @property({ type: String })
-  private datatablePathUrl: string = "attendance/meeting-event/attendance-history/statistics";
+  private datatablePathUrl: string = "attendance/meeting-event/member-attendance-history";
 
   @property({ type: String })
   private memberProfileBaseUrl: string = "/member/member-profile?view=";
@@ -85,19 +92,25 @@ export class PdbAttendanceClockingHistory extends LitElement {
   private _genders: GenericGenderInfo_I[] = [];
 
   @property({ type: Array })
-  private _clockingTypes: GenericMeetingEventClockingTypeInfo_I[] = [];
+  private _schedules: MeetingEventSchedule_I[] = [];
+
+  @property({ type: Number })
+  private startSearchPage: number = 0;
+
+  @property({ type: Number })
+  private accountType: number = 1;
+
+  @property({ type: Boolean })
+  private accountTypeChanged: boolean = false;
 
   @property({ type: Array })
   private _memberCategories: GroupingsMemberCategories_I[] = [];
 
   @property({ type: Array })
-  private _scheduleGroups: MeetingEventScheduleGroup_I[]  = [];
-
-  @property({ type: Array })
-  private _scheduleSubGroups: MeetingEventScheduleSubGroup_I[]  = [];
-
-  @property({ type: Array })
   private _activeBranchId?: ClientBranchShort_I[] = null;
+
+  @property({ type: Number })
+  private selectedBranch: number = 1;
 
   @property({ type: Number })
   private _memberType?: number = 1;
@@ -133,6 +146,21 @@ export class PdbAttendanceClockingHistory extends LitElement {
   private _hasSetup: boolean = false;
 
   @property({ type: Boolean })
+  private _selectedMembersCalled: boolean = false;
+
+  @property({ type: Array })
+  private _selectedMembersNames: TemplateResult<1>[] = null;
+
+  @property({ type: Array })
+  private _groups: GroupModel[] = [];
+
+  @property({ type: Array })
+  private _subgroups: SubGroupModel[] = [];
+
+  @property({ type: Array })
+  public _branches: ClientBranchModel[] = [];
+
+  @property({ type: Boolean })
   private _pageButtonAccess: boolean = false;
 
   async connectedCallback() {
@@ -143,6 +171,10 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
     const activeBranchId = getActiveBranchIdCookie();
     this._activeBranchId = (activeBranchId === null) ? null : [activeBranchId];
+    
+    if (this._activeBranchId !== null) {
+      this.selectedBranch = this._activeBranchId[0].id;
+    }
 
     this.filterBox = new FilterFieldBox({
       selectors: {
@@ -152,18 +184,12 @@ export class PdbAttendanceClockingHistory extends LitElement {
       }
     });
 
-    if ((this.meetingEventId === 0) || (this.meetingEventId === null) || (Number.isNaN(this.meetingEventId))) { } else {
-      await this.getAttendanceSchedule();
-      // console.log({"this._schedule-1": this._schedule})
-      if ((this._schedule !== null) && (this._schedule !== undefined)) {
-        // console.log({"this._schedule-2": this._schedule})
-        await this.getGenders();
-        await this.getClockingType();
-        await this.getClientMemberCategories();
-        await this.getAttendanceScheduleGroup();
-        await this.getAttendanceScheduleSubGroup();
-      }
-    }
+    await this.getAttendanceSchedule();
+    await this.getGenders();
+    await this.getClientMemberCategories();
+    await this.getBranches();
+    await this.getGroups();
+    await this.getSubGroups();
   }
 
   disconnectedCallback() { }
@@ -183,53 +209,27 @@ export class PdbAttendanceClockingHistory extends LitElement {
         return html`<no-page-entry-component></no-page-entry-component>`;
       }
     }
-    if ((this.meetingEventId === 0) || (this.meetingEventId === null) || (Number.isNaN(this.meetingEventId))) {
-      return html`
-        <div class="shadow bg-white p-2">
-          <pdb-attendance-clocking-meeting-picker 
-            openContentBaseUrl="/clocking/history?filter_start_date&filter_end_date&meeting-event-id=">
-          </pdb-attendance-clocking-meeting-picker>
+    return html`
+      <div class="shadow bg-white p-2">
+        <span class="flex flex-row md:flex-col w-100"></span>
+        <div class="block my-1">
+          <mwc-button icon="open_with" label="Filters" raised class="primary mt-1"
+            filter-section-context="btn" @click="${this.filterBox.toggleFilterFields}">
+          </mwc-button>
         </div>
-      `;
-    } else {
-    
-      if (this._schedule === null) {
-        return html`
-          <div class="main-container">
-            <div class="flex justify-center">
-              <mwc-circular-progress indeterminate></mwc-circular-progress>
-            </div>
-          </div>
-        `;
-      } else if (this._schedule === undefined) {
-        return html`
-          <div class="main-container">
-            <div class="flex justify-center">
-              <h4 class="text-red-600 text-lg">
-                <span class="font-bold">Schedule </span>: Not Found</h4>
-            </div>
-          </div>
-        `;
-      } else {
-        return html`
-          <div class="shadow bg-white p-2">
-            <span class="flex flex-row md:flex-col w-100"></span>
-            <div class="block my-1">
-              <mwc-button icon="open_with" label="Filters" raised class="primary mt-1"
-                filter-section-context="btn" @click="${this.filterBox.toggleFilterFields}">
-              </mwc-button>
-            </div>
-            <div class="block my-1">
-              ${this.filterForm}
-            </div>
-            <div class="block my-1">
-              ${this.downloadBtns}
+        <div class="block my-1">
+          ${this.filterForm}
+        </div>
+        <div class="block my-1">
+          ${this.downloadBtns}
+          <div class="flex w-full items-center justify-center">
+            <div class="block w-full xl:w-[60%]">
               ${this.table}
             </div>
           </div>
-        `;
-      }
-    }
+        </div>
+      </div>
+    `;
   }
 
   private get downloadBtns() {
@@ -243,6 +243,33 @@ export class PdbAttendanceClockingHistory extends LitElement {
         </mwc-button>
       </div>
     `
+  }
+
+  private changeActions() {
+    const _this = this,
+      filterNameId_filter_branch = "filter_branch",
+      filterNameId_filter_member_category = "filter_member_category";
+    document.querySelectorAll('[name="'+filterNameId_filter_member_category+'"]').forEach((category_field) => {
+      category_field.addEventListener("change", (evt) => {
+        // @ts-ignore 
+        const selectedCategory = category_field.selectedCategory
+        if (selectedCategory > 0) {
+          _this._memberType = selectedCategory;
+          // console.log({ "_this._memberType": _this._memberType, "selectedCategory": selectedCategory });
+        }
+      });
+    });
+    document.querySelectorAll('[name="'+filterNameId_filter_branch+'"]').forEach((branch_field) => {
+      branch_field.addEventListener("change", (evt) => {
+        // @ts-ignore 
+        const currentValue = branch_field.currentValue
+        if (currentValue > 0) {
+          _this.selectedBranch = currentValue;
+          // console.log({ "_this.selectedBranch": _this.selectedBranch, "currentValue": currentValue });
+        }
+      });
+    });
+
   }
 
   firstUpdated() {
@@ -262,7 +289,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
           this.dialog();
         }
       }
-    });   
+    }); 
+    this.changeActions();  
   }
 
   private getMeetingEventId() {
@@ -280,24 +308,32 @@ export class PdbAttendanceClockingHistory extends LitElement {
       filterNameId_filter_start_date = "filter_start_date",
       filterNameId_filter_end_date = "filter_end_date",
       filterNameId_filter_gender = "filter_gender",
-      filterNameId_filter_name = "filter_name",
-      filterNameId_filter_identity = "filter_identity",
+      filterNameId_filter_search = "search_member",
+      filterNameId_filter_branch = "filter_branch",
       filterNameId_filter_member_category = "filter_member_category",
       filterNameId_filter_group = "filter_group",
       filterNameId_filter_subgroup = "filter_subgroup",
       filterNameId_filter_from_age = "filter_from_age",
-      filterNameId_filter_to_age = "filter_to_age";
+      filterNameId_filter_to_age = "filter_to_age",
+      filterNameId_filter_memberIds = "filter_memberIds",
+      filterNameId_filter_meetingIds = "filter_meetingIds",
+      filterNameId_filter_accountType = "accountType",
+      filterNameId_filter_activeStatus = "filter_activeStatus";
 
     let filterNameId_filter_start_dateVal: string = null,
       filterNameId_filter_end_dateVal: string = null,
       filterNameId_filter_genderVal: string = null,
-      filterNameId_filter_nameVal:string = null,
-      filterNameId_filter_identityVal: string = null,
-      filterNameId_filter_member_categoryVal: number = null,
+      filterNameId_filter_searchVal: string = null,
+      filterNameId_filter_branchVal: number = this.selectedBranch,
+      filterNameId_filter_member_categoryVal: number = this._memberType,
       filterNameId_filter_groupVal: number = null,
       filterNameId_filter_subgroupVal: number = null,
       filterNameId_filter_from_ageVal: number = null,
-      filterNameId_filter_to_ageVal: number = null;
+      filterNameId_filter_to_ageVal: number = null,
+      filterNameId_filter_activeStatusVal: number = null,
+      filterNameId_filter_accountTypeVal: number = this.accountType,
+      filterNameId_filter_memberIdsVal: Array<string> = [],
+      filterNameId_filter_meetingIdsVal: Array<string> = [];
     
       for (const key in _urlQueryParams) {
         let value = String(_urlQueryParams[key]);
@@ -350,14 +386,17 @@ export class PdbAttendanceClockingHistory extends LitElement {
         if (key === filterNameId_filter_gender) {
           filterNameId_filter_genderVal = value;
         }
-        if (key === filterNameId_filter_name) {
-          filterNameId_filter_nameVal = value;
+        if (key === filterNameId_filter_search) {
+          filterNameId_filter_searchVal = value;
         }
-        if (key === filterNameId_filter_identity) {
-          filterNameId_filter_identityVal = value;
+        if (key === filterNameId_filter_branch) {          
+          filterNameId_filter_branchVal = Number(value);
         }
         if (key === filterNameId_filter_member_category) {
           filterNameId_filter_member_categoryVal = Number(value);
+        }
+        if (key === filterNameId_filter_activeStatus) {
+          filterNameId_filter_activeStatusVal = Number(value);
         }
         if (key === filterNameId_filter_group) {
           filterNameId_filter_groupVal = Number(value);
@@ -371,20 +410,36 @@ export class PdbAttendanceClockingHistory extends LitElement {
         if (key === filterNameId_filter_to_age) {
           filterNameId_filter_to_ageVal = Number(value);
         }
+        if (key === filterNameId_filter_accountType) {
+          filterNameId_filter_accountTypeVal = Number(value);
+          if (this.accountTypeChanged === false) {
+            this.accountType = filterNameId_filter_accountTypeVal;
+          }
+        }
+
+        if (key === filterNameId_filter_memberIds) {
+          filterNameId_filter_memberIdsVal = [String(value)];
+        } else {
+          if (key === `${filterNameId_filter_memberIds}[]`) {
+            filterNameId_filter_memberIdsVal = urlQueryParamsGetAll(`${filterNameId_filter_memberIds}[]`); 
+          }
+        }
+
+        if (key === filterNameId_filter_meetingIds) {
+          filterNameId_filter_meetingIdsVal = [String(value)];
+        } else {
+          if (key === `${filterNameId_filter_meetingIds}[]`) {
+            filterNameId_filter_meetingIdsVal = urlQueryParamsGetAll(`${filterNameId_filter_meetingIds}[]`); 
+          }
+        }
       }
-    
-    const nameField = html`
-      <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Search By Name
-          <mwc-textfield type="text" name="${filterNameId_filter_name}" id="${filterNameId_filter_name}" label="Search By Name" 
-            value="${filterNameId_filter_nameVal === null ? "" : filterNameId_filter_nameVal}" outlined required>
-          </mwc-textfield>
-        </div>
-      </div>`;
+      
+    // console.log({filterNameId_filter_memberIdsVal, filterNameId_filter_meetingIdsVal});
     
     const ageField = html`
-      <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Filter Age In Years
+      <div class="col-xl-6 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Filter Age In Years</h4>
           <div class="flex">
             <mwc-textfield type="number" min="0" name="${filterNameId_filter_from_age}" id="${filterNameId_filter_from_age}" label="Pick From Age" 
               value="${filterNameId_filter_from_ageVal === null ? "" : filterNameId_filter_from_ageVal}" class="mr-1" outlined required>
@@ -398,7 +453,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
     
     const memberCategoryField = html`
       <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Member Category
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Member Category</h4>
           <pdb-membership-select-member-type defaultValue="${filterNameId_filter_member_categoryVal}" 
             name="${filterNameId_filter_member_category}" id="${filterNameId_filter_member_category}"
             label="Select Member Category" outlined required>
@@ -407,8 +463,9 @@ export class PdbAttendanceClockingHistory extends LitElement {
       </div>`;
     
     const dateField = html`
-      <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Pick Dates
+      <div class="col-xl-6 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Pick Dates</h4>
           <div class="flex">
             <mwc-textfield type="date" name="${filterNameId_filter_start_date}" id="${filterNameId_filter_start_date}"
             value="${filterNameId_filter_start_dateVal}" class="mr-1" outlined required></mwc-textfield>
@@ -420,7 +477,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
     
     const genderField = html`
       <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Gender
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Gender</h4>
           <mwc-select name="${filterNameId_filter_gender}" id="${filterNameId_filter_gender}" label="Select Gender" outlined required>
             ${this._genders.map((item) => {
               // console.log({item});
@@ -437,75 +495,320 @@ export class PdbAttendanceClockingHistory extends LitElement {
           </mwc-select>
         </div>
       </div>`;
-    
-    const groupField = html`
+    const accountTypes: filterSelectType[] = [
+      "Individual Account", "Organization Account"
+    ].map((aT, i) => {
+      const ID = i + 1;
+      let isSelected: boolean = false,
+        isSelectedAlt: "true" | "false" = "false";
+      if (filterNameId_filter_accountTypeVal === ID) {
+        isSelected = true;
+        isSelectedAlt = "true";
+      }
+      const accountType: filterSelectType = {
+        id: ID, name: aT, isSelected: isSelectedAlt, selected: isSelected,
+      };
+      return accountType;
+    });
+    const accountTypeField = html`
       <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Meeting/ Event Group
-          <mwc-select name="${filterNameId_filter_group}" id="${filterNameId_filter_group}" label="Select Meeting/ Event Group" outlined required>
-            ${this._scheduleGroups.map((item) => {
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Account Type</h4>
+          <mwc-select name="${filterNameId_filter_accountType}" id="${filterNameId_filter_accountType}" label="Select Account Type" @change="${this.accountTypeChange}" outlined required>
+            <mwc-list-item value="">Select Account Type</mwc-list-item>
+            ${accountTypes.map((item) => {
               // console.log({item});
-              const groupId = item.groupId;
-              const groupName = until(this.getGroup(groupId), html`<span>Loading...</span>`);
-              if (filterNameId_filter_groupVal === null) {
-                return html`<mwc-list-item value="${groupId}">${groupName}</mwc-list-item>`;
+              // console.log({filterNameId_filter_branchVal, "this.selectedBranch": this.selectedBranch});
+              
+              if (Number(filterNameId_filter_accountTypeVal) === item.id) {
+                return html`<mwc-list-item value="${item.id}" selected>${item.name}</mwc-list-item>`;
               } else {
-                if (Number(filterNameId_filter_groupVal) === groupId) {
-                  return html`<mwc-list-item value="${groupId}" selected>${groupName}</mwc-list-item>`;
-                } else {
-                  return html`<mwc-list-item value="${groupId}">${groupName}</mwc-list-item>`;
-                }
+                return html`<mwc-list-item value="${item.id}">${item.name}</mwc-list-item>`;
               }
             })}
           </mwc-select>
+        </div>
+      </div>`;
+    
+    const activeStatusField = html`
+      <div class="col-xl-4 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Active Status</h4>
+          <mwc-select name="${filterNameId_filter_activeStatus}" id="${filterNameId_filter_activeStatus}" label="Select Active Status" outlined required>
+            <mwc-list-item value="">Select Active Status</mwc-list-item>
+            <mwc-list-item value="1" ?selected="${filterNameId_filter_activeStatusVal === 1 ? true: false}">Active</mwc-list-item>
+            <mwc-list-item value="2" ?selected="${filterNameId_filter_activeStatusVal === 2 ? true: false}">Inactive</mwc-list-item>
+          </mwc-select>
+        </div>
+      </div>`;
+
+    const memberListField = html`
+      <div class="col-xl-12 col-md-12">
+        <div class="form-input-container !block">
+          ${this.memberListField}
+          <div class="flex flex-wrap gap-2 p-1 my-2 shadow">
+            ${until(this.getMembersByIds(filterNameId_filter_memberIdsVal?.map(memberId => Number.isNaN(memberId) ? 0 :
+              Number(memberId))), html`<span>Loading...</span>`)}
+          </div>
+        </div>
+      </div>`;
+    
+    const groupsSubgroupsBranches = this.groupsSubgroupsBranches([filterNameId_filter_groupVal], [filterNameId_filter_subgroupVal], [filterNameId_filter_branchVal]);
+    const branchField = html`
+      <div class="col-xl-4 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Branch</h4>
+          <mwc-select name="${filterNameId_filter_branch}" id="${filterNameId_filter_branch}" label="Select Branch"
+            @change="${this.branchChange}" outlined required>
+            ${groupsSubgroupsBranches.branches.map((item) => {
+              // console.log({item});
+              // console.log({filterNameId_filter_branchVal, "this.selectedBranch": this.selectedBranch});
+              
+              if (Number(filterNameId_filter_branchVal) === item.id) {
+                return html`<mwc-list-item value="${item.id}" selected>${item.name}</mwc-list-item>`;
+              } else {
+                return html`<mwc-list-item value="${item.id}">${item.name}</mwc-list-item>`;
+              }
+            })}
+          </mwc-select>
+        </div>
+      </div>`;
+
+    // const groupField = html`
+    //   <div class="col-xl-6 col-md-6">
+    //     <div class="form-input-container !block">
+    //       <h4 class="font-semibold my-2">Select Group</h4>
+    //       <mwc-select name="${filterNameId_filter_group}" id="${filterNameId_filter_group}" label="Select Group"
+    //         outlined required>
+    //         ${groupsSubgroupsBranches.groups.map((item) => {
+    //           // console.log({item});
+              
+    //           if (Number(filterNameId_filter_groupVal) === item.id) {
+    //             return html`<mwc-list-item value="${item.id}" selected>${item.name}</mwc-list-item>`;
+    //           } else {
+    //             return html`<mwc-list-item value="${item.id}">${item.name}</mwc-list-item>`;
+    //           }
+    //         })}
+    //       </mwc-select>
+    //     </div>
+    //   </div>`;
+
+    // const subGroupField = html`
+    //   <div class="col-xl-6 col-md-6">
+    //     <div class="form-input-container !block">
+    //       <h4 class="font-semibold my-2">Select Sub-Group</h4>
+    //       <mwc-select name="${filterNameId_filter_subgroup}" id="${filterNameId_filter_subgroup}" label="Select Sub-Group"
+    //         outlined required>
+    //         ${groupsSubgroupsBranches.subgroups.map((item) => {
+    //           // console.log({item});              
+    //           if (Number(filterNameId_filter_subgroupVal) === item.id) {
+    //             return html`<mwc-list-item value="${item.id}" selected>${item.name}</mwc-list-item>`;
+    //           } else {
+    //             return html`<mwc-list-item value="${item.id}">${item.name}</mwc-list-item>`;
+    //           }
+    //         })}
+    //       </mwc-select>
+    //     </div>
+    //   </div>`;
+    const groupField = html`
+      <div class="col-xl-6 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Group</h4>
+          <select-input name="${filterNameId_filter_group}" id="${filterNameId_filter_group}" class="w-full" label="Select Group"
+            .options="${groupsSubgroupsBranches.groups}" outlined required>
+          </select-input>
         </div>
       </div>`;
     
     const subGroupField = html`
-      <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Meeting/ Event Sub-Group
-          <mwc-select name="${filterNameId_filter_subgroup}" id="${filterNameId_filter_subgroup}" label="Select Meeting/ Event Sub-Group" outlined required>
-            ${this._scheduleSubGroups.map((item) => {
-              // console.log({item});
-              const subGroupId = item.subGroupId;
-              const subGroupName = until(this.getSubGroup(subGroupId), html`<span>Loading...</span>`);
-              if (filterNameId_filter_subgroupVal === null) {
-                return html`<mwc-list-item value="${subGroupId}">${subGroupName}</mwc-list-item>`;
-              } else {
-                if (Number(filterNameId_filter_subgroupVal) === subGroupId) {
-                  return html`<mwc-list-item value="${subGroupId}" selected>${subGroupName}</mwc-list-item>`;
-                } else {
-                  return html`<mwc-list-item value="${subGroupId}">${subGroupName}</mwc-list-item>`;
-                }
-              }
-            })}
-          </mwc-select>
+      <div class="col-xl-6 col-md-6">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Sub-Group</h4>
+          <select-input name="${filterNameId_filter_subgroup}" id="${filterNameId_filter_subgroup}" class="w-full" label="Select Sub-Group"
+            .options="${groupsSubgroupsBranches.subgroups}" outlined required>
+          </select-input>
         </div>
       </div>`;
-    
-    const identifyField = html`
+
+    const meeting_schedules: {
+      id: number; name: string; isSelected: "true" | "false";
+      selected: boolean;
+    }[] = this._schedules.map((schedule) => {
+      let isSelected: "true" | "false" = "false",
+        selected: true | false = false;
+      filterNameId_filter_meetingIdsVal.forEach(meetingId => {
+        if (schedule.id === Number(meetingId)) {
+          isSelected = "true"; selected = true;
+        }
+      });
+      return {
+        id: schedule.id, name: schedule.name,
+        isSelected: isSelected, selected: selected,
+      }
+    });
+
+    const searchField = html`
       <div class="col-xl-4 col-md-6">
-        <div class="form-input-container !block">Search By Member ID
-          <mwc-textfield name="${filterNameId_filter_identity}" id="${filterNameId_filter_identity}" label="Search By Member ID"
-            value="${filterNameId_filter_identityVal === null ? "" : filterNameId_filter_identityVal}" outlined required>
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Search By Name/ ID/ E-mail/ Phone Number</h4>
+          <mwc-textfield type="text" name="${filterNameId_filter_search}" id="${filterNameId_filter_search}"
+            label="Search By Name/ ID/ E-mail/ Phone Number"
+            value="${filterNameId_filter_searchVal === null ? "" : filterNameId_filter_searchVal}" outlined required>
           </mwc-textfield>
         </div>
       </div>`;
+
+    const meetingsField = html`
+      <div class="col-xl-12 col-md-12">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Meeting(s)</h4>
+          <select-input name="${filterNameId_filter_meetingIds}" id="${filterNameId_filter_meetingIds}" multiple
+            label="Select Meeting(s)" .options="${meeting_schedules}" outlined required>
+          </select-input>
+        </div>
+      </div>`;
+    
+    const contents: Array<TemplateResult> = [
+      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+        .buttonHtml="${html`<b>Member Filter</b>`}"
+        .contentHtml="${html`
+          <div class="mt-1 mb-2 row">
+            ${activeStatusField} ${genderField} ${searchField} ${memberListField}
+          </div>`}">
+        </app-accordion-item>
+      `,
+      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+        .buttonHtml="${html`<b>Group Filter</b>`}"
+        .contentHtml="${html`
+          <div class="mt-1 mb-2 row">
+            ${groupField} ${subGroupField}
+          </div>`}">
+        </app-accordion-item>
+      `,
+      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+        .buttonHtml="${html`<b>Age/ Date Filters</b>`}"
+        .contentHtml="${html`<div class="mt-1 mb-2 row">
+            ${ageField} ${dateField}
+          </div>`}">
+        </app-accordion-item>
+      `,
+    ];
+    // console.log({contents});
+    
       returnHtml = html`<form method="get" class="form" make-general-posts="submit_filter_form" filter-section-context="container" hidden>
           <div class="container">
             <div class="row">
-              ${memberCategoryField} ${nameField} ${genderField} ${ageField} ${identifyField} ${groupField} ${subGroupField} ${dateField}
+              ${branchField} ${memberCategoryField} ${accountTypeField} ${meetingsField}
+            </div>
+          </div>
+          <div class="container">
+            <app-accordion accordionName="filter-areas" .contents=${contents} class="w-100"></app-accordion>
+          </div>
+          <div class="container">
+            <div class="row">
               <div class="col-xl-12 col-md-10">
                 <div class="form-input-container mt-1">
-                  <input type="hidden" name="meeting-event-id" value="${this.meetingEventIdEnc}" />
                   <mwc-button label="Clear" @click="${this.filterBox.clear_filter}"></mwc-button>
                   <mwc-button label="Filter" raised @click="${this.filterBox.submit}"></mwc-button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </form>`
     return returnHtml;
+  }
+
+  private groupsSubgroupsBranches(selectedGroupIDs: Array<number>, selectedSubGroupIDs: Array<number>, selectedBranchIDs: Array<number>) {
+    type returnType = { groups: filterSelectType[], subgroups: filterSelectType[], branches: filterSelectType[] };
+    let groups: filterSelectType[] = [{ id: "", name: "Select Groups", isSelected: "false", selected: false }];
+    let subgroups: filterSelectType[] = [{ id: "", name: "Select Sub-Groups", isSelected: "false", selected: false }];
+    let branches: filterSelectType[] = [{ id: "", name: "Select Branches", isSelected: "false", selected: false }];
+
+    // console.log({selectedGroupIDs, selectedSubGroupIDs});
+    
+    // console.log({"this._groups": this._groups, "this.memberGroups": this.memberGroups});
+    // console.log({"this._subgroups": this._subgroups, "this.memberSubGroups": this.memberSubGroups});
+
+
+    this._groups.forEach(_group => {
+      let thisIsSelected = false;
+      selectedGroupIDs.forEach(selectedGroupID => {
+        if (selectedGroupID === _group.id) {
+          thisIsSelected = true;
+        }
+      });
+      // console.log({"thisIsSelected-group": thisIsSelected});
+      
+      let isSelected: boolean = false,
+        isSelectedAlt: "true" | "false" = "false";
+      if (thisIsSelected) {
+        isSelected = true;
+        isSelectedAlt = "true";
+      }
+      const group: filterSelectType = {
+        id: _group.id, name: _group.group, isSelected: isSelectedAlt, selected: isSelected,
+      };
+
+      if (!groups.includes(group)) {
+        groups.push(group);
+      }
+    });
+
+    // console.log({"this._subgroups": this._subgroups})
+    this._subgroups.forEach(_subgroup => {
+      let thisIsSelected = false;
+      selectedSubGroupIDs.forEach(selectedSubGroupID => {
+        if (selectedSubGroupID === _subgroup.id) {
+          thisIsSelected = true;
+        }
+      });
+      // console.log({"thisIsSelected-subgroup": thisIsSelected});
+      
+      let isSelected: boolean = false,
+        isSelectedAlt: "true" | "false" = "false";
+      if (thisIsSelected) {
+        isSelected = true;
+        isSelectedAlt = "true";
+      }
+      const subgroup: filterSelectType = {
+        id: _subgroup.id, name: `${_subgroup.groupID.group} => ${_subgroup.subgroup}`,
+        isSelected: isSelectedAlt, selected: isSelected,
+      };
+
+      if (!subgroups.includes(subgroup)) {
+        subgroups.push(subgroup);
+      }
+    });
+
+    // console.log({"this._branches": this._branches, selectedBranchIDs})
+    this._branches.forEach(_branch => {
+      let thisIsSelected = false;
+      selectedBranchIDs.forEach(selectedBranchID => {
+        if (selectedBranchID === _branch.id) {
+          thisIsSelected = true;
+        }
+      });
+
+      let isSelected: boolean = false,
+        isSelectedAlt: "true" | "false" = "false";
+      if (thisIsSelected) {
+        isSelected = true;
+        isSelectedAlt = "true";
+      }
+      const branch: filterSelectType = {
+        id: _branch.id, name: `${_branch.name}`,
+        isSelected: isSelectedAlt, selected: isSelected,
+      };
+
+      if (!branches.includes(branch)) {
+        branches.push(branch);
+      }
+    });
+
+    const _returnType: returnType = {
+      groups: groups, subgroups: subgroups, branches
+    }
+    return _returnType;
   }
 
   private get __tableHeaders(): DataTables_ColumnSettings_I[] {
@@ -528,10 +831,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private get table(): TemplateResult {
     const memberType = this._memberType;
-    let branchId = 0;
-    if (this._activeBranchId !== null) {
-      branchId = this._activeBranchId[0].id;
-    }
+    let branchId = this.selectedBranch;
+
     let URL = CONSTANTS.URLS.AKWAABA_API_BASE_URL + "" + this.datatablePathUrl + "?branchId=" + branchId
       + "&meetingEventId=" + this.meetingEventId + "&memberType=" + memberType + "&order__by=firstname&datatable_plugin";
 
@@ -552,30 +853,40 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private get urlQueryString() {
     const _urlQueryParams = urlQueryParams(),
-    filterNameId_filter_start_date = "filter_start_date",
-    filterNameId_filter_end_date = "filter_end_date",
-    filterNameId_filter_gender = "filter_gender",
-    filterNameId_filter_name = "filter_name",
-    filterNameId_filter_identity = "filter_identity",
-    filterNameId_filter_member_category = "filter_member_category",
-    filterNameId_filter_group = "filter_group",
-    filterNameId_filter_subgroup = "filter_subgroup",
-    filterNameId_filter_from_age = "filter_from_age",
-    filterNameId_filter_to_age = "filter_to_age";
+      filterNameId_filter_start_date = "filter_start_date",
+      filterNameId_filter_end_date = "filter_end_date",
+      filterNameId_filter_gender = "filter_gender",
+      filterNameId_filter_search = "search_member",
+      filterNameId_filter_branch = "filter_branch",
+      filterNameId_filter_member_category = "filter_member_category",
+      filterNameId_filter_group = "filter_group",
+      filterNameId_filter_subgroup = "filter_subgroup",
+      filterNameId_filter_from_age = "filter_from_age",
+      filterNameId_filter_to_age = "filter_to_age",
+      filterNameId_filter_memberIds = "filter_memberIds",
+      filterNameId_filter_meetingIds = "filter_meetingIds",
+      filterNameId_filter_activeStatus = "filter_activeStatus";
 
-    let newObject:any = {};
+    let newObject: any = {};
+    
+    let _meetingIds: Array<string> = [],
+      _memberIds: Array<string> = [];
 
     for (const key in _urlQueryParams) {
-      let value = String(_urlQueryParams[key]);
+      let value = String(_urlQueryParams[key]),
+        memberIds = `${filterNameId_filter_memberIds}[]`,
+        meetingIds = `${filterNameId_filter_meetingIds}[]`;
       if ((key === filterNameId_filter_start_date) || (key === filterNameId_filter_end_date)
-        || (key === filterNameId_filter_gender) || (key === filterNameId_filter_name)
-        || (key === filterNameId_filter_identity) || (key === filterNameId_filter_member_category)
+        || (key === filterNameId_filter_gender) || (key === filterNameId_filter_branch)
+        || (key === filterNameId_filter_search) || (key === filterNameId_filter_member_category)
         || (key === filterNameId_filter_group) || (key === filterNameId_filter_subgroup)
-        || (key === filterNameId_filter_from_age) || (key === filterNameId_filter_to_age)) {
+        || (key === filterNameId_filter_from_age) || (key === filterNameId_filter_to_age)
+        || (key === filterNameId_filter_memberIds) || (key === filterNameId_filter_meetingIds)
+        || (key === filterNameId_filter_activeStatus) || (key === meetingIds) || (key === memberIds)) {
         // console.log({value, });
 
         if ((key === filterNameId_filter_from_age) || (key === filterNameId_filter_to_age)) {
-          if (value === "0") {
+          if (value <= "0" ) {
             delete newObject[key];
           }
         }
@@ -588,40 +899,253 @@ export class PdbAttendanceClockingHistory extends LitElement {
           }
         } else {
           newObject[key] = value;
+
+          if ((key === meetingIds) || (key === memberIds)) {
+            // console.log({value, });
+              _meetingIds = urlQueryParamsGetAll(meetingIds),
+              _memberIds = urlQueryParamsGetAll(memberIds);
+          }
         }
       }
     } 
 
+    if (!(filterNameId_filter_member_category in newObject)) {
+      newObject[filterNameId_filter_member_category] = "1";
+    }
+
+    if (((filterNameId_filter_from_age in newObject) && (filterNameId_filter_to_age in newObject))
+      && ((newObject[filterNameId_filter_from_age] > 1) && (newObject[filterNameId_filter_to_age] > 1))) {
+    } else {
+      delete newObject[filterNameId_filter_from_age];
+      delete newObject[filterNameId_filter_to_age];
+    }
+
     let filter_start_date = urlQueryParamsGet(filterNameId_filter_start_date);
     if (filter_start_date === null) {
-      newObject[filterNameId_filter_start_date] = `${this.filter_start_date_val}`;
+      delete newObject[filterNameId_filter_start_date];
+      // newObject[filterNameId_filter_start_date] = `${this.filter_start_date_val}`;
     }
     let filter_end_date = urlQueryParamsGet(filterNameId_filter_end_date);
     if (filter_end_date === null) {
-      newObject[filterNameId_filter_end_date] = `${this.filter_end_date_val}`;
+      delete newObject[filterNameId_filter_end_date];
+      // newObject[filterNameId_filter_end_date] = `${this.filter_end_date_val}`;
     }
+    // console.log({filter_start_date, filter_end_date});
+    
+    
+    let new_params = ``;
+    _meetingIds.forEach(_meetingId => new_params += `&${filterNameId_filter_meetingIds}=${_meetingId}`);
+    _memberIds.forEach(_memberId => new_params += `&${filterNameId_filter_memberIds}=${_memberId}`);
 
     let _urlQueryParamsJoin = urlQueryParamsJoin(newObject);
     let urlQueryString = (_urlQueryParamsJoin.length === 0)
-      ? _urlQueryParamsJoin : "&" + _urlQueryParamsJoin;
-
-    // let filter_start_date = urlQueryParamsGet(filterNameId_filter_start_date);
-    // if (filter_start_date === null) {
-    //   filter_start_date = `&${filterNameId_filter_start_date}=${this.filter_start_date_val}`;
-    // }
-    // let filter_end_date = urlQueryParamsGet(filterNameId_filter_end_date);
-    // if (filter_end_date === null) {
-    //   filter_end_date = `&${filterNameId_filter_end_date}=${this.filter_end_date_val}`;
-    // }
-
-    // console.log({newObject, urlQueryString});
-    // console.log({filter_start_date, filter_end_date});
+      ? _urlQueryParamsJoin : "&" + _urlQueryParamsJoin + new_params;
     
-
-    // urlQueryString = `${urlQueryString}${filter_start_date}${filter_end_date}`
     urlQueryString = `${urlQueryString}`
 
     return urlQueryString;
+  }
+
+  get memberListField() {
+    // console.log({ "this.selectedBranch": this.selectedBranch });
+    // console.log({"Number(this.accountType)": Number(this.accountType)});
+    
+    if (Number(this.accountType) === 1) {
+      return this.individualMemberList;
+    } else if (Number(this.accountType) === 2) {
+      return this.organizationMemberList;
+    }
+  }
+
+  get individualMemberList() {
+    this.startSearchPage = 0;
+
+    function processClientUserSearch(data: any, params: QueryOptions): SelectInputProcessedAjaxResponse_I {
+      params.page = params.page || 0;
+      const TOTAL = data.count,
+        RESULTS = data.results,
+        SELECTOR = document.querySelector('[id="filter_memberIds"]');
+      // console.log({ data, params, RESULTS, SELECTOR });
+
+      let processedData: { id: number; text: string; }[] = [];
+      if (TOTAL > 0) {
+        var _data = RESULTS;
+        // console.log({ "smbfl-_data": _data });
+        for (let i = 0; i < _data.length; i++) {
+          const item = _data[i];
+          // console.log({"typeof": typeof item, "item-item": item });
+          const member: MembershipUserModel = MuMconvert.toMembershipUserModel(JSON.stringify(item));
+          // console.log({ "member-member": member });
+
+          const id = member.id;
+          const fullName = `${member.firstname} ${member.middlename ?? ""} ${member.surname}`;
+          const _new = {
+            id: id,
+            text: fullName,
+          }
+          if (!processedData.includes(_new)) {
+            processedData.push(_new)
+          }
+        }
+      }
+      // console.log({ processedData });
+
+      return {
+        results: processedData,
+        total: TOTAL,
+        // @ts-ignore
+        totalShowing: SELECTOR.totalShowing,
+      };
+    }
+
+    let ajaxHeader: { Authorization?: string } = {};
+    // const _get_cookie = base64Decode(get_cookie('client_tokenLogin'));
+    const _get_cookie = getUserLoginInfoCookie();
+    ajaxHeader.Authorization = "Token " + _get_cookie.token;
+
+    return html`
+      <h4 class="font-semibold my-2">Select User</h4>
+      <select-input class="w-100" id="filter_memberIds" name="filter_memberIds" label="Select User" multiple
+        .ajaxFetchProcessResponse="${processClientUserSearch}" startSearchPage="${this.startSearchPage}"
+        .ajaxHeader="${ajaxHeader}" .ajaxFetchUrlParams="${this.ajaxFetchUrlParams}"
+        ajaxFetchUrl="${CONSTANTS.URLS.AKWAABA_API_BASE_URL}members/user/search"></select-input>
+    `;
+  }
+
+  get organizationMemberList() {
+    this.startSearchPage = 0;
+
+    function processClientUserSearch(data: any, params: QueryOptions): SelectInputProcessedAjaxResponse_I {
+      params.page = params.page || 0;
+      const TOTAL = data.count,
+        RESULTS = data.results,
+        SELECTOR = document.querySelector('[id="filter_memberIds"]');
+      // console.log({ data, params, RESULTS, SELECTOR });
+
+      let processedData: { id: number; text: string; }[] = [];
+      if (TOTAL > 0) {
+        var _data = RESULTS;
+        // console.log({ "smbfl-_data": _data });
+        for (let i = 0; i < _data.length; i++) {
+          const item = _data[i];
+          // console.log({"typeof": typeof item, "item-item": item });
+          const member: MembershipOrganizationUserModel = MouMconvert.toMembershipOrganizationUserModel(JSON.stringify(item));
+          // console.log({ "member-member": member });
+
+          const id = member.id;
+          const organizationName = `${member.organizationName}`;
+          const _new = {
+            id: id,
+            text: organizationName,
+          }
+          if (!processedData.includes(_new)) {
+            processedData.push(_new)
+          }
+        }
+      }
+      // console.log({ processedData });
+
+      return {
+        results: processedData,
+        total: TOTAL,
+        // @ts-ignore
+        totalShowing: SELECTOR.totalShowing,
+      };
+    }
+
+    let ajaxHeader: { Authorization?: string } = {};
+    // const _get_cookie = base64Decode(get_cookie('client_tokenLogin'));
+    // console.log({"this.selectedBranch": this.selectedBranch});
+
+    const _get_cookie = getUserLoginInfoCookie();
+    ajaxHeader.Authorization = "Token " + _get_cookie.token;
+    return html`
+      <h4 class="font-semibold my-2">Select Organization</h4>
+      <select-input class="w-100" id="filter_memberIds" name="filter_memberIds" label="Select Organization" multiple
+        .ajaxFetchProcessResponse="${processClientUserSearch}" startSearchPage="${this.startSearchPage}"
+        .ajaxHeader="${ajaxHeader}" .ajaxFetchUrlParams="${this.ajaxFetchUrlParams}"
+        ajaxFetchUrl="${CONSTANTS.URLS.AKWAABA_API_BASE_URL}members/user-organization/search"></select-input>
+    `;
+  }
+
+  private get ajaxFetchUrlParams(): SelectInputProcessedAjaxUrlParam_I[] {
+    let branchId = this.selectedBranch;
+    return [
+      { param: "branchId", value: String(branchId) }
+    ]
+  }
+
+  async getMembersByIds(memberIds: Array<Number>) {
+    memberIds = memberIds === null ? [] : memberIds;
+    // console.log({memberIds, "this._selectedMembersCalled": this._selectedMembersCalled});
+
+    let _members: MembershipMixedUserModel[] = [];
+
+    if (this._selectedMembersCalled === false) {
+      this._selectedMembersCalled = true;
+      const _networkResponse = await GET_MembershipUserIds<any>(memberIds, this.accountType);
+
+      if (_networkResponse !== null) {
+        // @ts-ignore
+        // console.log({"_networkResponse.data.paginResponse": _networkResponse.data});
+
+        if ((_networkResponse.response.success === true)) {
+          const _DATAS = _networkResponse.response.data;
+          // console.log({_DATAS});
+
+          const DATA: MembershipMixedUserModel[] = _DATAS.results?.map((member: any) => mmumConvert.toMembershipMixedUserModel(JSON.stringify(member)));
+          // console.log({DATA});
+          _members = DATA;
+        }
+      }
+      const _selectedMembersNames = _members?.map(member => {        
+        if (this.accountType === 1) {
+          return html`
+            <span
+              class="flex h-fit items-center gap-1 font-semibold bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-800 group-hover:bg-blue-200 dark:group-hover:bg-blue-300 rounded-full p-1.5 text-xs">
+              <span>${member.firstname} ${member.middlename ?? ""} ${member.surname}</span>
+            </span>
+          `;
+        } else {
+          return html`
+            <span
+              class="flex h-fit items-center gap-1 font-semibold bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-800 group-hover:bg-blue-200 dark:group-hover:bg-blue-300 rounded-full p-1.5 text-xs">
+              <span>${member.organizationName}</span>
+            </span>
+          `;
+        }
+      });
+      this._selectedMembersNames = _selectedMembersNames;
+    }
+    return this._selectedMembersNames;
+  }
+
+  accountTypeChange(e: Event) {
+    // @ts-ignore
+    const accountType = Number.isNaN(e.currentTarget.value) ? 0 : Number(e.currentTarget.value);
+    if (accountType > 0) {
+      setTimeout(() => {
+        this.accountTypeChanged = true;
+        this.accountType = accountType;
+      }, 50);
+      // console.log({ "this.accountType": this.accountType });
+    }
+  }
+  
+  branchChange(e: Event) {
+    // @ts-ignore
+    const branch = Number.isNaN(e.currentTarget.value) ? 0 : Number(e.currentTarget.value);
+    if (branch > 0) {
+      this.selectedBranch = branch;
+      // console.log({ "this.selectedBranch": this.selectedBranch });
+    }
+  }
+
+  memberCategoryChange(e: Event) {
+    // @ts-ignore
+    const memberType = Number.isNaN(e.currentTarget.value) ? 1 : Number(e.currentTarget.value);
+    this._memberType = memberType;
+    // console.log({ "this._memberType": this._memberType });
   }
 
   private async getGenders() {
@@ -650,10 +1174,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private async downloadHistoryPdf() {
     const memberType = this._memberType;
-    let branchId = 0;
-    if (this._activeBranchId !== null) {
-      branchId = this._activeBranchId[0].id;
-    }
+    let branchId = this.selectedBranch;
 
     let URL = "?branchId=" + branchId
       + "&meetingEventId=" + this.meetingEventId + "&memberType=" + memberType + "&order__by=firstname&datatable_plugin";
@@ -668,10 +1189,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private async downloadHistoryExcel() {
     const memberType = this._memberType;
-    let branchId = 0;
-    if (this._activeBranchId !== null) {
-      branchId = this._activeBranchId[0].id;
-    }
+    let branchId = this.selectedBranch;
 
     let URL = "?branchId=" + branchId
       + "&meetingEventId=" + this.meetingEventId + "&memberType=" + memberType + "&order__by=firstname&datatable_plugin";
@@ -682,88 +1200,6 @@ export class PdbAttendanceClockingHistory extends LitElement {
     
     const _networkResponse = await GET_AttendanceDownloadHistoryExcel<any>(URL);
     // console.log({_networkResponse});
-  }
-
-  private async getClockingType() {
-    const _networkResponse = await GET_GenericMeetingEventClockingType<GenericMeetingEventClockingTypeInfo_I>();
-    // console.log({_networkResponse});
-    
-    let ___clockingTypes: GenericGenderInfo_I[] = [];
-
-    if (_networkResponse === null) {
-      ___clockingTypes.push({ id: 0, name: "**NOT FOUND**" });
-    } else {
-      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
-        const data: any[] = _networkResponse.response.data;
-
-        const DATA: GenericMeetingEventClockingTypeInfo_I[] = data.map(value => {
-          return GenericMeetingEventClockingTypeInfo_S(value)
-        });
-        // console.log({DATA});
-        ___clockingTypes = DATA;
-      }
-    }
-    const new_data: Array<GenericMeetingEventClockingTypeInfo_I> = [];
-    new_data.push(...this._clockingTypes, ...___clockingTypes);
-    this._clockingTypes = new_data;
-  }
-
-  private async getAttendanceScheduleGroup() {
-    const _networkResponse = await GET_AttendanceScheduleGroup<MeetingEventScheduleGroup_I>(
-      null, "?meetingEventId=" + this.meetingEventId
-    );
-    // console.log({ _networkResponse });
-    if (_networkResponse !== null) {
-      const _scheduleGroups = _networkResponse.paginResponse;
-      if (_scheduleGroups.results.length > 0) {
-        this._scheduleGroups = _scheduleGroups.results;
-      }
-    }
-  }
-
-  private async getGroup(ID: number) {
-    const _networkResponse = await GET_MemberGroupingsGroups<GroupingsGroup_I>(ID);
-    if (_networkResponse === null) {
-      return "???";
-    } else {
-      if (_networkResponse.response.success && 'group' in _networkResponse.response.data) {
-        
-        const group: GroupingsGroup_I = GroupingsGroup_S(_networkResponse.response.data);
-        return group.group;
-      } else {
-        return _networkResponse.response.message;
-      }
-    }
-  }
-
-  private async getAttendanceScheduleSubGroup() {
-    const _networkResponse = await GET_AttendanceScheduleSubGroup<MeetingEventScheduleSubGroup_I>(
-      null, "?meetingEventId=" + this.meetingEventId
-    );
-    // console.log({ _networkResponse });
-    if (_networkResponse !== null) {
-      const _scheduleSubGroups = _networkResponse.paginResponse;
-      if (_scheduleSubGroups.results.length > 0) {
-        this._scheduleSubGroups = _scheduleSubGroups.results;
-      }
-    }
-  }
-
-  private async getSubGroup(ID: number) {
-    // console.log({subgroup_ID: ID})
-    const _networkResponse = await GET_MemberGroupingsSubGroups<GroupingsSubGroup_I>(ID);
-    if (_networkResponse === null) {
-      return "???";
-    } else {
-      if (_networkResponse.response.success && 'subgroup' in _networkResponse.response.data) {
-        
-        const subgroup: GroupingsSubGroup_I = GroupingsSubGroup_S(_networkResponse.response.data);
-        // console.log({subgroup})
-        return subgroup.subgroup;
-      } else {
-        return _networkResponse.response.message;
-      }
-    }
   }
   
   private async getClientMemberCategories() {
@@ -784,118 +1220,23 @@ export class PdbAttendanceClockingHistory extends LitElement {
     this._memberCategories = new_data;
   }
 
-  private renderCol1Info(data: any, type: any, statistics: MemberClockingHistoryStatisticsInfo_I) {
-    // console.log({statistics});
-    const _statistics = MemberClockingHistoryStatisticsInfo_S(statistics);
-    const MEMBER = _statistics.member;
-    const MEMBER_ID = base64Encode(String(MEMBER.id), true);
+  private renderCol1Info(data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel) {
+    // console.log({attendanceHistory,});
     
     return `
-      <div class="flex flex-col lg:flex-row m-1 justify-evenly whitespace-normal">
-        <div class="flex m-1 justify-evenly">
-          <user-profile-photo class="w-32 h-32 mr-1" rounded 'click-to-open'="" click-to-open="${this.memberProfileBaseUrl}${MEMBER_ID}" type="member"
-            url="${MEMBER.profilePicture}" size="32"></user-profile-photo>
-        </div>
-        <div class="flex flex-col m-1 justify-evenly">
-          <h3 class="whitespace-nowrap font-bold text-lg">${MEMBER.firstname} ${MEMBER.middlename} ${MEMBER.surname}</h3>
-          <p class="whitespace-nowrap text-base">${_statistics.period}</p>
-          <p class="whitespace-nowrap text-sm">Total Work Done Rating: ${_statistics.workDoneRating}</p>
-          <p class="whitespace-nowrap text-xs">Total Overtime: ${_statistics.totalOvertime}</p>
-          <div class="whitespace-nowrap block sm:hidden">
-            ${this.renderCol2Info(data, type, statistics, 1)}
-          </div>
-        </div>
-      </div>
+      <pdb-attendance-clocking-history-col-1 filter_start_date_val="${this.filter_start_date_val}"
+        filter_end_date_val="${this.filter_end_date_val}" historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'>
+      </pdb-attendance-clocking-history-col-1>
     `;
   }
 
-  private renderCol2Info(data: any, type: any, statistics: MemberClockingHistoryStatisticsInfo_I, summaryType: number) {
-    // console.log({statistics});  
-    const _statistics = MemberClockingHistoryStatisticsInfo_S(statistics);
-    const MEMBER = _statistics.member;
-    // const clockingId = _statistics
-    // @ts-ignore
-    const expectedMonthlyAttendance = this._schedule.data.expectedMonthlyAttendance;
+  private renderCol2Info(data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel) {
+    // console.log({attendanceHistory,});
     
     return `
-      <div class="flex flex-col m-1 justify-evenly whitespace-normal">
-        <div class="flex flex-col m-1 justify-evenly">
-          <h3 class="whitespace-nowrap font-bold text-lg">Total Attendance: ${_statistics.totalAttendance} </h3>
-          <p class="whitespace-nowrap text-base">Expected Monthly Attendance: ${expectedMonthlyAttendance}</p>
-        </div>
-        <div class="flex flex-col m-1 justify-evenly">
-          <!-- <p class="whitespace-nowrap my-1 hidden">
-            ${this.view_attendance_details(_statistics)}
-            <mwc-button class="button info" label="Attendance Details" outlined open-dialog-btn="attendance-details-${MEMBER.id}"></mwc-button>
-          </p> -->
-          <div class="whitespace-nowrap my-1">
-            ${this.view_summary_records(_statistics, MEMBER, summaryType)}
-            <mwc-button class="button danger" outlined open-dialog-btn="summary-records_${summaryType}-${MEMBER.id}">
-              <mwc-icon>bar_chart</mwc-icon> Summary Records
-            </mwc-button>
-          </div>
-        </div>
-      </div>
+      <pdb-attendance-clocking-history-col-2 historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'>
+      </pdb-attendance-clocking-history-col-2>
     `;
-  }
-
-  private view_attendance_details(statistics: MemberClockingHistoryStatisticsInfo_I) {
-    
-  }
-
-  private view_summary_records(statistics: MemberClockingHistoryStatisticsInfo_I, member: MembershipUser_I, type: number) {
-    const MEMBER_ID = base64Encode(String(member.id), true);
-    return `
-      <mwc-dialog open-this-dialog="summary-records_${type}-${member.id}" heading="Summary Records">
-        <div class="flex flex-col m-1 justify-evenly whitespace-normal">
-          <div class="flex m-1 justify-evenly">
-            <user-profile-photo class="w-32 h-32 mr-1" rounded 'click-to-open'="" click-to-open="${this.memberProfileBaseUrl}${MEMBER_ID}" type="member"
-              url="${member.profilePicture}" size="32"></user-profile-photo>
-          </div>
-          <div class="flex flex-col m-1 justify-evenly">
-            <h3 class="whitespace-nowrap font-bold text-lg">${member.firstname} ${member.middlename} ${member.surname}</h3>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Total Attendance</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.totalAttendance}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Total Lateness:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.totalLateness}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Total Break Overstay:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.totalBreakOverStay}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Total Over-time:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.totalOvertime}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Total Under-time:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.totalUndertime}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Period:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.period}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Work Done Rating:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.workDoneRating}</p>
-            </div>
-            <div class="flex justify-between content-between">
-              <h6 class="whitespace-nowrap text-base font-bold mr-1">Rated By:</h6>
-              <p class="whitespace-nowrap text-sm ml-1">${statistics.ratedBy}</p>
-            </div>
-          </div>
-        </div>
-        <mwc-button
-          slot="secondaryAction"
-          dialogAction="close">
-          Cancel
-        </mwc-button>
-      </mwc-dialog>
-    `;
-
   }
 
   private dialog() {
@@ -920,19 +1261,94 @@ export class PdbAttendanceClockingHistory extends LitElement {
   }
 
   private async getAttendanceSchedule() {
-    const _networkResponse = await GET_AttendanceSchedule<MeetingEventSchedule_I>(this.meetingEventId);
+    let branchId = this.selectedBranch;
+    const _networkResponse = await GET_AttendanceSchedule<MeetingEventSchedule_I>(null, "?length=1000000&branchId=" + branchId);
     if (_networkResponse === null) {
-      this._schedule = undefined;
+      this._schedules = [];
     } else {
-      const response = _networkResponse.response;
-      if (response.success) {
-        this._schedule = response;
-      } else {
-        this._schedule = undefined;
+      if ("results" in _networkResponse.paginResponse) {
+        this._schedules = _networkResponse.paginResponse.results;
       }
     }
     // console.log({"this._schedule": this._schedule});
     
+  }
+
+  private async getBranches() {
+    const _networkResponse = await GET_ClientBranches<ClientBranchModel>();
+    let __branches: ClientBranchModel[] = [];
+
+    if (_networkResponse === null) {
+      __branches.push({ id: 0, name: "**NOT FOUND**" });
+    } else {
+      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
+        // @ts-ignore
+        const DATA: ClientBranchModel[] = _networkResponse.response.data.map((data: any) => {
+          return cbmConvert.toClientBranchModel(JSON.stringify(data));
+        });
+        // console.log({DATA});
+        __branches = DATA;
+      }
+    }
+    const new_data: Array<ClientBranchModel> = [];
+    new_data.push(...this._branches, ...__branches);
+    this._branches = new_data;
+  }
+
+  private async getGroups() {
+    const memberType = this._memberType;
+    let branchId = this.selectedBranch;    
+
+    let _networkResponse;
+    if (memberType === null || memberType == 0) {
+      _networkResponse = await GET_MemberGroupingsGroups<any>(null, "?branchId=" + branchId);
+    } else {
+      _networkResponse = await GET_MemberGroupingsGroups<any>(null, "?branchId=" + branchId + "&memberCategoryId=" + memberType);
+    }
+    
+    let __groups: GroupModel[] = [];
+
+    if (_networkResponse === null) {
+      __groups.push({ id: 0, group: "**NOT FOUND**", date: new Date() });
+    } else {
+      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
+        // console.log({"_networkResponse.response.data": _networkResponse.response.data});
+
+        const DATA: GroupModel[] = _networkResponse.response.data.map((group: any) => gmConvert.toGroupModel(JSON.stringify(group)));
+        // console.log({DATA});
+        __groups = DATA;
+      }
+    }
+    const new_data: Array<GroupModel> = [];
+    new_data.push(...this._groups, ...__groups);
+    this._groups = new_data;
+  }
+
+  private async getSubGroups() {
+    const memberType = this._memberType;
+    let branchId = this.selectedBranch;
+
+    let _networkResponse;
+    if (memberType === null || memberType == 0) {
+      _networkResponse = await GET_MemberGroupingsSubGroups<any>(null, "?branchId=" + branchId);
+    } else {
+      _networkResponse = await GET_MemberGroupingsSubGroups<any>(null, "?branchId=" + branchId + "&memberCategoryId=" + memberType);
+    }
+
+    let __subgroups: SubGroupModel[] = [];
+
+    if (_networkResponse === null) {
+      __subgroups.push({ id: 0, subgroup: "**NOT FOUND**", date: new Date() });
+    } else {
+      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
+        const DATA: SubGroupModel[] = _networkResponse.response.data.map((subgroup: any) => sgmConvert.toSubGroupModel(JSON.stringify(subgroup)));
+        // console.log({DATA});
+        __subgroups = DATA;
+      }
+    }
+    const new_data: Array<SubGroupModel> = [];
+    new_data.push(...this._subgroups, ...__subgroups);
+    this._subgroups = new_data;
   }
 
   private __dataTable(url: string): DataTables_Settings_I {
@@ -950,13 +1366,13 @@ export class PdbAttendanceClockingHistory extends LitElement {
       },
       "columns": [
         {
-          data: 'member',
-          render: (data: any, type: any, statistics: MemberClockingHistoryStatisticsInfo_I) => __this.renderCol1Info(data, type, statistics),
+          data: 'breakOverstay',
+          render: (data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel) => __this.renderCol1Info(data, type, attendanceHistory),
           orderable: true
         },
         {
-          data: 'accountType',
-          render: (data: any, type: any, statistics: MemberClockingHistoryStatisticsInfo_I) => __this.renderCol2Info(data, type, statistics, 2),
+          data: 'history',
+          render: (data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel) => __this.renderCol2Info(data, type, attendanceHistory,),
           orderable: true
         },
 

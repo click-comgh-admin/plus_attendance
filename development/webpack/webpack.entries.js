@@ -75,6 +75,22 @@ module.exports = {
         import: './src/view/attendance/setup/form/edit/attachment/index.ts',
         dependOn: 'shared',
     },
+    "attendance/setup-form/add-agenda": {
+        import: './src/view/attendance/setup/form/edit/agenda/add.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/edit-agenda": {
+        import: './src/view/attendance/setup/form/edit/agenda/edit.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/view-agenda": {
+        import: './src/view/attendance/setup/schedules/views/agenda/one.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/list-agendas": {
+        import: './src/view/attendance/setup/schedules/views/agenda/index.ts',
+        dependOn: 'shared',
+    },
     "attendance/setup-form/edit-break": {
         import: './src/view/attendance/setup/form/edit/break/index.ts',
         dependOn: 'shared',

@@ -1,12 +1,12 @@
 import { AppStorageItem } from "@@addons/functions/cookies/local_storage";
 import { ExtraAppSettings_I, ExtraAppSettings_S } from "@@addons/interfaces/extra_app_settings";
 import { base64Decode, base64Encode } from "../../base64";
-import { GET_ClientUserDashboardMetrics } from '@@addons/network/clients/users/dashboard/metrics';
-import { Convert as cudmmConvert } from '@@addons/interfaces/clients/users/dashboard/metrics';
+import { Convert as cudammConvert } from '@@addons/interfaces/clients/users/dashboard/metrics/attendance';
 import { Convert as cupamConvert } from '@@addons/interfaces/clients/users/page_access/user_access';
 import { DateDifference, DateDifferenceMinutes } from "@@addons/functions/date_time/date_diffs";
 import { GET_ClientUserAccess } from "@@addons/network/clients/users/access";
 import { getUserLoginInfoCookie } from "@@addons/functions/login";
+import { GET_ClientUserDashboardAttendanceMetrics } from "@@addons/network/clients/users/dashboard/attendance_metrics";
 
 const AppSettingsExtraSettings = 'app-settings-extra_settings',
   ASI = new AppStorageItem();
@@ -19,11 +19,11 @@ export const setAppSettingsExtraSettings = async (force = false) => {
     ASI.set_storage_item(AppSettingsExtraSettings, base64Encode(stringData), 3500);
   },
     getDashboardMetrics = async () => {
-      const _networkResponse = await GET_ClientUserDashboardMetrics<any>();
-
+      const _networkResponse = await GET_ClientUserDashboardAttendanceMetrics<any>();
+      
       if (_networkResponse !== null) {
-        if (_networkResponse.response.success && 'statistics' in _networkResponse.response.data) {
-          return cudmmConvert.toClientUserDashboardMetricModel(
+        if (_networkResponse.response.success && 'expiration_date' in _networkResponse.response.data) {
+          return cudammConvert.toClientUserDashboardAttendanceMetricModel(
             JSON.stringify(_networkResponse.response.data)
           );
         }
