@@ -15,7 +15,9 @@ import '@@addons/widgets/form/new/select';
 import '@@addons/widgets/profile_photo';
 import '../../../membership/members/select-member-type';
 import '@material/mwc-dialog';
-import "@@addons/widgets/accordion/main";
+// import "@@addons/widgets/accordion/main";
+import "@@addons/widgets/accordion/component/item";
+import "@@addons/widgets/accordion/component/main";
 import { getActiveBranchIdCookie } from '@@addons/functions/views/home/branch';
 import { MembershipUser_I } from '@@addons/interfaces/members/user';
 import { ClientBranchShort_I } from '@@addons/interfaces/clients/branches';
@@ -29,6 +31,7 @@ import { GenericGenderInfo_I, GenericGenderInfo_S } from '@@addons/interfaces/ge
 import { FilterFieldBox } from '@@addons/classes/filter_field_box';
 import { Button } from '@material/mwc-button';
 import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
+// @ts-ignore
 import { QueryOptions } from 'select2';
 import { GroupingsMemberCategories_I } from '@@addons/interfaces/members/groupings/member_categories';
 import { GET_MemberGroupingsGroups } from '@@addons/network/members/groupings/group';
@@ -223,7 +226,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
         <div class="block my-1">
           ${this.downloadBtns}
           <div class="flex w-full items-center justify-center">
-            <div class="block w-full xl:w-[60%]">
+            <div class="block w-full xl:w-[45%]">
               ${this.table}
             </div>
           </div>
@@ -668,31 +671,31 @@ export class PdbAttendanceClockingHistory extends LitElement {
         </div>
       </div>`;
     
-    const contents: Array<TemplateResult> = [
-      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
-        .buttonHtml="${html`<b>Member Filter</b>`}"
-        .contentHtml="${html`
-          <div class="mt-1 mb-2 row">
-            ${activeStatusField} ${genderField} ${searchField} ${memberListField}
-          </div>`}">
-        </app-accordion-item>
-      `,
-      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
-        .buttonHtml="${html`<b>Group Filter</b>`}"
-        .contentHtml="${html`
-          <div class="mt-1 mb-2 row">
-            ${groupField} ${subGroupField}
-          </div>`}">
-        </app-accordion-item>
-      `,
-      html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
-        .buttonHtml="${html`<b>Age/ Date Filters</b>`}"
-        .contentHtml="${html`<div class="mt-1 mb-2 row">
-            ${ageField} ${dateField}
-          </div>`}">
-        </app-accordion-item>
-      `,
-    ];
+    // const contents: Array<TemplateResult> = [
+    //   html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+    //     .buttonHtml="${html`<b>Member Filter</b>`}"
+    //     .contentHtml="${html`
+    //       <div class="mt-1 mb-2 row">
+    //         ${activeStatusField} ${genderField} ${searchField} ${memberListField}
+    //       </div>`}">
+    //     </app-accordion-item>
+    //   `,
+    //   html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+    //     .buttonHtml="${html`<b>Group Filter</b>`}"
+    //     .contentHtml="${html`
+    //       <div class="mt-1 mb-2 row">
+    //         ${groupField} ${subGroupField}
+    //       </div>`}">
+    //     </app-accordion-item>
+    //   `,
+    //   html`<app-accordion-item accordion_class_name="filter-areas" class="w-100"
+    //     .buttonHtml="${html`<b>Age/ Date Filters</b>`}"
+    //     .contentHtml="${html`<div class="mt-1 mb-2 row">
+    //         ${ageField} ${dateField}
+    //       </div>`}">
+    //     </app-accordion-item>
+    //   `,
+    // ];
     // console.log({contents});
     
       returnHtml = html`<form method="get" class="form" make-general-posts="submit_filter_form" filter-section-context="container" hidden>
@@ -702,7 +705,24 @@ export class PdbAttendanceClockingHistory extends LitElement {
             </div>
           </div>
           <div class="container">
-            <app-accordion accordionName="filter-areas" .contents=${contents} class="w-100"></app-accordion>
+            <accordion-component class="my-2">
+              <accordion-item title="Member Filter">
+                <div class="mt-1 mb-2 row">
+                  ${activeStatusField} ${genderField} ${searchField} ${memberListField}
+                </div>
+              </accordion-item>
+              <accordion-item title="Group Filter">
+                <div class="mt-1 mb-2 row">
+                  ${groupField} ${subGroupField}
+                </div>
+              </accordion-item>
+              <accordion-item title="Age/ Date Filters">
+                <div class="mt-1 mb-2 row">
+                  ${ageField} ${dateField}
+                </div>
+              </accordion-item>
+            </accordion-component>
+            ${ /** <app-accordion accordionName="filter-areas" .contents=${contents} class="w-100"></app-accordion> */ ""}
           </div>
           <div class="container">
             <div class="row">
@@ -813,8 +833,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private get __tableHeaders(): DataTables_ColumnSettings_I[] {
     return [
-      { title: 'NAME', },
-      { title: 'MEETING RECORDS', },
+      { title: 'History', },
+      { title: html`<span class="block">MEETING RECORDS</span>`, },
     ];
   }
 
@@ -824,8 +844,8 @@ export class PdbAttendanceClockingHistory extends LitElement {
 
   private get __tableFoot(): DataTables_ColumnSettings_I[] {
     return [
-      { title: 'NAME', },
-      { title: 'MEETING RECORDS', },
+      { title: 'History', },
+      { title: html`<span class="block">MEETING RECORDS</span>`, },
     ];
   }
 
@@ -847,7 +867,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
     ajaxHeader.Authorization = "Token " + _get_cookie.token;
     return html`
       <datatables-new .datatable="${__dataTable}" .ajaxHeader="${ajaxHeader}" .dt_body="${this.__tableBody}"
-        .dt_foot="${this.__tableFoot}" .dt_head="${this.__tableHeaders}"></datatables-new>
+        .dt_foot="${this.__tableFoot}" .dt_head="${this.__tableHeaders}" id="attendance-history"></datatables-new>
     `;
   }
 
@@ -921,14 +941,18 @@ export class PdbAttendanceClockingHistory extends LitElement {
     }
 
     let filter_start_date = urlQueryParamsGet(filterNameId_filter_start_date);
+    const today_last_month_date = this.today_last_month_date;
+    console.log({"filter_start_date": filter_start_date, "today_last_month_date": today_last_month_date})
+    
     if (filter_start_date === null) {
-      delete newObject[filterNameId_filter_start_date];
-      // newObject[filterNameId_filter_start_date] = `${this.filter_start_date_val}`;
+      // delete newObject[filterNameId_filter_start_date];
+      newObject[filterNameId_filter_start_date] = today_last_month_date[1]; //`${this.filter_start_date_val}`;
     }
     let filter_end_date = urlQueryParamsGet(filterNameId_filter_end_date);
+    console.log({"filter_end_date": filter_end_date})
     if (filter_end_date === null) {
-      delete newObject[filterNameId_filter_end_date];
-      // newObject[filterNameId_filter_end_date] = `${this.filter_end_date_val}`;
+      // delete newObject[filterNameId_filter_end_date];
+      newObject[filterNameId_filter_end_date] = today_last_month_date[0]; //`${this.filter_end_date_val}`;
     }
     // console.log({filter_start_date, filter_end_date});
     
@@ -944,6 +968,25 @@ export class PdbAttendanceClockingHistory extends LitElement {
     urlQueryString = `${urlQueryString}`
 
     return urlQueryString;
+  }
+
+  get today_last_month_date() {
+    const today = new Date();
+
+    const year = today.getFullYear(),
+      month = today.getMonth() + 1,
+      day = today.getDate();
+    
+    const todayDate = `${year}-${month}-${day}`,
+      lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 0);
+
+    const lastMonthYear = lastMonth.getFullYear(),
+      lastMonthMonth = lastMonth.getMonth() + 1,
+      lastMonthDay = lastMonth.getDate();
+    
+    const lastMonthDate = `${lastMonthYear}-${lastMonthMonth}-${lastMonthDay}`;
+
+    return [todayDate, lastMonthDate]
   }
 
   get memberListField() {
@@ -1225,17 +1268,24 @@ export class PdbAttendanceClockingHistory extends LitElement {
     
     return `
       <pdb-attendance-clocking-history-col-1 filter_start_date_val="${this.filter_start_date_val}"
-        filter_end_date_val="${this.filter_end_date_val}" historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'>
+        filter_end_date_val="${this.filter_end_date_val}" historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'
+        style="display: block; height: 200px; position: relative; top: -75px;">
       </pdb-attendance-clocking-history-col-1>
+      <div class="whitespace-nowrap block sm:hidden">
+        ${this.renderCol2Info(data, type, attendanceHistory, "block", "0", '100px')}
+      </div>
     `;
   }
 
-  private renderCol2Info(data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel) {
+  private renderCol2Info(data: any, type: any, attendanceHistory: MeetingAttendanceHistoryModel, cls="block w-72", top="-75px", height="150px") {
     // console.log({attendanceHistory,});
     
     return `
-      <pdb-attendance-clocking-history-col-2 historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'>
-      </pdb-attendance-clocking-history-col-2>
+      <div class="${cls}">
+        <pdb-attendance-clocking-history-col-2 historyDataStr='${JSON.stringify(attendanceHistory).split("'").join("&rsquo;")}'
+          style="display: block; height: ${height}; position: relative; top: ${top};">
+        </pdb-attendance-clocking-history-col-2>
+      </div>
     `;
   }
 
@@ -1360,6 +1410,7 @@ export class PdbAttendanceClockingHistory extends LitElement {
       'processing': true,
       'serverSide': true,
       'ajax': {
+        // @ts-ignore
         url: url,
         dataSrc: 'data',
         apiType: "akwaabaApp",
@@ -1393,9 +1444,16 @@ export class PdbAttendanceClockingHistory extends LitElement {
         const aoData = e.aoData;
         // console.log({ aoData })
         __this.dialog();
+        __this.view_breakdown();
       },
       "responsive": {
-        details: false // this removes the green plus button to view hidden columns
+        details: false, // this removes the green plus button to view hidden columns
+        breakpoints: [
+          {
+            mame: "mobile",
+            width: 480
+          }
+        ],
       },
       "dom": 'Blfrtip',
       buttons: [
@@ -1417,6 +1475,42 @@ export class PdbAttendanceClockingHistory extends LitElement {
       // },
     };
     return dataTable;
+  }
+
+  view_breakdown() {
+    const table: HTMLTableElement = document.querySelector("#attendance-history table");
+    console.log({'document.querySelector("#attendance-history table")': table});
+    
+    table.addEventListener("click", function(event) {
+      var target = event.target;
+      console.log({event, target});
+      
+      // @ts-ignore
+      if (target && target.matches('[open-dialog-btn]')) {
+        // @ts-ignore
+        const dialogId: number = (target.getAttribute('open-dialog-btn'));
+        const dialog = this.querySelector('[open-this-dialog="' + dialogId + '"]');
+        console.log({dialogId, dialog})
+        dialog.setAttribute('open', "true");
+      }
+      
+      // @ts-ignore
+      if (target && target.matches('accordion-item[breakdown]')) {
+        // const dialogId: number = (target.getAttribute('open-dialog-btn'));
+        // const dialog = this.querySelector('[open-this-dialog="' + dialogId + '"]');
+        console.log({"target-target-target": target})
+        // dialog.setAttribute('open', "true");
+      }
+      
+      // @ts-ignore
+      if (target && target.matches('[heading="History Breakdown"] [dialogAction="close"]')) {
+        // @ts-ignore
+        const dialogId: number = (target.getAttribute('open-dialog-btn'));
+        const dialog = this.querySelector('[open-this-dialog="' + dialogId + '"]');
+        dialog.setAttribute('open', "false");
+        console.log({"close-target": target})
+      }
+    });
   }
 
   createRenderRoot() {

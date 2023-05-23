@@ -37,12 +37,12 @@ export class PdbAttendanceClockingHistoryColTwoContent extends LitElement {
   ];
 
   render() {
-    const MEETINGS_LENGTH = this.historyData.history.meetings.length;
+    const MEETINGS_LENGTH = this.historyData?.history.meetings.length;
     let breakdown = html``;
     if (MEETINGS_LENGTH > 0) {
       breakdown = html`
         <mwc-button class="my-2 success" @click="${this.showDialog}" raised 
-          open-dialog-btn="${this.dialog_prefix}-${this.historyData.history.member.id}">
+          open-dialog-btn="${this.dialog_prefix}-${this.historyData?.history.member.id}">
           Show Breakdown
         </mwc-button>
         <pdb-attendance-clocking-history-col-2-content-breakdown
@@ -55,8 +55,8 @@ export class PdbAttendanceClockingHistoryColTwoContent extends LitElement {
       <!-- <div class="mb-0">
         <div> -->
           <p class="flex justify-between"><b>Total Attendance:</b><span> ${this.totalAttendance}</span></p>
-          <p class="flex justify-between"><b>On Time:</b><span class="text-green-600"> ${this.historyData.onTime}</span></p>
-          <p class="flex justify-between"><b>Lateness:</b><span class="text-red-600"> ${this.historyData.lateness}</span></p>
+          <p class="flex justify-between"><b>On Time:</b><span class="text-green-600"> ${this.historyData?.onTime}</span></p>
+          <p class="flex justify-between"><b>Lateness:</b><span class="text-red-600"> ${this.historyData?.lateness}</span></p>
           ${breakdown}
         <!-- </div>
       </div> -->
@@ -64,11 +64,11 @@ export class PdbAttendanceClockingHistoryColTwoContent extends LitElement {
   }
 
   get totalAttendance() {
-    const parts = this.historyData.totalAttendance.split("/");
-    if (parts.length === 2) {
+    const parts = this.historyData?.totalAttendance.split("/");
+    if (parts?.length === 2) {
       return html`<span class="text-green-600">${parts[0]}</span>/ <span class="text-red-600">${parts[1]}</span>`;
     }
-    return this.historyData.totalAttendance;
+    return this.historyData?.totalAttendance;
   }
 
   private showDialog(event: any) {

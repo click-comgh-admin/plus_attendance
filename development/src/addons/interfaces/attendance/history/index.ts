@@ -269,7 +269,7 @@ function invalidValue(typ: any, val: any, key: any = '') {
     if (key) {
         console.error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`);
     }
-    console.error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`, );
+    // console.error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`, );
 }
 
 function jsonToJSProps(typ: any): any {

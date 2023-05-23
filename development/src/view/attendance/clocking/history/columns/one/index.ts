@@ -44,7 +44,7 @@ export class PdbAttendanceClockingHistoryColOne extends LitElement {
 
   render() {
     let profile = html``;
-    if (this.historyData.history.member.accountType === 1) {
+    if (this.historyData?.history?.member?.accountType === 1) {
       profile = html`<pdb-attendance-clocking-history-col-1-ind-profile filter_start_date_val="${this.filter_start_date_val}"
         filter_end_date_val="${this.filter_end_date_val}" .historyData="${this.historyData}">
         </pdb-attendance-clocking-history-col-1-ind-profile>

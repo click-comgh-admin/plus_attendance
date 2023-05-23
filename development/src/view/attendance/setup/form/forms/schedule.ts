@@ -169,11 +169,11 @@ export class AttendanceSetupFormSchedule extends LitElement {
                   </div>
                   <div class="col-md-6 col-lg-6">
                     <h4 class="font-semibold my-2">Select Member Type</h4>
-                    ${(schedule.type === undefined) ? html`
+                    ${(schedule.memberType === undefined) ? html`
                       <mwc-select name="memberType" class="w-full" id="memberType" label="Select Member Type" outlined required>
                         <mwc-list-item value="0">Select Member Type</mwc-list-item>
                         ${this._memberType.map((value) => {
-                          // console.log({ "schedule.type": schedule.type, "value.id": value.id });
+                          // console.log({ "schedule.memberType": schedule.memberType, "value.id": value.id });
                           return html`<mwc-list-item value="${value.id}">${value.name}</mwc-list-item>`;
                         })}
                       </mwc-select>
@@ -181,8 +181,8 @@ export class AttendanceSetupFormSchedule extends LitElement {
                       <mwc-select name="memberType" class="w-full" id="memberType" label="Select Member Type" outlined required>
                         <mwc-list-item value="0">Select Member Type</mwc-list-item>
                         ${this._memberType.map((value) => {
-                          // console.log({ "schedule.type": schedule.type, "value.id": value.id });
-                          if (schedule.type === value.id) {
+                          // console.log({ "schedule.memberType": schedule.memberType, "value.id": value.id });
+                          if (schedule.memberType === value.id) {
                             return html`<mwc-list-item value="${value.id}" selected>${value.name}</mwc-list-item>`;
                           } else {
                             return html`<mwc-list-item value="${value.id}">${value.name}</mwc-list-item>`;

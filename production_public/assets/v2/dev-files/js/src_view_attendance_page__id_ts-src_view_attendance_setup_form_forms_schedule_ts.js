@@ -43,7 +43,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6">
                     <h4 class="font-semibold my-2">Select Member Type</h4>
-                    ${void 0===e.type?l.html`
+                    ${void 0===e.memberType?l.html`
                       <mwc-select name="memberType" class="w-full" id="memberType" label="Select Member Type" outlined required>
                         <mwc-list-item value="0">Select Member Type</mwc-list-item>
                         ${this._memberType.map((e=>l.html`<mwc-list-item value="${e.id}">${e.name}</mwc-list-item>`))}
@@ -51,7 +51,7 @@
                     `:l.html`
                       <mwc-select name="memberType" class="w-full" id="memberType" label="Select Member Type" outlined required>
                         <mwc-list-item value="0">Select Member Type</mwc-list-item>
-                        ${this._memberType.map((t=>e.type===t.id?l.html`<mwc-list-item value="${t.id}" selected>${t.name}</mwc-list-item>`:l.html`<mwc-list-item value="${t.id}">${t.name}</mwc-list-item>`))}
+                        ${this._memberType.map((t=>e.memberType===t.id?l.html`<mwc-list-item value="${t.id}" selected>${t.name}</mwc-list-item>`:l.html`<mwc-list-item value="${t.id}">${t.name}</mwc-list-item>`))}
                       </mwc-select>
                     `}
                   </div>
