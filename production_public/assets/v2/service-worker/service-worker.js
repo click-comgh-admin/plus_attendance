@@ -75,7 +75,7 @@ self.addEventListener('fetch', event => {
     }
     if (!allowCache) return;
     if (!(event.request.url.indexOf('http://') === 0)) return;
-    if ((event.request.url.indexOf("api.") < 0) && (event.request.url.indexOf("db-api-v2.") < 0) && (event.request.url.indexOf("/api/") < 0)) {
+    if ((event.request.url.indexOf("api.") < 0) && (event.request.url.indexOf("db-api-v2.") < 0) && (event.request.url.indexOf("db-api-v2-2.") < 0) && (event.request.url.indexOf("/api/") < 0)) {
         if (event.request.url.indexOf("/login") > -1) {
             null;
         } else {
