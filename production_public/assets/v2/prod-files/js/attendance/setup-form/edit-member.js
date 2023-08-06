@@ -1,270 +1,330 @@
-"use strict";!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.webpackNumbers=t():e.webpackNumbers=t()}(self,(()=>(self.webpackChunkwebpackNumbers=self.webpackChunkwebpackNumbers||[]).push([[3670],{8967:(e,t,n)=>{n.d(t,{T:()=>i});const i=(e,t=!0)=>{if(Array.isArray(e)){let n=(t?"<style>#swal2-validation-message{\n  display: flex !important;\n  justify-content: flex-start !important;\n  font-weight: 600 !important;\n}#swal2-validation-message>ul{list-style: inside !important; margin: 0 !important;}</style>":"")+"<ul>";return e.forEach((e=>{n+="string"==typeof e?`<li>${e}</li>\n`:`<li>${e.error}</li>\n`})),n+="</ul>"}throw new Error("Unknown error response format")}},4108:(e,t,n)=>{n.d(t,{B:()=>c});var i=n(771),r=n(7270),o=n(7052),s=n(1942),a=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{l(i.next(e))}catch(e){o(e)}}function a(e){try{l(i.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}l((i=i.apply(e,t||[])).next())}))};const l=(e,t,n)=>a(void 0,void 0,void 0,(function*(){const a=i.t.URLS.AKWAABA_API_BASE_URL+"clients/login-id",l=n,c=JSON.stringify({email:e,id:t});yield(0,r.d)(a,{method:"POST",body:c},!0).then((e=>{if(e.jsonData.token){const t=(0,o.h)(String(e.jsonData.token));(0,s.Ad)(l,t,10),(0,s.vh)(l+"_date",(new Date).toUTCString(),10)}}))})),c=(e,t,n)=>a(void 0,void 0,void 0,(function*(){const c=(0,o.h)(String(t)),d=n;window.supersecret={unknowable:{ops:{email:e,id:c,cookieName:d}}},""==(0,s.Hl)(d)?yield l(e,c,n):yield((e,t,n)=>a(void 0,void 0,void 0,(function*(){const c=i.t.URLS.AKWAABA_API_BASE_URL+"clients/verify-token",d=n,u=(0,s.Hl)(d),h=JSON.stringify({token:(0,o.t)(u)});if((e=>{const t=new Date;return Math.abs(e.getTime()-t.getTime())/36e5<24})(new Date((0,s.Hl)(d+"_date"))))return u;yield(0,r.d)(c,{method:"POST",body:h},!0).then((i=>a(void 0,void 0,void 0,(function*(){if(i.jsonData.token&i.jsonData.user&i.jsonData.expiry){const e=(0,o.h)(String(i.jsonData.token));(0,s.Ad)(d,e,10),(0,s.vh)(d+"_date",(new Date).toUTCString(),10)}else yield l(e,t,n)}))))})))(e,c,n)}))},4672:(e,t,n)=>{n.d(t,{Jx:()=>r,O1:()=>i,Vc:()=>o,W3:()=>s});const i=()=>{const e=new URLSearchParams(window.location.search);return Object.fromEntries(e.entries())},r=e=>{const t=new URLSearchParams(window.location.search),n=Object.fromEntries(t.entries());let i=null;for(const t in n)t===e&&(i=n[t]);return i},o=e=>new URLSearchParams(window.location.search).getAll(e),s=e=>{let t="",n=0;for(const i in e)n+=1,t+=`${n>1?"&":""}${i}=${e[i]}`;return t}},2486:(e,t,n)=>{n.d(t,{N:()=>i});const i=e=>{const t=String(e).toLowerCase();return"1"===t||"true"===t||!0===e}},1801:(e,t,n)=>{n.d(t,{a:()=>o,w:()=>s});var i=n(6909),r=n(7202);function o(e){return{id:Number(e.id),regionId:"regionId"in e?(0,r.J)(e.regionId):(0,r.A)(),districtId:"districtId"in e?(0,i.A)(e.districtId):(0,i.W)(),location:String(e.location)}}function s(){return{id:0,regionId:(0,r.A)(),districtId:(0,i.W)(),location:"-"}}},9492:(e,t,n)=>{function i(e){const t=Array.isArray(e)?e[0]:e;return{id:t.id,name:String(t.name),short:String(t.short),code:String(t.code)}}function r(){return{id:0,name:"-",short:"-",code:"-"}}n.d(t,{Q:()=>r,V:()=>i})},6909:(e,t,n)=>{n.d(t,{A:()=>r,W:()=>o});var i=n(7202);function r(e){return{id:Number(e.id),regionId:"regionId"in e?(0,i.J)(e.regionId):(0,i.A)(),location:String(e.location)}}function o(){return{id:0,regionId:(0,i.A)(),location:"-"}}},7202:(e,t,n)=>{function i(e){return{id:Number(e.id),location:String(e.location)}}function r(){return{id:0,location:"-"}}n.d(t,{A:()=>r,J:()=>i})},1551:(e,t,n)=>{n.d(t,{Z:()=>d});var i=n(2486),r=n(1801),o=n(9492),s=n(6909),a=n(7202);function l(e){return{id:Number(e.id),regionId:"regionId"in e?(0,a.J)(e.regionId):(0,a.A)(),districtId:"districtId"in e?(0,s.A)(e.districtId):(0,s.W)(),location:String(e.location)}}function c(e,t=""){return String(null===e?t:e)}function d(e){return{id:Number(e.id),clientId:Number(e.clientId),firstname:String(e.firstname),middlename:c(e.middlename),surname:String(e.surname),gender:Number(e.gender),profilePicture:String(e.profilePicture),dateOfBirth:new Date(e.dateOfBirth),phone:String(e.phone),email:String(e.email),religion:Number(e.religion),nationality:String(e.nationality),countryOfResidence:String(e.countryOfResidence),stateProvince:String(e.stateProvince),region:Number(e.region),district:Number(e.district),constituency:Number(e.constituency),electoralArea:Number(e.electoralArea),community:String(e.community),hometown:String(e.hometown),houseNoDigitalAddress:String(e.houseNoDigitalAddress),digitalAddress:String(e.digitalAddress),referenceId:c(e.referenceId,"-"),accountType:Number(e.accountType),memberType:Number(e.memberType),branchId:Number(e.branchId),editable:(0,i.N)(e.editable),profileResume:String(e.profileResume),profileIdentification:String(e.profileIdentification),archived:(0,i.N)(e.archived),identification:String(e.identification),level:Number(e.level),status:Number(e.status),lastUpdatedBy:Number(e.lastUpdatedBy),date:new Date(e.date),last_login:new Date(e.last_login),countryInfo:"countryInfo"in e?(0,o.V)(e.countryInfo):(0,o.Q)(),regionInfo:"regionInfo"in e?(0,a.J)(e.regionInfo):(0,a.A)(),districtInfo:"districtInfo"in e?(0,s.A)(e.districtInfo):(0,s.W)(),constituencyInfo:"constituencyInfo"in e?(0,r.a)(e.constituencyInfo):(0,r.w)(),electoralareaInfo:"electoralareaInfo"in e?l(e.electoralareaInfo):{id:0,regionId:(0,a.A)(),districtId:(0,s.W)(),location:"-"}}}},6637:(e,t,n)=>{n.d(t,{n:()=>a});var i=n(771),r=n(7270),o=n(596),s=n(3600);function a(e=null,t=""){return n=this,a=void 0,c=function*(){const n=(0,s.Ie)(),a=i.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member"+(null===e?"":"/"+e)+t,l=yield(0,r.d)(a,{method:"GET",headers:{Authorization:"Token "+n.token}},!0);try{return new o.H("get",l)}catch(e){console.error({error:e});let t=l;return t.error=e,new o.H("get",t,!0)}},new((l=void 0)||(l=Promise))((function(e,t){function i(e){try{o(c.next(e))}catch(e){t(e)}}function r(e){try{o(c.throw(e))}catch(e){t(e)}}function o(t){var n;t.done?e(t.value):(n=t.value,n instanceof l?n:new l((function(e){e(n)}))).then(i,r)}o((c=c.apply(n,a||[])).next())}));var n,a,l,c}},2218:(e,t,n)=>{n.d(t,{u:()=>a});var i=n(771),r=n(7270),o=n(596),s=n(3600);function a(e=null,t=""){return n=this,a=void 0,c=function*(){const n=(0,s.Ie)(),a=i.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/schedule"+(null===e?"":"/"+e)+t,l=yield(0,r.d)(a,{method:"GET",headers:{Authorization:"Token "+n.token}},!0);try{return new o.H("get",l)}catch(e){console.error({error:e});let t=l;return t.error=e,new o.H("get",t,!0)}},new((l=void 0)||(l=Promise))((function(e,t){function i(e){try{o(c.next(e))}catch(e){t(e)}}function r(e){try{o(c.throw(e))}catch(e){t(e)}}function o(t){var n;t.done?e(t.value):(n=t.value,n instanceof l?n:new l((function(e){e(n)}))).then(i,r)}o((c=c.apply(n,a||[])).next())}));var n,a,l,c}},6656:(e,t,n)=>{n.d(t,{E:()=>a});var i=n(771),r=n(7270),o=n(596),s=n(3600);function a(e=null,t="",n=!1){return a=this,l=void 0,d=function*(){const a=i.t.URLS.AKWAABA_API_BASE_URL+"members/user"+(null===e?"":"/"+e)+t,l=i.t.URLS.AKWAABA_API_BASE_URL+"members/user/location"+(null===e?"":"/"+e)+t,c=(0,s.Ie)(),d=n?l:a,u=yield(0,r.d)(d,{method:"GET",headers:{Authorization:"Token "+c.token}},!0);try{return new o.H("get",u)}catch(e){console.error({error:e});let t=u;return t.error=e,new o.H("get",t,!0)}},new((c=void 0)||(c=Promise))((function(e,t){function n(e){try{r(d.next(e))}catch(e){t(e)}}function i(e){try{r(d.throw(e))}catch(e){t(e)}}function r(t){var r;t.done?e(t.value):(r=t.value,r instanceof c?r:new c((function(e){e(r)}))).then(n,i)}r((d=d.apply(a,l||[])).next())}));var a,l,c,d}},1854:(e,t,n)=>{var i=n(5862),r=n(8393),o=(n(5248),n(934),n(9261),n(3504),n(9132),n(3313),function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s}),s=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)},a=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{l(i.next(e))}catch(e){o(e)}}function a(e){try{l(i.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}l((i=i.apply(e,t||[])).next())}))};let l=class extends i.oi{constructor(){super(),this.index=0,this._widget=i.dy``,this.no_delete=!1,this.single=!1,this._single="[]"}set widget(e){this._widget=e,this.requestUpdate()}get widget(){return this._widget}connectedCallback(){const e=Object.create(null,{connectedCallback:{get:()=>super.connectedCallback}});return a(this,void 0,void 0,(function*(){e.connectedCallback.call(this),this.single?this._single="":this._single="[]"}))}disconnectedCallback(){}render(){return i.dy`
-      <div class="container">
-        <header class="form-input-container">
-          ${this.no_delete?i.Ld:i.dy`
-            <mwc-icon-button icon="delete_forever" class="danger"
-              @click="${this.deleteQuestion}"></mwc-icon-button>`}
-        </header>
-        <main>
-          ${this.widget}
-        </main>
+"use strict";!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.webpackNumbers=t():e.webpackNumbers=t()}(self,(()=>(self.webpackChunkwebpackNumbers=self.webpackChunkwebpackNumbers||[]).push([[3670],{2368:(e,t,n)=>{n.d(t,{L:()=>r});var i=n(4672);class r{constructor(e){this.filtering="--filtering--",this.__filtering__="",this.__filtering__open_default=!1,this.__allowed=!1,this.clear_filter=e=>{var t,n;e.preventDefault();const i=window.FilterFieldBox.form,r=new FormData(i),o=null===(t=this.unmutableInputNames)||void 0===t?void 0:t.map((e=>e.name));null==r||r.forEach(((e,t)=>{var n;(null==o?void 0:o.includes(t))||null===(n=document.querySelectorAll('[name="'+t+'"]'))||void 0===n||n.forEach((e=>{e.value=""}))})),null===(n=this.unmutableInputNames)||void 0===n||n.map((e=>{var t;const n=e.name,i=e.value;void 0!==i&&(null===(t=document.querySelectorAll('[name="'+n+'"]'))||void 0===t||t.forEach((e=>{e.value=i})))})),i.submit()},this.constructorInit=e;const t=e.selectors;this.form=t.form,this.container=t.container,this.filterSectionContextBtn=t.filterSectionContextBtn,this.unmutableInputNames=e.unmutableInputNames,this.__filtering__open_default=e.isOpen,this.__filtering__=(0,i.Jx)(this.filtering),null!==this.form&&null!==this.container&&null!==this.filterSectionContextBtn&&this.init()}init(){this.__allowed=!0,"FilterFieldBox"in window||(window.FilterFieldBox=this),setTimeout((()=>{this.addfilterCheckInput(),this.toggleFilterFieldsDefault()}),1e3)}toggleFilterFields(e){e.preventDefault();const t=window.FilterFieldBox;if(t.__allowed){const e=t.filterSectionContextBtn,n=t.container;n.hasAttribute("hidden")?(n.removeAttribute("hidden"),e.setAttribute("class","warning mt-1"),e.setAttribute("icon","close_fullscreen")):(n.setAttribute("hidden",""),e.setAttribute("class","primary mt-1"),e.setAttribute("icon","open_with"))}}addfilterCheckInput(){const e=window.FilterFieldBox.form,t=document.createElement("input");t.type="hidden",t.value="true",t.name=this.filtering,e.appendChild(t)}toggleFilterFieldsDefault(){const e=this;function t(){e.container.hasAttribute("hidden")&&e.filterSectionContextBtn.click()}"true"===this.__filtering__&&t(),this.__filtering__open_default&&t()}submit(e){e.preventDefault(),window.FilterFieldBox.form.submit()}}},89:(e,t,n)=>{n.d(t,{D:()=>r});var i=n(771);class r{constructor(){}static push(e,t={baseUrl:i.t.URLS.PDB_CLIENT}){const n=`${t.baseUrl}${e}`;window.location.href=n}}r.baseUrl=i.t.URLS.PDB_CLIENT},5049:(e,t,n)=>{n.d(t,{L:()=>a});var i=n(771),r=n(7270),o=n(596),s=n(3600);function a(e=null,t=""){return n=this,a=void 0,l=function*(){const n=(0,s.Ie)(),a=i.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/group/members"+(null===e?"":"/"+e)+t,c=yield(0,r.d)(a,{method:"GET",headers:{Authorization:"Token "+n.token}},!0);try{return new o.H("get",c)}catch(e){console.error({error:e});let t=c;return t.error=e,new o.H("get",t,!0)}},new((c=void 0)||(c=Promise))((function(e,t){function i(e){try{o(l.next(e))}catch(e){t(e)}}function r(e){try{o(l.throw(e))}catch(e){t(e)}}function o(t){var n;t.done?e(t.value):(n=t.value,n instanceof c?n:new c((function(e){e(n)}))).then(i,r)}o((l=l.apply(n,a||[])).next())}));var n,a,c,l}},1245:(e,t,n)=>{n.d(t,{c:()=>a});var i=n(771),r=n(7270),o=n(596),s=n(3600);function a(e=null,t=""){return n=this,a=void 0,l=function*(){const n=(0,s.Ie)(),a=i.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/subgroup/members"+(null===e?"":"/"+e)+t,c=yield(0,r.d)(a,{method:"GET",headers:{Authorization:"Token "+n.token}},!0);try{return new o.H("get",c)}catch(e){console.error({error:e});let t=c;return t.error=e,new o.H("get",t,!0)}},new((c=void 0)||(c=Promise))((function(e,t){function i(e){try{o(l.next(e))}catch(e){t(e)}}function r(e){try{o(l.throw(e))}catch(e){t(e)}}function o(t){var n;t.done?e(t.value):(n=t.value,n instanceof c?n:new c((function(e){e(n)}))).then(i,r)}o((l=l.apply(n,a||[])).next())}));var n,a,c,l}},1163:(e,t,n)=>{var i=n(771),r=n(3600),o=n(7052),s=n(5862),a=n(8393),c=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},l=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let d=class extends s.oi{constructor(){super(),this["click-to-open"]="false"}connectedCallback(){super.connectedCallback(),"client"===this.type?this.setUpClientImage():this.setUpMemberImage()}disconnectedCallback(){}render(){return s.dy`
+      <div @click="${this.openProfile}"
+        class="h-${this.size} w-${this.size} items-center justify-center border-2 border-yellow-500 ${this.rounded?"rounded-full":""}">
+        <img class="object-cover h-full w-full border-2 border-akwaaba-orange-light ${this.rounded?"rounded-full":""}"
+          src="${this.url}">
       </div>
-    `}deleteQuestion(e){e.preventDefault(),this.remove()}firstUpdated(){return a(this,void 0,void 0,(function*(){}))}createRenderRoot(){return this}};o([(0,r.Cb)({type:Number}),s("design:type",Number)],l.prototype,"index",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],l.prototype,"no_delete",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],l.prototype,"single",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],l.prototype,"_single",void 0),l=o([(0,r.Mo)("multiple-widgets"),s("design:paramtypes",[])],l)},2461:(e,t,n)=>{var i=n(5862),r=n(8393),o=(n(5185),n(5248),function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s}),s=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let a=class extends i.oi{constructor(){super(...arguments),this.name="",this.label="",this.value="1",this.accept="*",this.randomID=Math.floor(12345*Math.random()),this.id=this.id+"_"+this.randomID,this.startNumber=10,this.rowsPerPage=10,this.totalShowing=10,this.showSelectorLoaded=!1}styles(){return[i.iv`
-      #${Number(this.id)} {
-        width: 1px !important;
-        height: 1px !important;
-        position: absolute !important;
-      }
-      `]}connectedCallback(){super.connectedCallback(),setInterval((()=>{void 0===this.fileSelector?this.fileSelector=this.querySelector(`[type="file"][name="${this.name}"][id="${this.id}"]`):this.showFileSelector()}))}render(){return this.required?this.multiple?i.dy`
-          <div class="form-input border">
-            ${this.hasLabel?i.dy`<label for="${this.id}" class="w-full text-sm pb-2 text-gray-500">${this.label}*</label>`:i.Ld}
-            <input accept="${this.accept}" class="form-input" type="file" name="${this.name}[]" id="${this.id}" multiple required />
-          </div>
-        `:i.dy`
-          <div class="form-input border">
-            ${this.hasLabel?i.dy`<label for="${this.id}" class="w-full text-sm pb-2 text-gray-500">${this.label}*</label>`:i.Ld}
-            <input accept="${this.accept}" class="form-input" type="file" name="${this.name}" id="${this.id}" required />
-          </div>
-        `:this.multiple?i.dy`
-          <div class="form-input border">
-            ${this.hasLabel?i.dy`<label for="${this.id}" class="w-full text-sm pb-2 text-gray-500">${this.label}</label>`:i.Ld}
-            <input accept="${this.accept}" type="file" name="${this.name}[]" id="${this.id}" multiple />
-          </div>
-        `:i.dy`
-          <div class="form-input border">
-            ${this.hasLabel?i.dy`<label for="${this.id}" class="w-full text-sm pb-2 text-gray-500">${this.label}</label>`:i.Ld}
-            <input accept="${this.accept}" type="file" name="${this.name}" id="${this.id}" />
-          </div>
-        `}firstUpdated(){}showFileSelector(){!1===this.showSelectorLoaded&&(this.showSelectorLoaded=!0)}createRenderRoot(){return this}};o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"name",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"label",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"value",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"accept",void 0),o([(0,r.Cb)({type:Number}),s("design:type",Number)],a.prototype,"randomID",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"id",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"required",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"hasLabel",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"multiple",void 0),o([(0,r.Cb)({type:Number}),s("design:type",Number)],a.prototype,"startNumber",void 0),o([(0,r.Cb)({type:Number}),s("design:type",Number)],a.prototype,"rowsPerPage",void 0),o([(0,r.Cb)({type:Number}),s("design:type",Number)],a.prototype,"totalShowing",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"showSelectorLoaded",void 0),a=o([(0,r.Mo)("file-input")],a)},5866:(e,t,n)=>{var i=n(9755),r=n(5862),o=n(8393),s=(n(686),function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s}),a=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let l=class extends r.oi{constructor(){super(...arguments),this.name="",this.label="",this.value=[],this.randomID=Math.floor(12345*Math.random()),this.input_id=this.id+"_"+this.randomID,this.options=[],this.ajaxFetchToken="",this.ajaxFetchUrl=null,this._ajaxHeader=null,this.ajaxFetchProcessResponse=null,this.ajaxFetchUrlParams=[],this.startSearchPage=0,this.startNumber=10,this.rowsPerPage=10,this.totalShowing=10,this.showSelectorLoaded=!1}set ajaxHeader(e){this._ajaxHeader=e,this.requestUpdate()}get ajaxHeader(){return this._ajaxHeader}connectedCallback(){super.connectedCallback(),this.value=Array.isArray(this.value)?this.value:[],setInterval((()=>{void 0===this.selectSelector?(this.selectSelector=document.querySelectorAll("select-input>select[input_id="+this.input_id+"]"),this.$selectSelector=i(this.selectSelector)):this.showDropdownAlt()})),this.options=this.options.map((e=>{const t=e.id;let n=!1;return this.value.forEach((e=>{const i=e.id;n=t===i})),e.selected=n,e}))}render(){return this.multiple?this.required?r.dy`
-          <select input_id="${this.input_id}" id="${this.id}" name="${this.name}[]" placeholder="${this.label}" multiple required>
-            ${this.options.map((e=>{const t=void 0===e.isSelected?e.selected:e.isSelected;return!0===t||"true"===t?r.dy`
-                  <option value="${e.id}" selected>${e.name}</option>
-                `:r.dy`
-                  <option value="${e.id}">${e.name}</option>
-                `}))}
-          </select>
-        `:r.dy`
-          <select input_id="${this.input_id}" id="${this.id}" name="${this.name}[]" placeholder="${this.label}" multiple>
-            ${this.options.map((e=>{const t=void 0===e.isSelected?e.selected:e.isSelected;return!0===t||"true"===t?r.dy`
-                  <option value="${e.id}" selected>${e.name}</option>
-                `:r.dy`
-                  <option value="${e.id}">${e.name}</option>
-                `}))}
-          </select>
-        `:this.required?r.dy`
-          <select input_id="${this.input_id}" id="${this.id}" name="${this.name}" placeholder="${this.label}" required>
-            ${this.options.map((e=>{const t=void 0===e.isSelected?e.selected:e.isSelected;return!0===t||"true"===t?r.dy`
-                  <option value="${e.id}" selected>${e.name}</option>
-                `:r.dy`
-                  <option value="${e.id}">${e.name}</option>
-                `}))}
-          </select>
-        `:r.dy`
-          <select input_id="${this.input_id}" id="${this.id}" name="${this.name}" placeholder="${this.label}">
-            ${this.options.map((e=>{const t=void 0===e.isSelected?e.selected:e.isSelected;return!0===t||"true"===t?r.dy`
-                  <option value="${e.id}" selected>${e.name}</option>
-                `:r.dy`
-                  <option value="${e.id}">${e.name}</option>
-                `}))}
-          </select>
-        `}firstUpdated(){}formatRepo(e){return e.loading?e.text:i(this.value.map((t=>{const n=Number(e.id)===t.id?"selected='true'":"";return'<option value="'+e.id+'" '+n+">"+e.text+"</option>"})))}formatRepoSelection(e){return e.full_name||e.text}_start(e,t){const n=this;return this.startSearchPage=isNaN(e.page)?0:e.page,this.startSearchPage=0===this.startSearchPage?this.startSearchPage:this.startSearchPage*t,i(".select2-search__field").on("keyup",(function(e){i(n.selectSelector).empty(),n.startSearchPage=0})),n.startSearchPage}showDropdownAlt(){const e=this;let t=this.totalShowing,n=this.startSearchPage;if(!1===this.showSelectorLoaded){if(this.showSelectorLoaded=!0,null===this.ajaxFetchUrl)this.selectSelector.forEach((e=>{i(e).select2({closeOnSelect:!1,placeholder:this.label}),i(e).on("select2:select",(e=>{this.changeAction(e)}))}));else{let r={"Access-Control-Allow-Origin":"*/*",Accept:"application/json, text/plain, */*","Content-Type":"application/json"};for(const e in this.ajaxHeader)r[e]=this.ajaxHeader[e];this.selectSelector.forEach((o=>{i(o).select2({closeOnSelect:!1,ajax:{url:e.ajaxFetchUrl,dataType:"json",delay:250,data:function(r){const o=function(r,o){return n=isNaN(r.page)?0:r.page,n=0===n?n:n*t,i(".select2-search__field").on("keyup",(function(r){i(e.selectSelector).empty(),n=0,t=0})),n}(r),s=function(n,r){let o=isNaN(n.page)?1:n.page+1;return o=0===o?1:o,i(".select2-search__field").on("keyup",(function(n){i(e.selectSelector).empty(),o=0,t=0})),o}(r);let a={search:r.term,start:o,page:s};return e.ajaxFetchUrlParams.forEach((e=>{a[e.param]=e.value})),a},headers:r,processResults:(e,n)=>{const i=null===this.ajaxFetchProcessResponse?this._processResults(e,n):this.ajaxFetchProcessResponse(e,n);return t+=i.results.length,{results:i.results,pagination:{more:t<i.total}}},cache:!0},placeholder:this.label}).on("select2:opening",(e=>{n=0,t=0}))}))}this.querySelectorAll(".select2-container").forEach((e=>{e.setAttribute("style","width: 100% !important; pointer-events: auto !important;")}))}}_processResults(e,t){const n=e;t.page=t.page||0;let i=[];if(!1===n.error){var r=n.data;for(let e=0;e<r.length;e++){const t=r[e],n={id:t.id,text:t.fullName};i.includes(n)||i.push(n)}}return this.totalShowing+=i.length,{results:i,total:n.total,totalShowing:this.totalShowing}}changeAction(e){const t=this.querySelector(`[input_id="${this.input_id}"]`).selectedOptions;let n=[];for(const e of t){let t=e;const i=Number.isNaN(t.value)?0:Number(t.value);n.includes(i)||n.push(i)}this.currentValue=n,this.querySelector(`[input_id="${this.input_id}"]`).setAttribute("currentValue",n)}createRenderRoot(){return this}};l.styles=[r.iv`
-      .select2-container {
-        pointer-events: auto !important;
-      }
-    `],s([(0,o.Cb)({type:String}),a("design:type",String)],l.prototype,"name",void 0),s([(0,o.Cb)({type:String}),a("design:type",String)],l.prototype,"label",void 0),s([(0,o.Cb)({type:Array}),a("design:type",Array)],l.prototype,"value",void 0),s([(0,o.Cb)({type:Number}),a("design:type",Number)],l.prototype,"randomID",void 0),s([(0,o.Cb)({type:String}),a("design:type",String)],l.prototype,"input_id",void 0),s([(0,o.Cb)({type:Array}),a("design:type",Array)],l.prototype,"options",void 0),s([(0,o.Cb)({type:Boolean}),a("design:type",Boolean)],l.prototype,"required",void 0),s([(0,o.Cb)({type:String}),a("design:type",String)],l.prototype,"ajaxFetchToken",void 0),s([(0,o.Cb)({type:String}),a("design:type",String)],l.prototype,"ajaxFetchUrl",void 0),s([(0,o.Cb)({attribute:!1}),a("design:type",Object)],l.prototype,"currentValue",void 0),s([(0,o.Cb)({type:Object}),a("design:type",Function)],l.prototype,"ajaxFetchProcessResponse",void 0),s([(0,o.Cb)({type:Array}),a("design:type",Array)],l.prototype,"ajaxFetchUrlParams",void 0),s([(0,o.Cb)({type:Number}),a("design:type",Number)],l.prototype,"startSearchPage",void 0),s([(0,o.Cb)({type:Boolean}),a("design:type",Boolean)],l.prototype,"multiple",void 0),s([(0,o.Cb)({type:Number}),a("design:type",Number)],l.prototype,"startNumber",void 0),s([(0,o.Cb)({type:Number}),a("design:type",Number)],l.prototype,"rowsPerPage",void 0),s([(0,o.Cb)({type:Number}),a("design:type",Number)],l.prototype,"totalShowing",void 0),s([(0,o.Cb)({type:Boolean}),a("design:type",Boolean)],l.prototype,"showSelectorLoaded",void 0),l=s([(0,o.Mo)("select-input")],l)},3690:(e,t,n)=>{var i=n(5862),r=n(8393),o=(n(5185),n(5142),function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s}),s=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let a=class extends i.oi{constructor(){super(...arguments),this.name="",this.label="",this.selected=!1,this.value="1",this.isSelected=this.selected}render(){return i.dy`
-      <div class="w-full !py-4 px-2 !flex !justify-between border border-gray-400 rounded-md">
-        <mwc-formfield class="w-full text-gray-400" label="${this.label}" alignEnd spaceBetween>
-          ${this.switch}
-          <input type="hidden" name="${this.name}" id="${this.name}" value="${this.selected?"on":"off"}" />
-        </mwc-formfield>
-      </div>
-    `}get switch(){return this.selected?i.dy`
-        <mwc-switch selected name="${this.name}-switch" id="${this.name}-switch"  ariaLabel="${this.label}" @click="${this.switchAction}"></mwc-switch>
-      `:i.dy`
-        <mwc-switch name="${this.name}-switch" id="${this.name}-switch"  ariaLabel="${this.label}" @click="${this.switchAction}"></mwc-switch>
-      `}switchAction(e){this.isSelected=e.target.selected,this.querySelectorAll('[name="'+this.name+'"]').forEach((e=>{e.value=this.isSelected?"on":"off"}))}createRenderRoot(){return this}};a.styles=[i.iv`
-      :host {
-        display: block;
-      }
-    `],o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"name",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"label",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"selected",void 0),o([(0,r.Cb)({type:String}),s("design:type",String)],a.prototype,"value",void 0),o([(0,r.Cb)({type:Boolean}),s("design:type",Boolean)],a.prototype,"isSelected",void 0),a=o([(0,r.Mo)("switch-input")],a)},7108:(e,t,n)=>{n.d(t,{W:()=>i});const i={schedule_meeting_event:40,clocking:41,attendance_history:42,attendees:43,absentees:44,device_request_approval:45,absent_leave_status:58,absent_leave_assignment:59}},8693:(e,t,n)=>{var i=n(5862),r=n(8393),o=(n(2715),n(771)),s=n(4672),a=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},l=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let c=class extends i.oi{constructor(){super(),this.meetingEventId=0}connectedCallback(){super.connectedCallback(),this.getMeetingEventId()}disconnectedCallback(){}render(){return i.dy`
-      <link-button isblockcontent="false" aClass="" raised bClass="button primary mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/schedule?meeting-event-id=${this.meetingEventId}"
-        label="Edit Schedule"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button primary mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/admin?meeting-event-id=${this.meetingEventId}"
-        label="Edit Admin(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/attachments?meeting-event-id=${this.meetingEventId}"
-        label="Edit Attachment(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"
-        label="Agenda(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button info mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/break?meeting-event-id=${this.meetingEventId}"
-        label="Edit Break"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button warning mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/date?meeting-event-id=${this.meetingEventId}"
-        label="Edit Date(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button danger mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/day?meeting-event-id=${this.meetingEventId}"
-        label="Edit Day(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button primary mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/group?meeting-event-id=${this.meetingEventId}"
-        label="Edit Group(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/sub-group?meeting-event-id=${this.meetingEventId}"
-        label="Edit Sub-Group(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button info mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/location?meeting-event-id=${this.meetingEventId}"
-        label="Edit Location"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button warning mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/member?meeting-event-id=${this.meetingEventId}"
-        label="Edit Member(s)"></link-button>
-      <link-button isblockcontent="false" aClass="" bClass="button danger mr-2"
-        href="${o.t.URLS.PDB_CLIENT}settings/edit/sms?meeting-event-id=${this.meetingEventId}"
-        label="Edit SMS"></link-button>
-    `}firstUpdated(){}getMeetingEventId(){let e=(0,s.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}createRenderRoot(){return this}};c.styles=[i.iv`
+      <div class="w-8 h-8 hidden"></div>
+      <div class="w-32 h-32 hidden"></div>
+      <div class="w-16 h-16 hidden"></div>
+    `}openProfile(e){if(e.preventDefault(),"false"!==this["click-to-open"]){const e=(e=>{const t=(0,r.Ie)().token,n=(0,o.h)(t,!0),s=(0,o.h)(e,!0);return`${i.t.URLS.PDB_DATABASE}app-reroute?permission-key=${n}&access-page-key=${s}`})(this["click-to-open"]);window.location.href=e}}firstUpdated(){}setUpMemberImage(){if(this.url.includes("member/logo/")||this.url.includes("member/profile/"))this.url=this.url;else{const e=this.url.split("/"),t=e[e.length-1];this.url=i.t.URLS.FILE_BUCKET_BASE_URL+"/files/members/profile-picture/"+t}}setUpClientImage(){if(this.url.includes("clients/profile-picture/"))this.url=this.url;else{const e=this.url.split("/"),t=e[e.length-1];this.url=i.t.URLS.FILE_BUCKET_BASE_URL+"/files/clients/profile-picture/"+t}}createRenderRoot(){return this}};d.styles=[s.iv`
    :host { display: block; }
-  `],a([(0,r.Cb)({type:Number}),l("design:type",Number)],c.prototype,"meetingEventId",void 0),c=a([(0,r.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],c)},3591:(e,t,n)=>{n.r(t),n.d(t,{AttendanceSetupFormEditMember:()=>B}),n(3683),n(4657);var i=n(4108),r=n(5862),o=n(8393),s=n(5458),a=(n(5248),n(6811),n(3690),n(1854),n(2461),n(2262)),l=n(6637),c=n(2218),d=n(4672),u=n(6455),h=n.n(u),p=n(771),m=n(7270),f=n(596),b=n(8967),y=n(3600),g=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{l(i.next(e))}catch(e){o(e)}}function a(e){try{l(i.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}l((i=i.apply(e,t||[])).next())}))};n(5866);var v,w,S=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{l(i.next(e))}catch(e){o(e)}}function a(e){try{l(i.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}l((i=i.apply(e,t||[])).next())}))},_=n(1551),C=n(6656),A=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},$=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)},I=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{l(i.next(e))}catch(e){o(e)}}function a(e){try{l(i.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}l((i=i.apply(e,t||[])).next())}))};let k=class extends r.oi{constructor(){super(),this.CLIENT_ID=0,this.startSearchPage=0,this.__memberUser=null,this.__schedule=null,this.__scheduleMembers=null,this._members=[],this._data=[],this.urlQueryParams=void 0,this.meetingEventId=0}set _memberUser(e){this.__memberUser=e,this.requestUpdate()}get _memberUser(){return this.__memberUser}set _schedule(e){this.__schedule=e,this.requestUpdate()}get _schedule(){return this.__schedule}set _scheduleMembers(e){this.__scheduleMembers=e,this.requestUpdate()}get _scheduleMembers(){return this.__scheduleMembers}connectedCallback(){const e=Object.create(null,{connectedCallback:{get:()=>super.connectedCallback}});return I(this,void 0,void 0,(function*(){e.connectedCallback.call(this),this.urlQueryParams=(0,d.O1)(),this.getMeetingEventId(),yield this.getAttendanceSchedule(),yield this.getAttendanceScheduleMember()}))}disconnectedCallback(){}render(){return r.dy`${this.schedule}`}get schedule(){return null===this._schedule?r.dy`
+  `],c([(0,a.Cb)({type:String}),l("design:type",String)],d.prototype,"url",void 0),c([(0,a.Cb)({type:String}),l("design:type",String)],d.prototype,"type",void 0),c([(0,a.Cb)({type:Boolean}),l("design:type",Boolean)],d.prototype,"rounded",void 0),c([(0,a.Cb)({type:String}),l("design:type",String)],d.prototype,"click-to-open",void 0),c([(0,a.Cb)({type:Number}),l("design:type",Number)],d.prototype,"size",void 0),d=c([(0,a.Mo)("user-profile-photo"),l("design:paramtypes",[])],d)},9443:(e,t,n)=>{n.r(t),n.d(t,{AttendanceSetupFormEditMember:()=>Be}),n(3683),n(4657);var i,r,o=n(4108),s=n(5862),a=n(8393),c=(n(1877),n(5248)),l=(n(2169),n(6811),n(3690),n(1854),n(2461),n(6883),n(2218)),d=n(4672),u=n(8304),m=(n(5866),n(3512)),p=n(771),f=n(3600),b=(n(1725),n(89)),h=n(2368),g=n(7270),y=n(596),v=n(9474),w=n(5049),S=n(4676),_=n(2126),x=n(701),k=n(1245),C=(n(1163),function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s}),I=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let B=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None}connectedCallback(){super.connectedCallback()}disconnectedCallback(){}render(){const e=this.attendanceMember.memberInfo;return s.dy`
+      <!-- <div class="flex flex-col items-center whitespace-normal mb-0"> -->
+      <div class="whitespace-normal mb-0">
+        <div class="flex flex-col items-center">
+          <input id="meeting_member_info" name="meeting_member_info" type="checkbox" value="${this.attendanceMember.id}"
+            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mt-3 flex flex-col items-start justify-start">
+          <!-- <user-profile-photo class="w-16 h-16 mb-1 justify-center" rounded 'click-to-open'="" click-to-open="" type="member"
+            url="${e.logo}" size="16"></user-profile-photo> -->
+          <p class="ml-1 mb-2 text-xs w-[130px] whitespace-[normal]">
+            ${e.organizationName}
+          </p>
+        </div>
+      </div>
+    `}firstUpdated(){}createRenderRoot(){return this}};B.styles=[s.iv`
+   :host { display: block; }
+  `],C([(0,a.Cb)({attribute:!1}),I("design:type","function"==typeof(i=void 0!==S.rG&&S.rG)?i:Object)],B.prototype,"activeStatus",void 0),C([(0,a.Cb)({attribute:!1}),I("design:type","function"==typeof(r=void 0!==S.rB&&S.rB)?r:Object)],B.prototype,"attendanceMember",void 0),B=C([(0,a.Mo)("member-col-one-org-component"),I("design:paramtypes",[])],B);var A,R,$=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},O=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let M=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None}connectedCallback(){super.connectedCallback()}disconnectedCallback(){}render(){var e;const t=this.attendanceMember.memberInfo;return s.dy`
+      <!-- <div class="flex flex-col items-center whitespace-normal mb-0"> -->
+      <div class="whitespace-normal mb-0">
+        <div class="items-start justify-start">
+          <input id="meeting_member_info" name="meeting_member_info" type="checkbox" value="${this.attendanceMember.id}"
+            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mt-3 items-start justify-start">
+          <!-- <user-profile-photo class="w-16 h-16 mb-1 justify-center" rounded 'click-to-open'="" click-to-open="" type="member"
+            url="${t.profilePicture}" size="16"></user-profile-photo> -->
+          <p class="ml-1 mb-2 text-xs whitespace-[normal]">
+            ${t.firstname} ${null!==(e=t.middlename)&&void 0!==e?e:""} ${t.surname}
+          </p>
+        </div>
+      </div>
+    `}firstUpdated(){}createRenderRoot(){return this}};M.styles=[s.iv`
+   :host { display: block; }
+  `],$([(0,a.Cb)({attribute:!1}),O("design:type","function"==typeof(A=void 0!==S.rG&&S.rG)?A:Object)],M.prototype,"activeStatus",void 0),$([(0,a.Cb)({attribute:!1}),O("design:type","function"==typeof(R=void 0!==S.rB&&S.rB)?R:Object)],M.prototype,"attendanceMember",void 0),M=$([(0,a.Mo)("member-col-one-ind-component"),O("design:paramtypes",[])],M);var E,j,N=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},G=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let D=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None,this.attendanceMemberString=""}connectedCallback(){super.connectedCallback();try{this.attendanceMember=S.rB.fromJson(JSON.parse(this.attendanceMemberString))}catch(e){this.attendanceMember=null}}disconnectedCallback(){}render(){if(null===this.attendanceMember)return s.dy`<b class="text-red-500">UNKOWN MEMBER</b>`;{const e=this.attendanceMember.memberInfo;return null===e?s.dy`<b class="text-red-500">UNKOWN MEMBER</b>`:1===e.accountType?s.dy`
+            <member-col-one-ind-component activeStatus="${this.activeStatus}" .attendanceMember="${this.attendanceMember}"></member-col-one-ind-component>
+          `:s.dy`
+            <member-col-one-org-component activeStatus="${this.activeStatus}" .attendanceMember="${this.attendanceMember}"></member-col-one-org-component>
+          `}}firstUpdated(){}createRenderRoot(){return this}};D.styles=[s.iv`
+   :host { display: block; }
+  `],N([(0,a.Cb)({attribute:!1}),G("design:type","function"==typeof(E=void 0!==S.rG&&S.rG)?E:Object)],D.prototype,"activeStatus",void 0),N([(0,a.Cb)({type:String}),G("design:type",String)],D.prototype,"attendanceMemberString",void 0),N([(0,a.Cb)({attribute:!1}),G("design:type","function"==typeof(j=void 0!==S.rB&&S.rB)?j:Object)],D.prototype,"attendanceMember",void 0),D=N([(0,a.Mo)("member-col-one-component"),G("design:paramtypes",[])],D),n(1239);var P,U,T,F=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},L=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let W=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None,this.memberActiveStatus=S.rG.None,this.attendanceMemberString=""}connectedCallback(){super.connectedCallback();try{this.attendanceMember=S.rB.fromJson(JSON.parse(this.attendanceMemberString));for(const e in S.rG)if(Object.prototype.hasOwnProperty.call(S.rG,e)){const t=S.rG[e];this.attendanceMember.statusId.id.toString()===t.toString()&&(this.memberActiveStatus=Number(t))}}catch(e){this.attendanceMember=null}}disconnectedCallback(){}render(){if(null===this.attendanceMember)return s.dy`<b class="text-red-500">UNKOWN MEMBER</b><b class="w-1/6"></b>`;{const e=this.attendanceMember.statusId;return s.dy`
+        <div class="ml-1 mb-2 whitespace-normal"><b class="w-100"></b>
+          <p class="ml-1 mb-2 text-xs whitespace-normal flex flex-col items-start justify-start">
+            <mwc-icon class="${this.textIconColor} flex flex-col items-center justify-center">${this.iconType}</mwc-icon>
+            <b class="${this.textIconColor}">${e.status}</b>
+          </p>
+        </div>
+      `}}get iconType(){return this.memberActiveStatus===S.rG.Assigned?"check_circle":this.memberActiveStatus===S.rG.Pending?"timer":"circle"}get textIconColor(){return this.memberActiveStatus===S.rG.Assigned?"text-green-500":this.memberActiveStatus===S.rG.Pending?"text-purple-500":"text-red-500"}firstUpdated(){}createRenderRoot(){return this}};W.styles=[s.iv`
+   :host { display: block; }
+  `],F([(0,a.Cb)({attribute:!1}),L("design:type","function"==typeof(P=void 0!==S.rG&&S.rG)?P:Object)],W.prototype,"activeStatus",void 0),F([(0,a.Cb)({attribute:!1}),L("design:type","function"==typeof(U=void 0!==S.rG&&S.rG)?U:Object)],W.prototype,"memberActiveStatus",void 0),F([(0,a.Cb)({type:String}),L("design:type",String)],W.prototype,"attendanceMemberString",void 0),F([(0,a.Cb)({attribute:!1}),L("design:type","function"==typeof(T=void 0!==S.rB&&S.rB)?T:Object)],W.prototype,"attendanceMember",void 0),W=F([(0,a.Mo)("member-col-two-component"),L("design:paramtypes",[])],W);var z,J,Q=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},H=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let V=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None,this.attendanceMemberString=""}connectedCallback(){super.connectedCallback();try{this.attendanceMember=S.rB.fromJson(JSON.parse(this.attendanceMemberString))}catch(e){this.attendanceMember=null}}disconnectedCallback(){}render(){if(null===this.attendanceMember)return s.dy`<b class="text-red-500">UNKOWN MEMBER</b>`;{this.attendanceMember.memberInfo;const e=this.attendanceMember.meetingCategoryId,t=this.attendanceMember.meetingGroupId,n=this.attendanceMember.meetingSubgroupId;return s.dy`
+        <table class="table striped hover w-full shadow-md border">
+          <thead>
+            <tr>
+              <th class="text-left">Grouping</th>
+              <th class="text-left">Info</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Category</td>
+              <td>${null==e?s.dy`<p class="text-red-400">Not Assigned</p>`:e.memberCategoryId.category}</td>
+            </tr>
+            <tr>
+              <td>Group</td>
+              <td>${null==t?s.dy`<p class="text-red-400">Not Assigned</p>`:t.groupInfo.group}</td>
+            </tr>
+            <tr>
+              <td>Subgroup</td>
+              <td>${null==n?s.dy`<p class="text-red-400">Not Assigned</p>`:n.subGroupInfo.subgroup}</td>
+            </tr>
+          </tbody>
+        </table>
+      `}}firstUpdated(){}createRenderRoot(){return this}};V.styles=[s.iv`
+   :host { display: block; }
+  `],Q([(0,a.Cb)({attribute:!1}),H("design:type","function"==typeof(z=void 0!==S.rG&&S.rG)?z:Object)],V.prototype,"activeStatus",void 0),Q([(0,a.Cb)({type:String}),H("design:type",String)],V.prototype,"attendanceMemberString",void 0),Q([(0,a.Cb)({attribute:!1}),H("design:type","function"==typeof(J=void 0!==S.rB&&S.rB)?J:Object)],V.prototype,"attendanceMember",void 0),V=Q([(0,a.Mo)("member-col-three-component"),H("design:paramtypes",[])],V);var K,q,Y,X=n(6455),Z=n.n(X),ee=n(8967),te=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{c(i.next(e))}catch(e){o(e)}}function a(e){try{c(i.throw(e))}catch(e){o(e)}}function c(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}c((i=i.apply(e,t||[])).next())}))},ne=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},ie=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let re=class extends s.oi{constructor(){super(),this.activeStatus=S.rG.None,this.memberActiveStatus=S.rG.None,this.attendanceMemberString=""}connectedCallback(){super.connectedCallback();try{this.attendanceMember=S.rB.fromJson(JSON.parse(this.attendanceMemberString));for(const e in S.rG)if(Object.prototype.hasOwnProperty.call(S.rG,e)){const t=S.rG[e];this.attendanceMember.statusId.id.toString()===t.toString()&&(this.memberActiveStatus=Number(t))}}catch(e){this.attendanceMember=null}}disconnectedCallback(){}render(){return null===this.attendanceMember?s.dy`<b class="text-red-500">UNKOWN MEMBER</b>`:this.memberActiveStatus===S.rG.Assigned?s.dy`
+          <div class="flex flex-col lg:flex-row items-center justify-center">
+            ${this.unassignButton}
+            <div class="mx-1"></div>
+            ${this.pendingButton}            
+          </div>
+          <div class="flex justify-center items-center">
+            ${this.showDayDateButtons}
+          </div>
+        `:this.memberActiveStatus===S.rG.Pending?s.dy`
+          <div class="flex flex-col lg:flex-row items-center justify-center">
+            ${this.assignButton}
+            <div class="mx-1"></div>
+            ${this.unassignButton}            
+          </div>
+          <div class="flex justify-center items-center">
+            ${this.showDayDateButtons}
+          </div>
+        `:s.dy`
+          <div class="flex flex-col lg:flex-row items-center justify-center">
+            ${this.assignButton}
+            <div class="mx-1"></div>
+            ${this.pendingButton}            
+          </div>
+          <div class="flex justify-center items-center">
+            ${this.showDayDateButtons}
+          </div>
+        `}get pendingButton(){return s.dy`
+      <div class="block">
+        <mwc-button class="button info text-xs" label="Set Pending" status-id="3" outlined @click="${this.submitStatus}">
+          <mwc-icon>timer</mwc-icon>
+        </mwc-button>
+      </div>
+    `}get assignButton(){return s.dy`
+      <div class="block">
+        <mwc-button class="button success text-xs" label="Assign" status-id="1" outlined @click="${this.submitStatus}">
+          <mwc-icon>check_circle</mwc-icon>
+        </mwc-button>
+      </div>
+    `}get unassignButton(){return s.dy`
+      <div class="block">
+        <mwc-button class="button danger text-xs" label="Unassign" status-id="2" outlined @click="${this.submitStatus}">
+          <mwc-icon>circle</mwc-icon>
+        </mwc-button>
+      </div>
+    `}get showDayDateButtons(){return this.attendanceMember.meetingEventId.isRecuring?s.dy`
+        <mwc-button class="button warning text-xs" label="Set Meeting Days" raised @click="${()=>b.D.push("settings/edit/member-days?member-id="+this.attendanceMember.id)}">
+          <mwc-icon>today</mwc-icon>
+        </mwc-button>`:s.dy`
+        <mwc-button class="button warning text-xs" label="Set Meeting Dates" raised @click="${()=>b.D.push("settings/edit/member-dates?member-id="+this.attendanceMember.id)}">
+          <mwc-icon>today</mwc-icon>
+        </mwc-button>`}submitStatus(e){return t=this,n=void 0,r=function*(){if(null!==this.attendanceMember){const t=e.target.getAttribute("status-id"),n=Number.isNaN(t)?0:t;yield function(e,t){return te(this,void 0,void 0,(function*(){const n=(0,f.Ie)(),i=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member/"+e,r={statusId:t};return Z().fire({title:"Update Status?",icon:"info",iconColor:"#f97817",showCancelButton:!0,confirmButtonText:"Yes",cancelButtonText:"Cancel",confirmButtonColor:"#f97817",cancelButtonColor:"#ddd",reverseButtons:!0,showLoaderOnConfirm:!0,backdrop:!0,preConfirm:e=>te(this,void 0,void 0,(function*(){return yield(0,g.d)(i,{method:"PUT",body:JSON.stringify(r),headers:{Authorization:"Token "+n.token}},!0).then((e=>{const t=new y.H("post",e,!1),n=t.response;if("nameError"in n&&"unknownError"in n&&n.unknownError.length>0){let e=[];n.unknownError.forEach((t=>{t.errors.forEach((n=>{let i={error:t.id+": "+n};"non_field_errors"===t.id&&(i={error:n}),e.push(i)}))}));const t=(0,ee.T)(e);Z().showValidationMessage(`${t}`)}return t})).catch((e=>{Z().showValidationMessage(`${String(e)}`)}))})),allowOutsideClick:()=>!Z().isLoading()}).then((e=>{if(e.isConfirmed){let t="Success",n=!1;const i=e.value;if(i instanceof Object){const e=i.response;t=String(e.message),n=i.response.success}n&&Z().fire({title:t,icon:n?"success":"error",iconColor:n?"#f97817":"#dc2626",confirmButtonColor:"#f97817"}),n&&setTimeout((()=>{window.location.reload()}),500)}}))}))}(this.attendanceMember.id,n)}},new((i=void 0)||(i=Promise))((function(e,o){function s(e){try{c(r.next(e))}catch(e){o(e)}}function a(e){try{c(r.throw(e))}catch(e){o(e)}}function c(t){var n;t.done?e(t.value):(n=t.value,n instanceof i?n:new i((function(e){e(n)}))).then(s,a)}c((r=r.apply(t,n||[])).next())}));var t,n,i,r}firstUpdated(){}createRenderRoot(){return this}};re.styles=[s.iv`
+   :host { display: block; }
+  `],ne([(0,a.Cb)({attribute:!1}),ie("design:type","function"==typeof(K=void 0!==S.rG&&S.rG)?K:Object)],re.prototype,"activeStatus",void 0),ne([(0,a.Cb)({attribute:!1}),ie("design:type","function"==typeof(q=void 0!==S.rG&&S.rG)?q:Object)],re.prototype,"memberActiveStatus",void 0),ne([(0,a.Cb)({type:String}),ie("design:type",String)],re.prototype,"attendanceMemberString",void 0),ne([(0,a.Cb)({attribute:!1}),ie("design:type","function"==typeof(Y=void 0!==S.rB&&S.rB)?Y:Object)],re.prototype,"attendanceMember",void 0),re=ne([(0,a.Mo)("member-col-four-component"),ie("design:paramtypes",[])],re);var oe,se,ae,ce,le,de,ue,me,pe,fe,be,he=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{c(i.next(e))}catch(e){o(e)}}function a(e){try{c(i.throw(e))}catch(e){o(e)}}function c(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}c((i=i.apply(e,t||[])).next())}))},ge=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},ye=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)},ve=function(e,t,n,i){return new(n||(n=Promise))((function(r,o){function s(e){try{c(i.next(e))}catch(e){o(e)}}function a(e){try{c(i.throw(e))}catch(e){o(e)}}function c(e){var t;e.done?r(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}c((i=i.apply(e,t||[])).next())}))};let we=class extends s.oi{constructor(){super(),this.CLIENT_ID=0,this.startSearchPage=0,this.statusDisplay=1,this.__memberUser=null,this.__schedule=null,this.__scheduleMembers=null,this.activeStatus=S.rG.None,this._isLoading=!1,this.firstLoad=!0,this.renderView=s.dy``,this._members=[],this._data=[],this.urlQueryParams=void 0,this.meetingEventId=0,this._categories=[],this._groups=[],this._subgroups=[]}set _memberUser(e){this.__memberUser=e,this.requestUpdate()}get _memberUser(){return this.__memberUser}set _schedule(e){this.__schedule=e,this.requestUpdate()}get _schedule(){return this.__schedule}set _scheduleMembers(e){this.__scheduleMembers=e,this.requestUpdate()}get _scheduleMembers(){return this.__scheduleMembers}connectedCallback(){const e=Object.create(null,{connectedCallback:{get:()=>super.connectedCallback}});return ve(this,void 0,void 0,(function*(){e.connectedCallback.call(this),this.urlQueryParams=(0,d.O1)(),this.getMeetingEventId(),this.filterBox=new h.L({selectors:{container:this.filterSectionContextContainer,form:this.filterSectionContextForm,filterSectionContextBtn:this.filterSectionContextBtn}}),document.onreadystatechange=e=>{"complete"==document.readyState&&this.handleQueryParam()},yield this.getAttendanceSchedule(),yield this.getCategories(),yield this.getGroups(),yield this.getSubGroups()}))}disconnectedCallback(){}render(){return s.dy`
+      <span class="flex flex-row md:flex-col w-100">
+      </span>
+      <div class="mt-1 mb-2 border border-y-2 rounded shadow-sm">
+        <div class="block my-1 p-2">
+          <mwc-button icon="open_with" label="Filters" raised class="primary mt-1"
+            filter-section-context="btn" @click="${this.filterBox.toggleFilterFields}">
+          </mwc-button>
+        </div>
+        <div class="block my-1">
+          ${this.filterForm}
+          <schedule-title-card meetingEventId="${this.meetingEventId}" CLIENT_ID="${this.CLIENT_ID}">
+          </schedule-title-card>
+        </div>
+      </div>
+      <div class="block my-2">
+        ${this.firstLoad?this.mainRender:s.Ld}
+        ${this._isLoading?s.dy`
         <div class="main-container">
           <div class="flex justify-center">
             <mwc-circular-progress indeterminate></mwc-circular-progress>
           </div>
         </div>
-      `:void 0===this._schedule?r.dy`
+      `:this.renderView}
+      </div>
+    `}get getCurrentTabFromQueryParam(){return new URLSearchParams(window.location.search).get("status-view")}get currentIndex(){return this.getCurrentTabFromQueryParam===S.rG.None.valueOf().toString()?S.rG.None:this.getCurrentTabFromQueryParam===S.rG.Assigned.valueOf().toString()?S.rG.Assigned:this.getCurrentTabFromQueryParam===S.rG.Unassigned.valueOf().toString()?S.rG.Unassigned:S.rG.Pending}handleQueryParam(){const e=this.getCurrentTabFromQueryParam;e===S.rG.None.valueOf().toString()?this.displayAllStatus(new Event("click")):e===S.rG.Assigned.valueOf().toString()?this.displayAssignedStatus(new Event("click")):e===S.rG.Unassigned.valueOf().toString()?this.displayUnassignedStatus(new Event("click")):this.displayPendingStatus(new Event("click")),this.pageRenderFirstView()}updateQueryParam(e){const t=new URLSearchParams(window.location.search);t.set("status-view",e);const n=`${window.location.pathname}?${t.toString()}`;window.history.replaceState(null,"",n),this.reloadRenderView(new Event("click"))}displayAllStatus(e){e.preventDefault(),this.statusDisplay=1,this.updateQueryParam(S.rG.None.valueOf().toString())}displayAssignedStatus(e){e.preventDefault(),this.statusDisplay=2,this.updateQueryParam(S.rG.Assigned.valueOf().toString())}displayUnassignedStatus(e){e.preventDefault(),this.statusDisplay=3,this.updateQueryParam(S.rG.Unassigned.valueOf().toString())}displayPendingStatus(e){e.preventDefault(),this.statusDisplay=4,this.updateQueryParam(S.rG.Pending.valueOf().toString())}pageRenderView(){this.firstLoad=!1,this._isLoading=!0,this.renderView=s.dy``,setTimeout((()=>{this.renderView=this.mainRender,this._isLoading=!1}),100)}pageRenderFirstView(){setTimeout((()=>{this.firstLoad=!0,this._isLoading=!1,this.renderView=s.dy``}),100)}get mainRender(){return s.dy`
+      <!-- <mwc-button icon="refresh" label="Reload" raised class="primary mt-1"
+        @click="${""}">
+      </mwc-button> -->
+      <div>
+        <div class="main-container">
+          <div class="md:hidden block">
+            <mwc-tab-bar activeIndex="${this.currentIndex.valueOf()}">
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="album" id="allStatusDisplayBtn"
+                label="Status" @click="${this.displayAllStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="check_circle" id="assignedStatusDisplayBtn"
+                label="Status" @click="${this.displayAssignedStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="circle" id="unassignedStatusDisplayBtn"
+                label="Status" @click="${this.displayUnassignedStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="timer" id="pendingStatusDisplayBtn"
+                label="Status" @click="${this.displayPendingStatus}"></mwc-tab>
+            </mwc-tab-bar>
+          </div>
+          <div class="md:block hidden">
+            <mwc-tab-bar activeIndex="${this.currentIndex.valueOf()}">
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="album" id="allStatusDisplayBtn"
+                label="Status :: All" @click="${this.displayAllStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="check_circle" id="assignedStatusDisplayBtn"
+                label="Status :: Assigned" @click="${this.displayAssignedStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="circle" id="unassignedStatusDisplayBtn"
+                label="Status :: Unassigned" @click="${this.displayUnassignedStatus}"></mwc-tab>
+              <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="timer" id="pendingStatusDisplayBtn"
+                label="Status :: Pending" @click="${this.displayPendingStatus}"></mwc-tab>
+            </mwc-tab-bar>
+          </div>
+          <hr class="mt-3 mb-2"/>
+          <div class="p-2">
+            ${""}
+          </div>
+        </div>
+      </div>
+      ${this.schedule}
+    `}reloadRenderView(e){e.preventDefault(),this.pageRenderView()}get schedule(){return null===this._schedule?s.dy`
+        <div class="main-container">
+          <div class="flex justify-center">
+            <mwc-circular-progress indeterminate></mwc-circular-progress>
+          </div>
+        </div>
+      `:void 0===this._schedule?s.dy`
         <div class="main-container">
           <div class="flex justify-center">
             <h4 class="text-red-600 text-lg">
               <span class="font-bold">Meeting/Event</span>: undefined error</h4>
           </div>
         </div>
-      `:!0===this._schedule.success?r.dy`${this.scheduleMember}`:r.dy`
+      `:!0===this._schedule.success?s.dy`
+        <div>
+          ${this.groupsAndSubgroups}
+          ${this.table}
+        </div>
+      `:s.dy`
         <div class="main-container">
           <div class="flex justify-center">
             <h2 class="text-red-600 text-lg">
               <span class="font-bold">Meeting/Event</span>: ${this._schedule.message}</h2>
           </div>
         </div>
-      `}get scheduleMember(){return null===this._scheduleMembers?r.dy`
-        <div class="main-container">
-          <div class="flex justify-center">
-            <mwc-circular-progress indeterminate></mwc-circular-progress>
+      `}get groupsAndSubgroups(){return s.dy`
+      <div class="main-container mt-2 mb-4">
+        <div class="flex justify-end">
+          <div class="flex flex-col md:flex-row justify-evenly">
+            <mwc-button raised class="button info" type="button" @click="${()=>b.D.push("settings/edit/member-groups?meeting-event-id="+this.meetingEventId)}">
+              Assign Group(s)
+            </mwc-button>
+            <div class="m-1"></div>
+            <mwc-button raised class="button warning" type="button" @click="${()=>b.D.push("settings/edit/member-subgroups?meeting-event-id="+this.meetingEventId)}">
+              Assign Sub-Group(s)
+            </mwc-button>
           </div>
         </div>
-      `:void 0===this._scheduleMembers?r.dy`
-        <div class="main-container">
-          <div class="flex justify-center">
-            <h4 class="text-red-600 text-lg">
-              <span class="font-bold">Meeting/Event Member</span>: undefined error</h4>
-          </div>
+      </div>
+    `}get __tableHeaders(){return[{title:"Member(s)"},{title:"Status"},{title:"Grouping"},{title:"Action"}]}get __tableBody(){return[]}get __tableFoot(){return[{title:"Member(s)"},{title:"Status"},{title:"Grouping"},{title:"Action"}]}get table(){const e=0===this.currentIndex?"":`&statusId=${this.currentIndex}`;let t=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member?datatable_plugin&meetingEventId="+this.meetingEventId+e;t+=this.urlQueryString;const n=this.__dataTable(t);let i={};const r=(0,f.Ie)();return i.Authorization="Token "+r.token,s.dy`
+      ${this.table_header}
+      <datatables-new .datatable="${n}" .ajaxHeader="${i}" .dt_body="${this.__tableBody}"
+        .dt_foot="${this.__tableFoot}" .dt_head="${this.__tableHeaders}"></datatables-new>
+    `}firstUpdated(){this.filterBox=new h.L({selectors:{container:this.filterSectionContextContainer,form:this.filterSectionContextForm,filterSectionContextBtn:this.filterSectionContextBtn},unmutableInputNames:[{name:"meeting-event-id",value:String(this.meetingEventId)}]})}get filterForm(){let e=s.dy``;const t=(0,d.O1)(),n="meetingGroupId",i="meetingSubgroupId",r="meetingCategoryId";let o=null,a=null,c=null;for(const e in t){let s=String(t[e]);s=""===s?null:s,e===n&&(a=s),e===i&&(c=s),e===r&&(o=s)}const l=Number.isNaN(a)?0:Number(a),u=Number.isNaN(c)?0:Number(c),m=Number.isNaN(o)?0:Number(o),p=this.groupsSubgroupsCategories(l,u,m),f=s.dy`
+      <div class="col-xl-4 col-md-4">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Group</h4>
+          <select-input name="${n}" class="w-full" id="${n}" label="Select Group"
+            .options="${p.groups}" outlined required>
+          </select-input>
         </div>
-      `:r.dy`
-        ${this.form}<hr/>${this.display}
-      `}get display(){return r.dy`${this.table}`}get table(){return this._scheduleMembers.results.length>0?r.dy`
-        <div class="mdc-data-table w-full" mdc-data-table="data-table">
-          <div class="mdc-data-table__table-container">
-            <table class="mdc-data-table__table" aria-label="New Meeting Member">
-              <thead>
-                <tr class="mdc-data-table__header-row">
-                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
-                    <div class="mdc-data-table__header-cell-wrapper">
-                      <div class="mdc-data-table__header-cell-label">
-                        Meeting Member
-                      </div>
-                      <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
-                    </div>
-                  </th>
-                  <th class="mdc-data-table__header-cell !text-right" role="columnheader" scope="col" aria-sort="ascending">
-                    <div class="mdc-data-table__header-cell-wrapper">
-                      <div class="mdc-data-table__header-cell-label">
-                        <mwc-icon>tune</mwc-icon>
-                      </div>
-                      <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="mdc-data-table__content">
-                ${this.getMeetingAttendanceMembers}
-              </tbody>
-            </table>
-          </div>
+      </div>`,b=s.dy`
+      <div class="col-xl-4 col-md-4">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Sub-Group</h4>
+          <select-input name="${i}" class="w-full" id="${i}" label="Select Sub-Group"
+            .options="${p.subgroups}" outlined required>
+          </select-input>
         </div>
-      `:r.dy`
-        <div class="flex justify-center">
-          <mwc-circular-progress indeterminate></mwc-circular-progress>
+      </div>`,h=s.dy`
+      <div class="col-xl-4 col-md-4">
+        <div class="form-input-container !block">
+          <h4 class="font-semibold my-2">Select Category</h4>
+          <select-input name="${r}" class="w-full" id="${r}" label="Select Category"
+            .options="${p.categories}" outlined required>
+          </select-input>
         </div>
-      `}get getMeetingAttendanceMembers(){return r.dy`
-      ${this._scheduleMembers.results.map(((e,t)=>r.dy`
-          <tr class="mdc-data-table__row">
-            <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${(0,s.C)(this.getMember(e.memberId),r.dy`<span>Loading...</span>`)}
-            </th>
-            <td class="mdc-data-table__cell mdc-data-table__cell--numeric !py-1" scope="row">
-              <mwc-icon-button class="ml-1 danger" icon="delete_forever" delete-this-item="${e.id}" @click="${this.deleteQuestionnaireMeetingAttendanceMember}"></mwc-icon-button>
-            </td>
-          </tr>
-        `))}
-    `}get form(){return r.dy`
-      <div class="form-container">
-        <div class=" !px-0">
-          <div class="-row !px-0">
-            <div class="-col-md-12">
-              <header class="header warning -col-md-12">
-                <label for="" class="label">
-                  <mwc-icon class="icon">format_strikethrough</mwc-icon>
-                  <h1 class="h1 !text-red-400">New Meeting/ Event Scheduled Member</h1>
-                  <h3 class="h3">Create New Meeting/ Event Scheduled Member!</h3>
-                </label>
-              </header>
-              <form method="post" action="#" class="form mt-0" make-general-posts="add-schedule-member">
-                <div class="p-0 m-0" show-memberField="all">
-                  ${this.memberFieldDefault(0)}
+      </div>`;return e=s.dy`<form method="get" class="form" make-general-posts="submit_filter_form" filter-section-context="container" hidden>
+          <div class="container pb-2">
+            <div class="row">
+              ${h} ${f} ${b}
+              <div class="col-xl-12 col-md-12">
+                <div class="form-input-container mt-1">
+                  <input type="hidden" name="meeting-event-id" id="meeting-event-id" value="${this.meetingEventId}" />
+                  <mwc-button label="Clear" @click="${this.filterBox.clear_filter}"></mwc-button>
+                  <mwc-button label="Filter" raised @click="${this.filterBox.submit}"></mwc-button>
                 </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-12 col-lg-12">
-                    <input type="hidden" name="clientId" id="clientId" value="${this.CLIENT_ID}"/>
-                    <input type="hidden" name="meetingEventId" id="meetingEventId" value="${this.meetingEventId}"/>
-                    <div class="form-input-container">
-                      <mwc-button label="Add Member" raised class="button" @click="${this.submitForm}">
-                      </mwc-button>
-                    </div>
-
-                    <div class="flex form-input-container items-center text-center">
-                      <hr class="border-gray-300 border-1 w-full rounded-md">
-                      <label class="block font-medium text-sm text-gray-600 w-full">
-                        Lets go digital...
-                      </label>
-                      <hr class="border-gray-300 border-1 w-full rounded-md">
-                    </div>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `}get memberField(){let e={};const t=(0,y.Ie)();return e.Authorization="Token "+t.token,r.dy`
-      <div class="container my-4">
-        <div class="row justify-center">
-          <div class="col-md-6 col-lg-6">
-            <h4 class="font-semibold my-2">Select Member</h4>
-            <select-input class="w-100" id="memberId" name="memberId" label="Select User"
-              .ajaxFetchProcessResponse="${this.processClientUserSearch}" startSearchPage="${this.startSearchPage}"
-              .ajaxHeader="${e}" .ajaxFetchUrlParams="${this.ajaxFetchUrlParams}"
-              ajaxFetchUrl="${p.t.URLS.AKWAABA_API_BASE_URL}members/user/search"></select-input>
-          </div>
+      </form>`,e}groupsSubgroupsCategories(e,t,n){let i=[{id:0,name:"Select Group Status",isSelected:"false",selected:!1}],r=[{id:0,name:"Select Sub-Group Status",isSelected:"false",selected:!1}],o=[{id:0,name:"Select Category Status",isSelected:"false",selected:!1}];return this._groups.forEach((t=>{let n=!1,r="false";e===t.id&&(n=!0,r="true");const o={id:t.id,name:t.groupInfo.group,isSelected:r,selected:n};i.includes(o)||i.push(o)})),this._subgroups.forEach((e=>{let n=!1,i="false";t===e.id&&(n=!0,i="true");const o={id:e.id,name:`${e.subGroupInfo.groupId.group} => ${e.subGroupInfo.subgroup}`,isSelected:i,selected:n};r.includes(o)||r.push(o)})),this._categories.forEach((e=>{let n=!1,i="false";t===e.id&&(n=!0,i="true");const r={id:e.id,name:`${e.memberCategoryId.category}`,isSelected:i,selected:n};o.includes(r)||o.push(r)})),{groups:i,subgroups:r,categories:o}}get urlQueryString(){const e=(0,d.O1)(),t="meetingGroupId",n="meetingSubgroupId",i="meetingCategoryId";let r={};for(const o in e){let s=String(e[o]);o!==t&&o!==n&&o!==i||(r[o]=s,o!==t&&o!==n&&o!==i||"0"===s&&(r[o]=""))}let o=(0,d.W3)(r);return 0===o.length?o:"&"+o}get table_header(){return s.dy`
+      <div class="p-2 mb-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 grid-flow-row gap-4 pb-5">
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2">
+          <label class="flex justify-between items-stretch px-4 my-2">
+            <b>CHECK ALL: </b>
+            <input id="meeting_member_info_all" name="meeting_member_info_all" type="checkbox"
+              class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              @change="${this.check_all_meeting_members}" />
+          </label>
         </div>
+        ${this.table_header_buttons}
       </div>
-    `}memberFieldDefault(e){return r.dy`
-      <multiple-widgets class="col-md-12 col-lg-12 mb-3" .widget=${this.memberField}
-        memberField-id="${e}" no_delete></multiple-widgets>
-    `}addMemberField(){const e=this.showMemberFieldAllSelector.children.length,t=(0===e?-1:Number(this.showMemberFieldAllSelector.children[e-1].getAttribute("memberField-id")))+1,n=document.createElement("multiple-widgets");n.setAttribute("class","col-md-12 col-lg-12 mb-3"),n.setAttribute("memberField-id",String(t)),this.showMemberFieldAllSelector.append(n);const i=this.showMemberFieldAllSelector.querySelectorAll('multiple-widgets[memberField-id="'+t+'"]'),r=this.memberField.strings.join("");setTimeout((()=>{i.forEach((e=>{e.querySelectorAll("main").forEach((e=>{e.innerHTML=r}))}))}))}processClientUserSearch(e,t){t.page=t.page||0;const n=e.count,i=e.results,r=document.querySelector('[id="memberId"]');let o=[];if(o[0]={id:"all",text:"All Members"},n>0){var s=i;for(let e=0;e<s.length;e++){const t=s[e],n={id:t.id,text:t.firstname+" "+t.surname};o.includes(n)||o.push(n)}}return{results:o,total:n,totalShowing:r.totalShowing}}get ajaxFetchUrlParams(){return[{param:"",value:""}]}firstUpdated(){this.querySelectorAll('[mdc-data-table="data-table"]').forEach((e=>{new a.T(e)}))}submitForm(e){return I(this,void 0,void 0,(function*(){e.preventDefault(),yield function(){return S(this,void 0,void 0,(function*(){const e=(0,y.Ie)(),t=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member",n=document.querySelector('[make-general-posts="add-schedule-member"]'),i=new FormData(n);return h().fire({title:"Add Member?",icon:"info",iconColor:"#f97817",showCancelButton:!0,confirmButtonText:"Yes",cancelButtonText:"Cancel",confirmButtonColor:"#f97817",cancelButtonColor:"#ddd",reverseButtons:!0,showLoaderOnConfirm:!0,backdrop:!0,preConfirm:r=>S(this,void 0,void 0,(function*(){return yield(0,m.d)(t,{method:"POST",body:i,headers:{Authorization:"Token "+e.token}},!1).then((e=>{const t=new f.H("post",e,!1,n),i=t.response;if("nameError"in i&&"unknownError"in i&&i.unknownError.length>0){let e=[];i.unknownError.forEach((t=>{t.errors.forEach((n=>{let i={error:t.id+": "+n};"non_field_errors"===t.id&&(i={error:n}),e.push(i)}))}));const t=(0,b.T)(e);h().showValidationMessage(`${t}`)}return t})).catch((e=>{h().showValidationMessage(`${String(e)}`)}))})),allowOutsideClick:()=>!h().isLoading()}).then((e=>{if(e.isConfirmed){let t="Success",n=!1;const i=e.value;if(i instanceof Object){const e=i.response;t=String(e.message),n=i.response.success}n&&h().fire({title:t,icon:n?"success":"error",iconColor:n?"#f97817":"#dc2626",confirmButtonColor:"#f97817"}),n&&setTimeout((()=>{window.location.reload()}),500)}}))}))}()}))}deleteQuestionnaireMeetingAttendanceMember(e){return I(this,void 0,void 0,(function*(){e.preventDefault();const t=Number(e.currentTarget.getAttribute("delete-this-item"));yield function(e){return g(this,void 0,void 0,(function*(){const t=(0,y.Ie)(),n=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member/"+e,i={};return h().fire({title:"Remove Member?",icon:"info",iconColor:"#f97817",showCancelButton:!0,confirmButtonText:"Yes",cancelButtonText:"Cancel",confirmButtonColor:"#f97817",cancelButtonColor:"#ddd",reverseButtons:!0,showLoaderOnConfirm:!0,backdrop:!0,preConfirm:e=>g(this,void 0,void 0,(function*(){return yield(0,m.d)(n,{method:"DELETE",body:JSON.stringify(i),headers:{Authorization:"Token "+t.token}},!1).then((e=>{try{const t=new f.H("delete",e,!1),n=t.response;if("nameError"in n&&"unknownError"in n&&n.unknownError.length>0){let e=[];n.unknownError.forEach((t=>{t.errors.forEach((t=>{e.push({error:t})}))}));const t=(0,b.T)(e);h().showValidationMessage(`${t}`)}return t}catch(t){console.error({error:t});let n=e;n.error=t;const i=new f.H("delete",n,!0);return i.postForm,i}})).catch((e=>{h().showValidationMessage(`${String(e)}`)}))})),allowOutsideClick:()=>!h().isLoading()}).then((e=>{if(e.isConfirmed){let t="Success",n=!1;const i=e.value;if(i instanceof Object){const e=i.response;t=String(e.message),n=i.response.success}h().fire({title:t,icon:n?"success":"error",iconColor:"#f97817",confirmButtonColor:"#f97817"}),n&&setTimeout((()=>{window.location.reload()}),500)}}))}))}(t)}))}getMeetingEventId(){let e=(0,d.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}getAttendanceSchedule(){return I(this,void 0,void 0,(function*(){const e=yield(0,c.u)(this.meetingEventId);this._schedule=null===e?void 0:e.response}))}getAttendanceScheduleMember(){return I(this,void 0,void 0,(function*(){const e=yield(0,l.n)(null,"?meetingEventId="+this.meetingEventId+"&length=1000");this._scheduleMembers=null===e?void 0:e.paginResponse}))}getMembers(){return I(this,void 0,void 0,(function*(){const e=yield(0,C.E)();let t=[];null===e?t.push({id:0,firstname:"** ",middlename:"NOT FOUND",surname:" **",date:new Date}):!0===e.response.success&&"length"in e.response.data&&(t=e.response.data);const n=[];n.push(...this._members,...t),this._members=n}))}getMember(e){return I(this,void 0,void 0,(function*(){const t=yield(0,C.E)(e);if(null===t)return"???";if(t.response.success&&"dateOfBirth"in t.response.data){const e=(0,_.Z)(t.response.data);return`${e.firstname} ${e.middlename} ${e.surname}`}return t.response.message}))}createRenderRoot(){return this}};k.styles=[r.iv`
+    `}get table_header_buttons(){const e=this.getCurrentTabFromQueryParam;return e===S.rG.None.valueOf().toString()?s.dy``:e===S.rG.Assigned.valueOf().toString()?s.dy`
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+          <mwc-button class="danger" raised meeting_member_info_all="unassign"
+            @click="${e=>this.updateBulkStatusID(e,2)}">Unassign Selected</mwc-button>
+          <div class="w-4 h-4"></div>
+          <mwc-button class="info" raised meeting_member_info_all="pending"
+            @click="${e=>this.updateBulkStatusID(e,3)}">Set Pending To Selected</mwc-button>  
+        </div>
+      `:e===S.rG.Unassigned.valueOf().toString()?s.dy`
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+          <mwc-button class="success" raised meeting_member_info_all="assign"
+            @click="${e=>this.updateBulkStatusID(e,1)}">Assign Selected</mwc-button>
+          <div class="w-4 h-4"></div>
+          <mwc-button class="info" raised meeting_member_info_all="unassign"
+            @click="${e=>this.updateBulkStatusID(e,3)}">Set Pending To Selected</mwc-button>  
+        </div>
+      `:s.dy`
+        <div
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+          <mwc-button class="success" raised meeting_member_info_all="assign"
+            @click="${e=>this.updateBulkStatusID(e,1)}">Assign Selected</mwc-button>
+          <div class="w-4 h-4"></div>
+          <mwc-button class="danger" raised meeting_member_info_all="pending"
+            @click="${e=>this.updateBulkStatusID(e,2)}">Unassign Selected</mwc-button>  
+        </div>
+      `}rowOneRender(e){const t=S.rB.fromJson(e);return`\n      <member-col-one-component activeStatus="${this.activeStatus}"\n        attendanceMemberString='${t.toString()}'>\n      </member-col-one-component>\n    `}rowTwoRender(e){const t=S.rB.fromJson(e);return`\n      <member-col-two-component activeStatus="${this.activeStatus}"\n      attendanceMemberString='${t.toString()}'>\n    </member-col-two-component>\n    `}rowThreeRender(e){const t=S.rB.fromJson(e);return`\n      <member-col-three-component activeStatus="${this.activeStatus}"\n      attendanceMemberString='${t.toString()}'>\n    </member-col-three-component>\n    `}rowFourRender(e){const t=S.rB.fromJson(e);return`\n      <member-col-four-component activeStatus="${this.activeStatus}"\n      attendanceMemberString='${t.toString()}'>\n    </member-col-four-component>\n    `}__dataTable(e){const t=this;let n={order:[[0,"desc"]],processing:!0,serverSide:!0,ajax:{url:e,dataSrc:"data",apiType:"akwaabaApp"},columns:[{data:"id",render:(e,n,i)=>t.rowOneRender(i),orderable:!0,className:"w-1/6"},{data:"memberId",render:(e,n,i)=>t.rowTwoRender(i),orderable:!0,className:"w-20"},{data:"meetingEventId",render:(e,n,i)=>t.rowThreeRender(i),orderable:!0,className:"w-full sm:w-1/4"},{data:"statusId",render:(e,n,i)=>t.rowFourRender(i),orderable:!0}],columnDefs:[{targets:["_all"],className:"mdc-data-table__cell",checkboxes:{selectRow:!0}}],lengthMenu:[10,25,50,100,500,1e3],drawCallback:function(e){return ve(this,void 0,void 0,(function*(){e.aoData}))},responsive:!0,dom:"Blfrtip",buttons:["selected","selectedSingle","selectAll","selectNone","selectRows","selectColumns","selectCells","pdf","excel","copy","csv"],select:!0};return n}submitForm(e){return ve(this,void 0,void 0,(function*(){e.preventDefault(),yield(0,m.T)()}))}deleteQuestionnaireMeetingAttendanceMember(e){return ve(this,void 0,void 0,(function*(){e.preventDefault();const t=Number(e.currentTarget.getAttribute("delete-this-item"));yield(0,u.g)(t)}))}getMeetingEventId(){let e=(0,d.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}getAttendanceSchedule(){return ve(this,void 0,void 0,(function*(){const e=yield(0,l.u)(this.meetingEventId);this._schedule=null===e?void 0:e.response}))}getCategories(){return ve(this,void 0,void 0,(function*(){const e=yield function(e=null,t=""){return n=this,i=void 0,o=function*(){const n=(0,f.Ie)(),i=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/category"+(null===e?"":"/"+e)+t,r=yield(0,g.d)(i,{method:"GET",headers:{Authorization:"Token "+n.token}},!0);try{return new y.H("get",r)}catch(e){console.error({error:e});let t=r;return t.error=e,new y.H("get",t,!0)}},new((r=void 0)||(r=Promise))((function(e,t){function s(e){try{c(o.next(e))}catch(e){t(e)}}function a(e){try{c(o.throw(e))}catch(e){t(e)}}function c(t){var n;t.done?e(t.value):(n=t.value,n instanceof r?n:new r((function(e){e(n)}))).then(s,a)}c((o=o.apply(n,i||[])).next())}));var n,i,r,o}(null,"?length=10000&meetingEventId="+this.meetingEventId);if(null===e)this._categories=[];else{const t=e.paginResponse.results;Array.isArray(t)?this._categories=t.map((e=>v.wB.fromJson(e))):this._categories=[v.wB.fromJson(t)]}}))}getGroups(){return ve(this,void 0,void 0,(function*(){const e=yield(0,w.L)(null,"?length=10000&meetingEventId="+this.meetingEventId);if(null===e)this._groups=[];else{const t=e.paginResponse.results;Array.isArray(t)?this._groups=t.map((e=>_.aU.fromJson(e))):this._groups=[_.aU.fromJson(t)]}}))}getSubGroups(){return ve(this,void 0,void 0,(function*(){const e=yield(0,k.c)(null,"?length=10000&meetingEventId="+this.meetingEventId);if(null===e)this._subgroups=[];else{const t=e.paginResponse.results;Array.isArray(t)?this._subgroups=t.map((e=>x.b.fromJson(e))):this._subgroups=[x.b.fromJson(t)]}}))}check_all_meeting_members(e){return ve(this,void 0,void 0,(function*(){e.preventDefault(),document.querySelectorAll('[id="meeting_member_info_all"][name="meeting_member_info_all"]').forEach((e=>{e.checked?document.querySelectorAll('[id="meeting_member_info"][name="meeting_member_info"]').forEach((e=>{e.checked=!0})):document.querySelectorAll('[id="meeting_member_info"][name="meeting_member_info"]').forEach((e=>{e.checked=!1}))}))}))}updateBulkStatusID(e,t){return ve(this,void 0,void 0,(function*(){e.preventDefault();let n=[];document.querySelectorAll('[id="meeting_member_info"][name="meeting_member_info"]').forEach((e=>{if(e.checked&&!Number.isNaN(e.value)){const t=Number(e.value);n.includes(t)||n.push(t)}}));let i=n.map((e=>({id:e})));yield function(e,t){return he(this,void 0,void 0,(function*(){const n=(0,f.Ie)(),i=p.t.URLS.AKWAABA_API_BASE_URL+"attendance/meeting-event/member/bulk-status/"+t,r=JSON.stringify(e);return Z().fire({title:"Add Member Status(es)?",icon:"info",iconColor:"#f97817",showCancelButton:!0,confirmButtonText:"Yes",cancelButtonText:"Cancel",confirmButtonColor:"#f97817",cancelButtonColor:"#ddd",reverseButtons:!0,showLoaderOnConfirm:!0,backdrop:!0,preConfirm:e=>he(this,void 0,void 0,(function*(){return yield(0,g.d)(i,{method:"PUT",body:r,headers:{Authorization:"Token "+n.token}},!0).then((e=>{const t=new y.H("post",e,!1),n=t.multipleResponse;let i=[];if(null!==n&&n.forEach(((e,t)=>{"nameError"in e&&"unknownError"in e&&(e.unknownError.length>0?e.unknownError.forEach((e=>{e.errors.forEach((e=>{i.push({error:`[${"Entry".toUpperCase()} ${t+1}] - ${e}`})}))})):e.nameError.length>0&&e.nameError.forEach((e=>{const n=e.id;e.errors.forEach((e=>{i.push({error:`[${"Entry".toUpperCase()} ${t+1}] - ${n.toUpperCase()} :: ${e}`})}))})))})),i.length>0){const e=(0,ee.T)(i);return Z().showValidationMessage(`${e}`)}return t})).catch((e=>{Z().showValidationMessage(`${String(e)}`)}))})),allowOutsideClick:()=>!Z().isLoading()}).then((e=>{if(e.isConfirmed){let t="Success",n=!1;const i=e.value;if(i instanceof Object){const e=i.response;t=String(e.message),n=i.response.success}n&&Z().fire({title:t,icon:n?"success":"error",iconColor:n?"#f97817":"#dc2626",confirmButtonColor:"#f97817"}),n&&setTimeout((()=>{window.location.reload()}),500)}}))}))}(i,t)}))}createRenderRoot(){return this}};we.styles=[s.iv`
    :host { display: block; }
-  `],A([(0,o.Cb)({type:Number}),$("design:type",Number)],k.prototype,"CLIENT_ID",void 0),A([(0,o.Cb)({type:Number}),$("design:type",Number)],k.prototype,"startSearchPage",void 0),A([(0,o.Cb)({type:Array}),$("design:type",Array)],k.prototype,"_members",void 0),A([(0,o.Cb)({type:Array}),$("design:type","function"==typeof(v="undefined"!=typeof Array&&Array)?v:Object)],k.prototype,"_data",void 0),A([(0,o.Cb)({type:Object}),$("design:type",Object)],k.prototype,"urlQueryParams",void 0),A([(0,o.Cb)({type:Number}),$("design:type",Number)],k.prototype,"meetingEventId",void 0),A([(0,o.IO)('[show-memberField="all"]'),$("design:type","function"==typeof(w="undefined"!=typeof Element&&Element)?w:Object)],k.prototype,"showMemberFieldAllSelector",void 0),k=A([(0,o.Mo)("attendance-setup-form-member"),$("design:paramtypes",[])],k),n(8693);var x=n(9665),N=n(8092),E=n(1302),R=n(7108),j=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},P=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let B=class extends r.oi{constructor(){super(),this._hasSetup=!1,this._pageButtonAccess=!1}connectedCallback(){const e=Object.create(null,{connectedCallback:{get:()=>super.connectedCallback}});return t=this,n=void 0,o=function*(){e.connectedCallback.call(this),(0,x.f)().then((()=>this._hasSetup=!0)),yield(0,i.B)(this.email,this.mId,"client_tokenLogin")},new((r=void 0)||(r=Promise))((function(e,i){function s(e){try{l(o.next(e))}catch(e){i(e)}}function a(e){try{l(o.throw(e))}catch(e){i(e)}}function l(t){var n;t.done?e(t.value):(n=t.value,n instanceof r?n:new r((function(e){e(n)}))).then(s,a)}l((o=o.apply(t,n||[])).next())}));var t,n,r,o}disconnectedCallback(){}render(){var e;if(this._hasSetup){if(null===(e=(0,N.H)())||void 0===e?void 0:e.expiration_date.expired)return r.dy`<account-expired-component></account-expired-component>`;if(this._pageButtonAccess=(0,E.OR)(R.W.schedule_meeting_event),!(0,E.H)({pageId:R.W.schedule_meeting_event,viewType:"Edit"},!1))return r.dy`<no-page-entry-component></no-page-entry-component>`}return r.dy`
+  `],ge([(0,a.Cb)({type:Number}),ye("design:type",Number)],we.prototype,"CLIENT_ID",void 0),ge([(0,a.Cb)({type:Number}),ye("design:type",Number)],we.prototype,"startSearchPage",void 0),ge([(0,a.IO)('[filter-section-context="btn"]'),ye("design:type","function"==typeof(oe=void 0!==c.z&&c.z)?oe:Object)],we.prototype,"filterSectionContextBtn",void 0),ge([(0,a.IO)('[filter-section-context="container"]'),ye("design:type","function"==typeof(se="undefined"!=typeof Element&&Element)?se:Object)],we.prototype,"filterSectionContextContainer",void 0),ge([(0,a.IO)('[make-general-posts="submit_filter_form"]'),ye("design:type","function"==typeof(ae="undefined"!=typeof HTMLFormElement&&HTMLFormElement)?ae:Object)],we.prototype,"filterSectionContextForm",void 0),ge([(0,a.IO)("#allStatusDisplayBtn"),ye("design:type","function"==typeof(ce=void 0!==c.z&&c.z)?ce:Object)],we.prototype,"allStatusDisplayBtn",void 0),ge([(0,a.IO)("#assignedStatusDisplayBtn"),ye("design:type","function"==typeof(le=void 0!==c.z&&c.z)?le:Object)],we.prototype,"assignedStatusDisplayBtn",void 0),ge([(0,a.IO)("#unassignedStatusDisplayBtn"),ye("design:type","function"==typeof(de=void 0!==c.z&&c.z)?de:Object)],we.prototype,"unassignedStatusDisplayBtn",void 0),ge([(0,a.IO)("#pendingStatusDisplayBtn"),ye("design:type","function"==typeof(ue=void 0!==c.z&&c.z)?ue:Object)],we.prototype,"pendingStatusDisplayBtn",void 0),ge([(0,a.Cb)({type:Number}),ye("design:type",Number)],we.prototype,"statusDisplay",void 0),ge([(0,a.Cb)({type:Number}),ye("design:type","function"==typeof(me=void 0!==S.rG&&S.rG)?me:Object)],we.prototype,"activeStatus",void 0),ge([(0,a.Cb)({type:Boolean}),ye("design:type",Boolean)],we.prototype,"_isLoading",void 0),ge([(0,a.Cb)({type:Boolean}),ye("design:type",Boolean)],we.prototype,"firstLoad",void 0),ge([(0,a.Cb)({type:Object}),ye("design:type","function"==typeof(pe=void 0!==s.TemplateResult&&s.TemplateResult)?pe:Object)],we.prototype,"renderView",void 0),ge([(0,a.Cb)({type:Array}),ye("design:type",Array)],we.prototype,"_members",void 0),ge([(0,a.Cb)({type:Array}),ye("design:type","function"==typeof(fe="undefined"!=typeof Array&&Array)?fe:Object)],we.prototype,"_data",void 0),ge([(0,a.Cb)({type:Object}),ye("design:type",Object)],we.prototype,"urlQueryParams",void 0),ge([(0,a.Cb)({type:Number}),ye("design:type",Number)],we.prototype,"meetingEventId",void 0),ge([(0,a.Cb)({type:Array}),ye("design:type",Array)],we.prototype,"_categories",void 0),ge([(0,a.Cb)({type:Array}),ye("design:type",Array)],we.prototype,"_groups",void 0),ge([(0,a.Cb)({type:Array}),ye("design:type",Array)],we.prototype,"_subgroups",void 0),ge([(0,a.IO)('[show-memberField="all"]'),ye("design:type","function"==typeof(be="undefined"!=typeof Element&&Element)?be:Object)],we.prototype,"showMemberFieldAllSelector",void 0),we=ge([(0,a.Mo)("attendance-setup-form-member"),ye("design:paramtypes",[])],we),n(8693);var Se=n(9665),_e=n(8092),xe=n(1302),ke=n(7108),Ce=function(e,t,n,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,n):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,n,i);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(s=(o<3?r(s):o>3?r(t,n,s):r(t,n))||s);return o>3&&s&&Object.defineProperty(t,n,s),s},Ie=function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};let Be=class extends s.oi{constructor(){super(),this._hasSetup=!1,this._pageButtonAccess=!1}connectedCallback(){const e=Object.create(null,{connectedCallback:{get:()=>super.connectedCallback}});return t=this,n=void 0,r=function*(){e.connectedCallback.call(this),(0,Se.f)().then((()=>this._hasSetup=!0)),yield(0,o.B)(this.email,this.mId,"client_tokenLogin")},new((i=void 0)||(i=Promise))((function(e,o){function s(e){try{c(r.next(e))}catch(e){o(e)}}function a(e){try{c(r.throw(e))}catch(e){o(e)}}function c(t){var n;t.done?e(t.value):(n=t.value,n instanceof i?n:new i((function(e){e(n)}))).then(s,a)}c((r=r.apply(t,n||[])).next())}));var t,n,i,r}disconnectedCallback(){}render(){var e;if(this._hasSetup){if(null===(e=(0,_e.H)())||void 0===e?void 0:e.expiration_date.expired)return s.dy`<account-expired-component></account-expired-component>`;if(this._pageButtonAccess=(0,xe.OR)(ke.W.schedule_meeting_event),!(0,xe.H)({pageId:ke.W.schedule_meeting_event,viewType:"Edit"},!1))return s.dy`<no-page-entry-component></no-page-entry-component>`}return s.dy`
       <div class="shadow bg-white p-2 my-2">
         <attendance-setup-form-edit-links></attendance-setup-form-edit-links>
         <attendance-setup-form-member CLIENT_ID="${this.clientId}"></attendance-setup-form-member>
       </div>
-    `}firstUpmemberd(){}createRenderRoot(){return this}};j([(0,o.Cb)({type:String}),P("design:type",String)],B.prototype,"email",void 0),j([(0,o.Cb)({type:Number}),P("design:type",Number)],B.prototype,"mId",void 0),j([(0,o.Cb)({type:Number}),P("design:type",Number)],B.prototype,"clientId",void 0),j([(0,o.Cb)({type:Boolean}),P("design:type",Boolean)],B.prototype,"_hasSetup",void 0),j([(0,o.Cb)({type:Boolean}),P("design:type",Boolean)],B.prototype,"_pageButtonAccess",void 0),B=j([(0,o.Mo)("attendance-setup-form-edit-member"),P("design:paramtypes",[])],B)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,7597,1109,6236,6069,214,3901,3712],(()=>(3591,e(e.s=3591)))),e.O())])));
+    `}firstUpmemberd(){}createRenderRoot(){return this}};Ce([(0,a.Cb)({type:String}),Ie("design:type",String)],Be.prototype,"email",void 0),Ce([(0,a.Cb)({type:Number}),Ie("design:type",Number)],Be.prototype,"mId",void 0),Ce([(0,a.Cb)({type:Number}),Ie("design:type",Number)],Be.prototype,"clientId",void 0),Ce([(0,a.Cb)({type:Boolean}),Ie("design:type",Boolean)],Be.prototype,"_hasSetup",void 0),Ce([(0,a.Cb)({type:Boolean}),Ie("design:type",Boolean)],Be.prototype,"_pageButtonAccess",void 0),Be=Ce([(0,a.Mo)("attendance-setup-form-edit-member"),Ie("design:paramtypes",[])],Be)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,1109,6236,6069,214,7719,751,1952,1710,3712],(()=>(9443,e(e.s=9443)))),e.O())])));
 //# sourceMappingURL=edit-member.js.map

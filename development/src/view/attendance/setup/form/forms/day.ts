@@ -24,15 +24,19 @@ import { ClientUsers_I } from '@@addons/interfaces/clients/users';
 import '@@addons/widgets/form/new/select';
 import { DayOfWeek_I } from '@@addons/interfaces/attendance/day_of_week';
 import { GET_DayOfWeek } from '@@addons/network/attendance/day_of_week';
-import { POST_AttendanceAddScheduleDayMultiple } from '@@addons/network/attendance/setup/day/post_multiple';
+// import { POST_AttendanceAddScheduleDayMultiple } from '@@addons/network/attendance/setup/day/post_multiple';
 import { DateTime } from 'luxon';
 import { getDate } from '@@addons/functions/date_time/date';
-import { POST_AttendanceAddScheduleDay } from '@@addons/network/attendance/setup/day/post';
+// import { POST_AttendanceAddScheduleDay } from '@@addons/network/attendance/setup/day/post';
+import './days/multiple';
+import { POST_AttendanceAddScheduleDayMultipleAlt } from '@@addons/network/attendance/setup/day/post_multiple_alt';
 
 
 @customElement("attendance-setup-form-day")
 export class AttendanceSetupFormDay extends LitElement {
-  constructor() { super(); }
+  constructor() {
+    super();
+  }
 
   //  @query(identifier)
   //  private _identifier?: any;
@@ -206,6 +210,14 @@ export class AttendanceSetupFormDay extends LitElement {
                   <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
                     <div class="mdc-data-table__header-cell-wrapper">
                       <div class="mdc-data-table__header-cell-label">
+                        Start Date
+                      </div>
+                      <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
+                    </div>
+                  </th>
+                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
+                    <div class="mdc-data-table__header-cell-wrapper">
+                      <div class="mdc-data-table__header-cell-label">
                         End Date
                       </div>
                       <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
@@ -240,20 +252,23 @@ export class AttendanceSetupFormDay extends LitElement {
   private get getMeetingAttendanceDays() {
     return html`
       ${this._scheduleDays.map((item, i) => {
-        return html`
+      return html`
           <tr class="mdc-data-table__row">
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
               ${until(this.getDayOfWeek(item.dayId), html`<span>Loading...</span>`)}
             </th>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${getDate(item.endDate, {dateStyle: "medium"})}
+              ${getDate(item.startDate, { dateStyle: "medium" })}
+            </td>
+            <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
+              ${getDate(item.endDate, { dateStyle: "medium" })}
             </td>
             <td class="mdc-data-table__cell mdc-data-table__cell--numeric !py-1" scope="row">
               <mwc-icon-button class="ml-1 danger" icon="delete_forever" delete-this-item="${item.id}" @click="${this.deleteQuestionnaireMeetingAttendanceDay}"></mwc-icon-button>
             </td>
           </tr>
         `;
-      })}
+    })}
     `;
   }
 
@@ -274,14 +289,16 @@ export class AttendanceSetupFormDay extends LitElement {
               </header>
               <form method="post" action="#" class="form mt-0" make-general-posts="add-schedule-day">
                 <div class="p-0 m-0" show-dayField="all">
-                  ${this.dayFieldDefault(0)}
+                  <day-multiple-inputs-component .daysOfWeek="${this._daysOfWeek}" 
+                    meetingEventId="${this.meetingEventId}">
+                  </day-multiple-inputs-component>
                 </div>
                 <div class="row justify-content-center">
                   <div class="col-md-12 col-lg-12">
                     <input type="hidden" name="clientId" id="clientId" value="${this.CLIENT_ID}"/>
                     <input type="hidden" name="meetingEventId" id="meetingEventId" value="${this.meetingEventId}"/>
                     <div class="form-input-container">
-                      <mwc-button label="Add Day" raised class="button" @click="${this.submitForm}">
+                      <mwc-button label="Submit Day(s)" raised class="button" @click="${this.submitForm}">
                       </mwc-button>
                     </div>
 
@@ -311,18 +328,30 @@ export class AttendanceSetupFormDay extends LitElement {
     return html`
       <div class="container my-4">
         <div class="row justify-center">
-          <div class="col-md-6 col-lg-6">
+          <div class="col-md-6 col-lg-4">
             <h4 class="font-semibold my-2">Select Day</h4>
             <mwc-select name="dayId" class="w-full" id="dayId" label="Select Day" outlined required>
               <mwc-list-item value="">Select Day</mwc-list-item>
               ${html`${daysOfWeek__}`}
             </mwc-select>
           </div>
-          <div class="col-md-6 col-lg-6">
-            <h4 class="font-semibold my-2">Select End Date</h4>
-            <mwc-textfield name="endDate" multiple type="date" class="w-full" id="endDate"
-              label="Select Date" outlined required>
-            </mwc-textfield>
+          <div class="col-md-6 col-lg-8">
+            <div class="container px-0">
+              <div class="row justify-center">
+                <div class="col-md-12 col-lg-6">
+                  <h4 class="font-semibold my-2">Select Start Date</h4>
+                  <mwc-textfield name="startDate" multiple type="date" class="w-full" id="startDate"
+                    label="Select Date" outlined required>
+                  </mwc-textfield>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                  <h4 class="font-semibold my-2">Select End Date</h4>
+                  <mwc-textfield name="endDate" multiple type="date" class="w-full" id="endDate"
+                    label="Select Date" outlined required>
+                  </mwc-textfield>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -336,19 +365,19 @@ export class AttendanceSetupFormDay extends LitElement {
     `;
   }
 
-  private addDayField() {    
+  private addDayField() {
     const count = this.showDayFieldAllSelector.children.length,
       // @ts-ignore
       lastIndex = count === 0 ? -1 : Number(this.showDayFieldAllSelector.children[count - 1].getAttribute('dayField-id'));
-      // console.log({lastIndex});
-        
+    // console.log({lastIndex});
+
     const newIndex = lastIndex + 1,
       question = document.createElement('multiple-widgets');
-      question.setAttribute('class', "col-md-12 col-lg-12 mb-3");
-      question.setAttribute('dayField-id', String(newIndex));
+    question.setAttribute('class', "col-md-12 col-lg-12 mb-3");
+    question.setAttribute('dayField-id', String(newIndex));
     // question.setAttribute('widget', this.dayField);
     this.showDayFieldAllSelector.append(question);
-    const elements = this.showDayFieldAllSelector.querySelectorAll('multiple-widgets[dayField-id="'+newIndex+'"]')
+    const elements = this.showDayFieldAllSelector.querySelectorAll('multiple-widgets[dayField-id="' + newIndex + '"]')
     // console.log({ elements })
     const newElem = this.dayField.strings.join('');
     setTimeout(() => {
@@ -381,16 +410,25 @@ export class AttendanceSetupFormDay extends LitElement {
     //   await POST_AttendanceAddScheduleDayMultiple();
     // }
     // await POST_AttendanceAddScheduleDayMultiple();
-    await POST_AttendanceAddScheduleDay();
+    document.querySelectorAll("day-multiple-inputs-component").forEach(async selector => {
+      console.log({ "selector--selector": selector });
+
+      // @ts-ignore
+      const multipleDayObjects = selector.multipleDayObjects;
+      // console.log({ "selector--multipleDayObjects": multipleDayObjects });
+        await POST_AttendanceAddScheduleDayMultipleAlt(multipleDayObjects);
+      
+    });
+    // await POST_AttendanceAddScheduleDay();
   }
 
   async deleteQuestionnaireMeetingAttendanceDay(e: PointerEvent) {
     e.preventDefault();
     // console.log({ e });
-    
+
     // @ts-ignore
     const meetingEventId = Number(e.currentTarget.getAttribute('delete-this-item'));
-    
+
     await DELETE_AttendanceDeleteScheduleDay(meetingEventId);
   }
 
@@ -417,7 +455,7 @@ export class AttendanceSetupFormDay extends LitElement {
     let __scheduleDays: MeetingEventScheduleDay_I[] = [];
 
     if (_networkResponse === null) {
-      __scheduleDays.push({ id: 0, dayId: 0, endDate: new Date()  });
+      __scheduleDays.push({ id: 0, dayId: 0, endDate: new Date() });
     } else {
       if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
         const DATA: MeetingEventScheduleDay_I[] = _networkResponse.response.data;
@@ -436,7 +474,7 @@ export class AttendanceSetupFormDay extends LitElement {
     let __daysOfWeek: DayOfWeek_I[] = [];
 
     if (_networkResponse === null) {
-      __daysOfWeek.push({ id: 0, day: "**NOT FOUND**", date: new Date()  });
+      __daysOfWeek.push({ id: 0, day: "**NOT FOUND**", date: new Date() });
     } else {
       if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
         const DATA: DayOfWeek_I[] = _networkResponse.response.data;
@@ -456,7 +494,7 @@ export class AttendanceSetupFormDay extends LitElement {
       return "???";
     } else {
       if (_networkResponse.response.success && 'day' in _networkResponse.response.data) {
-        
+
         const day_of_week: DayOfWeek_I = _networkResponse.response.data;
         return day_of_week.day;
       } else {

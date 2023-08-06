@@ -1,0 +1,136 @@
+{
+    "id": 5,
+    "meetingEventId": {
+        "id": 5,
+        "type": 1,
+        "memberType": 1,
+        "name": "First Schedule..",
+        "clientId": {
+            "id": 4,
+            "name": "Original Group",
+            "accountType": 1,
+            "country": "Ghana",
+            "stateProvince": "George County",
+            "applicantFirstname": "Test",
+            "applicantSurname": "Group",
+            "applicantGender": 1,
+            "applicantPhone": "1111111111",
+            "applicantEmail": "a@b.c",
+            "applicantDesignationRole": 1,
+            "region": 1,
+            "district": 1,
+            "constituency": 1,
+            "community": "Com",
+            "subscriptionDuration": "2",
+            "subscriptionDate": "2018-01-01 22:38:59",
+            "subscriptionFee": "200",
+            "logo": "http://192.168.173.1/AMG/plus_db/file_bucket/files/clients/logo/4/78805a221a988e79ef3f42d7c5bfd418.jpg",
+            "status": 1,
+            "archive": 0,
+            "accountCategory": {
+                "id": 1,
+                "clientId": 0,
+                "category": "Non-Profit",
+                "createdBy": 0,
+                "updatedBy": 0,
+                "updateDate": null,
+                "date": null
+            },
+            "website": "",
+            "creationDate": "2020-01-01T22:38:59Z",
+            "updatedBy": 3,
+            "updateDate": "2023-05-13T12:59:36Z",
+            "subscriptionInfo": {
+                "id": 17,
+                "client": "Original Group",
+                "client_id": "4",
+                "subscription_id": "ASL20230024",
+                "subscribed_modules": {
+                    "Module 1": {
+                        "module_id": 5,
+                        "module_name": "Database Manager",
+                        "expires_on": "2027-02-01T00:00:00Z",
+                        "amount_paid": 65.0
+                    },
+                    "Module 2": {
+                        "module_id": 7,
+                        "module_name": "Attendance Manager",
+                        "expires_on": "2027-02-01T00:00:00Z",
+                        "amount_paid": 65.0
+                    }
+                },
+                "date_created": "2023-02-13"
+            },
+            "countryInfo": [{
+                "id": 76,
+                "name": "Ghana",
+                "short": "GH",
+                "code": "+233"
+            }]
+        },
+        "branchId": {
+            "id": 1,
+            "name": "Main Branch",
+            "accountId": 0,
+            "createdBy": 1,
+            "creationDate": "2022-03-21T17:40:40Z",
+            "updatedBy": 3,
+            "updateDate": "2022-04-26T11:43:35.580177Z"
+        },
+        "memberCategoryId": {
+            "id": 1,
+            "clientId": 0,
+            "category": "Registered Member",
+            "createdBy": 0,
+            "updatedBy": 0,
+            "updateDate": "2022-03-21T20:10:54Z",
+            "date": "2022-03-21T20:10:51Z"
+        },
+        "meetingSpan": 1,
+        "startTime": "10:00:00",
+        "closeTime": "12:00:00",
+        "latenessTime": null,
+        "isRecuring": false,
+        "hasBreakTime": true,
+        "hasDuty": false,
+        "hasOvertime": false,
+        "virtualMeetingLink": "",
+        "virtualMeetingType": 1,
+        "meetingLocation": 1,
+        "expectedMonthlyAttendance": 4,
+        "activeMonthlyAttendance": 3,
+        "agenda": "Agenda",
+        "agendaFile": "",
+        "updatedBy": 3,
+        "updateDate": "2022-03-30T21:19:23.887181Z",
+        "date": "2022-03-30T21:19:23.342530Z",
+        "meetingCategories": [{
+            "id": 5,
+            "meetingEventId": 5,
+            "memberCategoryId": {
+                "id": 1,
+                "clientId": 0,
+                "category": "Registered Member",
+                "createdBy": 0,
+                "updatedBy": 0,
+                "updateDate": "2022-03-21T20:10:54Z",
+                "date": "2022-03-21T20:10:51Z"
+            },
+            "updatedBy": 0,
+            "updateDate": "2023-06-22T09:01:32.633888Z",
+            "date": "2023-06-22T09:01:32.460451Z"
+        }]
+    },
+    "memberCategoryId": {
+        "id": 1,
+        "clientId": 0,
+        "category": "Registered Member",
+        "createdBy": 0,
+        "updatedBy": 0,
+        "updateDate": "2022-03-21T20:10:54Z",
+        "date": "2022-03-21T20:10:51Z"
+    },
+    "updatedBy": 0,
+    "updateDate": "2023-06-22T09:01:32.633888Z",
+    "date": "2023-06-22T09:01:32.460451Z"
+}

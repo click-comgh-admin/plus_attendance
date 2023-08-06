@@ -1,15 +1,23 @@
 <?php
 	// print_r(['IN_PRODUCTION_MODE'=>IN_PRODUCTION_MODE]);
 	$actual_host = $_SERVER['SERVER_ADDR'];
+	$new_host = explode(":", $actual_host)[0];
 	// print_r(['$actual_host' => $actual_host, '$_SERVER[HTTP_HOST]' => $_SERVER['HTTP_HOST']]);
 	if (IN_PRODUCTION_MODE) {
 		define('API_BASE_URL', "https://db-api.akwaabasoftware.com/");
-		define('API_V2_BASE_URL', "https://db-api-v2.akwaabasoftware.com/");
+
+		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com")) {
+			define('API_V2_BASE_URL', "https://db-api-v2-2.akwaabasoftware.com/");
+		} else {
+			define('API_V2_BASE_URL', "https://db-api-v2.akwaabasoftware.com/");
+		}
+		
 	} else {
-		define('API_BASE_URL', "http://$actual_host/AMG/plus_db/api/");
+		define('API_BASE_URL', "http://$new_host/AMG/plus_db/api/");
 		define('API_V2_BASE_URL', "http://127.0.0.1:9001/api/");
 	}
 	// print_r($_SERVER);
+	// print_r(['API_BASE_URL'=>API_BASE_URL]);
 
 	$_SERVER['SERVER_NAME'] = "api.districtdb.com";
 	// // $_SERVER['SERVER_NAME'] = "api.Akwaaba.com";

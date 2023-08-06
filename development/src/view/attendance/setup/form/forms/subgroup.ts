@@ -293,13 +293,20 @@ export class AttendanceSetupFormSubGroup extends LitElement {
 
   private get subgroupField() {
     // console.log({ "this._subgroups": this._subgroups });
+    // const subgroups__ = this._subgroups.map((value) => {
+    //   return html`<mwc-list-item value="${value.id}">
+    //     ${until(this.getGroup(value.groupId), html`<span>Loading...</span>`)} >> 
+    //     ${value.subgroup}
+    //   </mwc-list-item>`;
+    // });
+    //
+    
     const subgroups__ = this._subgroups.map((value) => {
       return html`<mwc-list-item value="${value.id}">
-        ${until(this.getGroup(value.groupId), html`<span>Loading...</span>`)} >> 
+        ${value.groupId.group} >> 
         ${value.subgroup}
       </mwc-list-item>`;
-    });
-    // console.log({ "subgroups__": subgroups__ });
+    });console.log({ "subgroups__": subgroups__ });
     return html`
       <div class="container my-4">
         <div class="row justify-center">

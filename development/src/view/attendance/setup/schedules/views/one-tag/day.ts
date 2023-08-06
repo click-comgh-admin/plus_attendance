@@ -87,6 +87,14 @@ export class AttendanceSetupViewOneDay extends LitElement {
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
                   <div class="mdc-data-table__header-cell-wrapper">
                     <div class="mdc-data-table__header-cell-label">
+                      Start Date
+                    </div>
+                    <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
+                  </div>
+                </th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
+                  <div class="mdc-data-table__header-cell-wrapper">
+                    <div class="mdc-data-table__header-cell-label">
                       End Date
                     </div>
                     <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
@@ -137,6 +145,10 @@ export class AttendanceSetupViewOneDay extends LitElement {
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
               ${until(this.getDayOfWeek(item.dayId), html`<span>Loading...</span>`)}
             </th>
+            <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
+              ${getDate(item.startDate, {dateStyle: "medium"})}
+              ${(_index + 1) == __lists.length ? "..." : ""}
+            </td>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
               ${getDate(item.endDate, {dateStyle: "medium"})}
               ${(_index + 1) == __lists.length ? "..." : ""}

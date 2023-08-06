@@ -71,6 +71,10 @@ module.exports = {
         import: './src/view/attendance/setup/form/edit/admin/index.ts',
         dependOn: 'shared',
     },
+    "attendance/setup-form/edit-admin-members": {
+        import: './src/view/attendance/setup/form/edit/admin/members.ts',
+        dependOn: 'shared',
+    },
     "attendance/setup-form/edit-attachment": {
         import: './src/view/attendance/setup/form/edit/attachment/index.ts',
         dependOn: 'shared',
@@ -115,6 +119,22 @@ module.exports = {
         import: './src/view/attendance/setup/form/edit/member/index.ts',
         dependOn: 'shared',
     },
+    "attendance/setup-form/edit-member-groups": {
+        import: './src/view/attendance/setup/form/edit/member/groups/index.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/edit-member-subgroups": {
+        import: './src/view/attendance/setup/form/edit/member/subgroups/index.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/edit-member-days": {
+        import: './src/view/attendance/setup/form/edit/member/days/index.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-form/edit-member-dates": {
+        import: './src/view/attendance/setup/form/edit/member/dates/index.ts',
+        dependOn: 'shared',
+    },
     "attendance/setup-form/edit-sms": {
         import: './src/view/attendance/setup/form/edit/sms/index.ts',
         dependOn: 'shared',
@@ -133,6 +153,10 @@ module.exports = {
     },
     "attendance/setup-view/schedule": {
         import: './src/view/attendance/setup/schedules/one.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-view/categories": {
+        import: './src/view/attendance/setup/categories/index.ts',
         dependOn: 'shared',
     },
 

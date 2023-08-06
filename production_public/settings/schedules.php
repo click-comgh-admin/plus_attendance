@@ -48,6 +48,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php //print_r(['$user_info'=>$user_info]); ?>
                         <attendance-setup-view-schedules email="<?= $user_info['pdcu_email']; ?>" 
                             mid="<?= $user_info['pdcu_id']; ?>" clientId="<?= $user_info['pdcu_account_id']; ?>">
                         </attendance-setup-view-schedules>

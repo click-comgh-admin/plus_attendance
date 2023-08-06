@@ -1,10 +1,7 @@
 import '@@assets/styles/views/widget/simple-table/main.scss';
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement, property, query, queryAll } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import '@material/mwc-button';
-// import '@material/mwc-select';
-// import '@material/mwc-textarea';
-// import '@material/mwc-textfield';
 import '@material/mwc-circular-progress';
 import '@@addons/widgets/form/new/switch';
 import '@@addons/widgets/add_remove_widget';
@@ -15,38 +12,26 @@ import { GET_AttendanceSchedule } from '@@addons/network/attendance/setup/schedu
 import { urlQueryParams, urlQueryParamsGet } from '@@addons/functions/url_query_params';
 import { MeetingEventSchedule_I } from '@@addons/interfaces/attendance/meeting_event/schedules';
 import { NetworkCallPaginResponse_I, NetworkCallResponse_I } from '@@addons/interfaces/network_calls/response';
-// import { POST_AttendanceAddScheduleLocationMultiple } from '@@addons/network/attendance/setup/location/post_multiple';
-// import { PUT_AttendanceUpdateScheduleLocationMultiple } from '@@addons/network/attendance/setup/location/put_multiple';
 import { DELETE_AttendanceDeleteScheduleLocation } from '@@addons/network/attendance/setup/location/delete';
+import { POST_AttendanceAddScheduleLocationBulk } from '@@addons/network/attendance/setup/location/post_bulk';
 import { MeetingEventScheduleLocation_I } from '@@addons/interfaces/attendance/meeting_event/location';
 import { ClientUsers_I } from '@@addons/interfaces/clients/users';
-import { GET_ClientUsers } from '@@addons/network/clients/users';
 import '@@addons/widgets/form/new/select';
 import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
+//@ts-ignore
 import { QueryOptions } from 'select2';
-// import { Select } from '@material/mwc-select';
-import { POST_AttendanceAddScheduleLocation } from '@@addons/network/attendance/setup/location/post';
-import { getUserLoginInfoCookie } from '@@addons/functions/login';
+import '../edit/location/multiple';
 
 
 @customElement("attendance-setup-form-location")
 export class AttendanceSetupFormLocation extends LitElement {
   constructor() { super(); }
 
-  //  @query(identifier)
-  //  private _identifier?: any;
-
-  //  @queryAll(identifier)
-  //  private _identifier?: any;
-
   @property({ type: Number })
   public CLIENT_ID: number = 0;
 
   @property({ type: Number })
   private startSearchPage: number = 0;
-
-  // @property({ type: Array })
-  // private _locationUser: ClientUsers_I[] = [];
 
   private __locationUser: NetworkCallPaginResponse_I<ClientUsers_I> = null;
 
@@ -196,6 +181,14 @@ export class AttendanceSetupFormLocation extends LitElement {
                   <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
                     <div class="mdc-data-table__header-cell-wrapper">
                       <div class="mdc-data-table__header-cell-label">
+                        Location Name
+                      </div>
+                      <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
+                    </div>
+                  </th>
+                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col" aria-sort="ascending">
+                    <div class="mdc-data-table__header-cell-wrapper">
+                      <div class="mdc-data-table__header-cell-label">
                         Latitude
                       </div>
                       <div class="mdc-data-table__sort-status-label" aria-hidden="true"></div>
@@ -249,8 +242,11 @@ export class AttendanceSetupFormLocation extends LitElement {
         return html`
           <tr class="mdc-data-table__row">
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${item.latitude}
+              ${item.locationName}
             </th>
+            <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
+              ${item.latitude}
+            </td>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
               ${item.longitude}
             </td>
@@ -283,7 +279,8 @@ export class AttendanceSetupFormLocation extends LitElement {
               </header>
               <form method="post" action="#" class="form mt-0" make-general-posts="add-schedule-location">
                 <div class="p-0 m-0" show-locationField="all">
-                  ${this.locationFieldDefault(0)}
+                  <meeting-location-multiple-inputs-component meetingEventId="${this.meetingEventId}">
+                  </meeting-location-multiple-inputs-component>
                 </div>
                 <div class="row justify-content-center">
                   <div class="col-md-12 col-lg-12">
@@ -311,69 +308,6 @@ export class AttendanceSetupFormLocation extends LitElement {
     `;
   }
 
-  private get locationField() {
-    let ajaxHeader: {Authorization?: string} = {};
-    const _get_cookie = getUserLoginInfoCookie();
-    ajaxHeader.Authorization = "Token " + _get_cookie.token;
-    // console.log({ajaxHeader: ajaxHeader});
-    return html`
-      <div class="container my-4">
-        <div class="row justify-center">
-          <div class="col-md-6 col-lg-6">
-            <h4 class="font-semibold my-2">Select Latitude</h4>
-            <mwc-textfield name="latitude" type="number" step="0.01" class="w-full" id="latitude" label="Enter Latitude" outlined required>
-            </mwc-textfield>
-          </div>
-          <div class="col-md-6 col-lg-6">
-            <h4 class="font-semibold my-2">Select Longitude</h4>
-            <mwc-textfield name="longitude" type="number" step="0.01" class="w-full" id="longitude" label="Enter Longitude" outlined required>
-            </mwc-textfield>
-          </div>
-          <div class="col-md-6 col-lg-6">
-            <h4 class="font-semibold my-2">Select Radius</h4>
-            <mwc-textfield name="radius" type="number" step="0.01" class="w-full" id="radius" label="Enter Radius" outlined required>
-            </mwc-textfield>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  private locationFieldDefault(number: number) {
-    return html`
-      <multiple-widgets class="col-md-12 col-lg-12 mb-3" .widget=${this.locationField}
-        locationField-id="${number}" no_delete></multiple-widgets>
-    `;
-  }
-
-  private addLocationField() {    
-    const count = this.showLocationFieldAllSelector.children.length,
-      // @ts-ignore
-      lastIndex = count === 0 ? -1 : Number(this.showLocationFieldAllSelector.children[count - 1].getAttribute('locationField-id'));
-      // console.log({lastIndex});
-        
-    const newIndex = lastIndex + 1,
-      question = document.createElement('multiple-widgets');
-      question.setAttribute('class', "col-md-12 col-lg-12 mb-3");
-      question.setAttribute('locationField-id', String(newIndex));
-    // question.setAttribute('widget', this.locationField);
-    this.showLocationFieldAllSelector.append(question);
-    const elements = this.showLocationFieldAllSelector.querySelectorAll('multiple-widgets[locationField-id="'+newIndex+'"]')
-    // console.log({ elements })
-    const newElem = this.locationField.strings.join('');
-    setTimeout(() => {
-      elements.forEach(element => {
-        // console.log({ element })
-        const mainElements = element.querySelectorAll('main');
-        // console.log({ mainElements })
-        mainElements.forEach(main => {
-          // console.log({ main, newIndex })
-          main.innerHTML = newElem;
-        });
-      });
-    });
-  }
-
   firstUpdated() {
     this.querySelectorAll('[mdc-data-table="data-table"]').forEach((selector) => {
       const dataTable = new MDCDataTable(selector);
@@ -382,43 +316,18 @@ export class AttendanceSetupFormLocation extends LitElement {
     });
   }
 
-  private async getLocationUsers() {
-    const _networkResponse = await GET_ClientUsers<ClientUsers_I>();
-    let __locationUsers: ClientUsers_I[] = [];
-
-    if (_networkResponse === null) {
-      this._locationUser = undefined;
-    } else {
-      this._locationUser = _networkResponse.paginResponse;
-    }
-  }
-
-  private async getLocationUser(ID: number) {
-    const _networkResponse = await GET_ClientUsers<ClientUsers_I>(ID);
-    if (_networkResponse === null) {
-      return "???";
-    } else {
-      if (_networkResponse.response.success && 'dateOfBirth' in _networkResponse.response.data) {
-        // console.log({ "_networkResponse.response": _networkResponse.response })
-        
-        const user: ClientUsers_I = _networkResponse.response.data;
-        // console.log({ "user.firstname user.surname": user.firstname + " " + user.surname })
-        return user.firstname + " " + user.surname;
-      } else {
-        return _networkResponse.response.message;
-      }
-    }
-  }
-
   async submitForm(e: PointerEvent) {
     e.preventDefault();
-    // console.log({ e });
-    // if (this._scheduleLocations.count > 0) {
-    //   await PUT_AttendanceUpdateScheduleLocationMultiple(this.meetingEventId);
-    // } else {
-    //   await POST_AttendanceAddScheduleLocationMultiple();
-    // }
-    await POST_AttendanceAddScheduleLocation();
+    // await POST_AttendanceAddScheduleLocation();
+    document.querySelectorAll("meeting-location-multiple-inputs-component").forEach(async selector => {
+      console.log({ "selector--selector": selector });
+
+      // @ts-ignore
+      const multipleDayObjects = selector.multipleDayObjects;
+      // console.log({ "selector--multipleDayObjects": multipleDayObjects });
+      await POST_AttendanceAddScheduleLocationBulk(multipleDayObjects);
+
+    });
   }
 
   async deleteQuestionnaireMeetingAttendanceLocation(e: PointerEvent) {

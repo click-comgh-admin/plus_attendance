@@ -17,12 +17,6 @@ export class AttendanceSetupFormEditMember extends LitElement {
     super();
   }
 
-  //  @query(identifier)
-  //  private _identifier?: any;
-
-  //  @queryAll(identifier)
-  //  private _identifier?: any;
-
   @property({ type: String })
   public email?: string;
 

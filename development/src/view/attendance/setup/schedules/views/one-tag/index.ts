@@ -250,7 +250,9 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
             Member Category
           </th>
           <td class="mdc-data-table__cell" scope="row">
-            ${DATA.memberCategoryId.category}
+            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/categories?meeting-event-id=${this.meetingEventId}">
+              <mwc-button class="button warning mr-2">Categories</mwc-button>
+            </a>
           </td>
         </tr>
         <tr class="mdc-data-table__row">
@@ -365,9 +367,13 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
             Meeting Day Agenda
           </th>
           <td class="mdc-data-table__cell" scope="row">
-            <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
+                
+            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}">
+              <mwc-button class="button success mr-2">Agenda(s)</mwc-button>
+            </a>
+            ${/** <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
               href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"
-              label="Agenda(s)"></link-button>
+                label="Agenda(s)"></link-button> */ ""}
           </td>
         </tr>
       `;

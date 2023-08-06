@@ -512,6 +512,7 @@ class ClickComApi
             } else if ($all === "one_client") {
                 $response = curlCall($this->base_url . $this->client_membership . "/" . $all . "?id=" . $account_id, $curl);
             } else if ($all === "one_user") {
+                // print_r(['$this->base_url . $this->client_membership . "/" . $all . "?id=" . $id'=> $this->base_url . $this->client_membership . "/" . $all . "?id=" . $id]);
                 $response = curlCall($this->base_url . $this->client_membership . "/" . $all . "?id=" . $id, $curl);
             } else {
                 $response = curlCall($this->base_url . $this->client_membership . "/one_client?id=" . $id, $curl);

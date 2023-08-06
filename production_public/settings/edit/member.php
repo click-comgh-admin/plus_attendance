@@ -17,7 +17,9 @@
 <!doctype html>
 <html lang="en">
     <?php 
-        $cssFiles = '';
+        $cssFiles = '<link rel="stylesheet" href="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/datatables.min.css">
+            <link rel="stylesheet" href="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/select/css/select.dataTables.min.css">
+            <link rel="stylesheet" href="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/responsive/css/responsive.dataTables.min.css">';
         foreach (_Webpack_Pack_['css'] as $key => $cssFile) {
             $cssFiles .= $cssFile;
         }
@@ -55,7 +57,15 @@
             </div>
         </div>
         <?php 
-            $jsFiles = '';
+        $jsFiles = '<script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/datatables.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/buttons/datatables.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/select/js/select.dataTables.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/buttons/js/buttons.dataTables.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/pdfmake/pdfmake.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/pdfmake/vfs_fonts.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/jszip/jszip.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/responsive/datatables.min.js"></script>
+            <script src="'.CLIENT_BASE_URL.'assets/v2/3rd-party/datatables/extensions/responsive/js/responsive.dataTables.min.js"></script>';
             foreach (_Webpack_Pack_Shared_['js'] as $key => $jsFile) {
                 $jsFiles .= $jsFile;
             }

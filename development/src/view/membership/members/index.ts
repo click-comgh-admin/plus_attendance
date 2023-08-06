@@ -815,6 +815,7 @@ export class PdbMembershipMembers extends LitElement {
       'processing': true,
       'serverSide': true,
       'ajax': {
+        // @ts-ignore
         url: url,
         dataSrc: 'data',
         apiType: "akwaabaApp",

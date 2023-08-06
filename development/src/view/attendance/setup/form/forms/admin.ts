@@ -25,10 +25,12 @@ import { GET_ClientUsers } from '@@addons/network/clients/users';
 import '@@addons/widgets/form/new/select';
 import { CONSTANTS } from '@@addons/constants';
 import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
+// @ts-ignore
 import { QueryOptions } from 'select2';
 // import { Select } from '@material/mwc-select';
 import { POST_AttendanceAddScheduleAdmin } from '@@addons/network/attendance/setup/admin/post';
 import { getUserLoginInfoCookie } from '@@addons/functions/login';
+import { NavigatorRouter } from '@@addons/classes/navigator';
 
 
 @customElement("attendance-setup-form-admin")
@@ -259,7 +261,7 @@ export class AttendanceSetupFormAdmin extends LitElement {
         return html`
           <tr class="mdc-data-table__row">
             <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${until(this.getAdminUser(item.adminId), html`<span>Loading...</span>`)}
+              <p class="py-2">${until(this.getAdminUser(item.adminId), html`<span>Loading...</span>`)}</p>
             </th>
             <th class="mdc-data-table__cell" scope="row">
               ${item.meetingEditor ? html`<mwc-icon class="text-green-600">check</mwc-icon>`: html`<mwc-icon class="text-red-600">close</mwc-icon>`}
@@ -271,6 +273,10 @@ export class AttendanceSetupFormAdmin extends LitElement {
               ${item.clockingAdmin ? html`<mwc-icon class="text-green-600">check</mwc-icon>`: html`<mwc-icon class="text-red-600">close</mwc-icon>`}
             </th>
             <td class="mdc-data-table__cell mdc-data-table__cell--numeric !py-1" scope="row">
+              <a href="${NavigatorRouter.baseUrl}settings/edit/admin-members?meeting-event-id=${this.meetingEventId}&meeting-admin-id=${item.id}">
+                <mwc-button raised class="ml-1 py-2 info" icon="people" label="Members" delete-this-item="${item.id}">
+                </mwc-button>
+              </a>
               <mwc-icon-button class="ml-1 danger" icon="delete_forever" delete-this-item="${item.id}" @click="${this.deleteQuestionnaireMeetingAttendanceAdmin}"></mwc-icon-button>
             </td>
           </tr>

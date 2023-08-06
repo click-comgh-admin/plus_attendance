@@ -1,11 +1,14 @@
 import { SelectInputOptions_I, SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I } from '@@addons/interfaces/form/select-input';
+// @ts-ignore
 import * as $ from 'jquery'
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import 'select2';
+// @ts-ignore
 import { ProcessedResult, QueryOptions, DataParams, Event } from 'select2';
 import '../../../../assets/styles/views/widget/select_input/select_input.scss';
 
+export type filterSelectType = { id: number | ""; name: string; isSelected: "true" | "false"; selected: boolean; };
 
 @customElement('select-input')
 export class SelectInput extends LitElement {
@@ -26,7 +29,7 @@ export class SelectInput extends LitElement {
   public input_id?: string = this.id + "_" + this.randomID;
 
   @property({ type: Array })
-  public options?: { id: number, name: string, isSelected?: "true" | "false", selected: boolean }[] = [];
+  public options?: filterSelectType[] = [];
 
   @property({ type: Boolean })
   public required?: boolean;
@@ -68,6 +71,7 @@ export class SelectInput extends LitElement {
   public multiple?: boolean;
 
   private selectSelector: NodeListOf<HTMLSelectElement>;
+  // @ts-ignore
   private $selectSelector: JQuery<HTMLSelectElement>;
 
   @property({ type: Number })
@@ -239,6 +243,7 @@ export class SelectInput extends LitElement {
 
     this.startSearchPage = isNaN(params.page) ? 0 : params.page;
     this.startSearchPage = this.startSearchPage === 0 ? this.startSearchPage : this.startSearchPage * totalShowing;
+    // @ts-ignore
     $('.select2-search__field').on('keyup', function ($this) {
       $(_this.selectSelector).empty();
       _this.startSearchPage = 0
@@ -253,7 +258,7 @@ export class SelectInput extends LitElement {
     const _this = this;
     let totalShowing = this.totalShowing,
       startSearchPage = this.startSearchPage;
-
+// @ts-ignore
       function _start(params: any, S2: JQuery<HTMLSelectElement>) {
         // console.log({ _this });
   
@@ -261,6 +266,7 @@ export class SelectInput extends LitElement {
   
         startSearchPage = isNaN(params.page) ? 0 : params.page;
         startSearchPage = startSearchPage === 0 ? startSearchPage : startSearchPage * totalShowing;
+        // @ts-ignore
         $('.select2-search__field').on('keyup', function ($this) {
           $(_this.selectSelector).empty();
           startSearchPage = 0
@@ -270,14 +276,15 @@ export class SelectInput extends LitElement {
   
         return startSearchPage;
       }
-
+// @ts-ignore
       function _page(params: any, S2: JQuery<HTMLSelectElement>) {
         // console.log({ _this });
   
         // totalShowing = 0;
   
         let startSearchPage = isNaN(params.page) ? 1 : params.page + 1;
-        startSearchPage = startSearchPage === 0? 1 : startSearchPage;
+        startSearchPage = startSearchPage === 0 ? 1 : startSearchPage;
+        // @ts-ignore
         $('.select2-search__field').on('keyup', function ($this) {
           $(_this.selectSelector).empty();
           startSearchPage = 0
@@ -298,6 +305,7 @@ export class SelectInput extends LitElement {
             // @ts-ignore
             placeholder: this.label,
           });
+          // @ts-ignore
           $(selectSelector).on('select2:select', (e) => {
             this.changeAction(e)
           })
@@ -320,6 +328,7 @@ export class SelectInput extends LitElement {
         // console.log({"this.selectSelector": this.selectSelector})
         this.selectSelector.forEach(selectSelector => {
           // console.log({"selectSelector-2": selectSelector})
+          // @ts-ignore
           const S2: JQuery<HTMLSelectElement> = $(selectSelector).select2({
             closeOnSelect: false,
             ajax: {
@@ -366,6 +375,7 @@ export class SelectInput extends LitElement {
             },
             placeholder: this.label,
           });
+          // @ts-ignore
           S2.on('select2:opening', (e) => {
             // console.log({ e });
             startSearchPage = 0

@@ -1,7 +1,13 @@
 <?php
 	$actual_host = $_SERVER['SERVER_ADDR'];
 	if (IN_PRODUCTION_MODE) {
-		define('CLIENT_BASE_URL', "https://clock.akwaabasoftware.com/");
+
+		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com")) {
+			define('CLIENT_BASE_URL', "https://clock-2.akwaabasoftware.com/");
+		} else {
+			define('CLIENT_BASE_URL', "https://clock.akwaabasoftware.com/");
+		}
+		
 	} else {
 		// define('CLIENT_BASE_URL', "http://$actual_host/AMG/plus_db/client_dashboard/");
 		define('CLIENT_BASE_URL', "http://$actual_host:83/");
