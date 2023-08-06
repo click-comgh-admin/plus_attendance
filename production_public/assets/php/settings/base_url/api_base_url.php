@@ -6,7 +6,7 @@
 	if (IN_PRODUCTION_MODE) {
 		define('API_BASE_URL', "https://db-api.akwaabasoftware.com/");
 
-		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com")) {
+		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com") !== false) {
 			define('API_V2_BASE_URL', "https://db-api-v2-2.akwaabasoftware.com/");
 		} else {
 			define('API_V2_BASE_URL', "https://db-api-v2.akwaabasoftware.com/");

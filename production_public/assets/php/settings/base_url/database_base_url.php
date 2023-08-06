@@ -2,7 +2,7 @@
 	$actual_host = $_SERVER['SERVER_ADDR'];
 	if (IN_PRODUCTION_MODE) {
 
-		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com")) {
+		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com") !== false) {
 			define('DATABASE_BASE_URL', "https://database-2.akwaabasoftware.com/");
 		} else {
 			define('DATABASE_BASE_URL', "https://database.akwaabasoftware.com/");
