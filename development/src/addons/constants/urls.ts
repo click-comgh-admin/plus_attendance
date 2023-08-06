@@ -9,6 +9,7 @@ let _BASE_URL: string, _API_BASE_URL: string,
 
 if (APP_SETTINGS.production) {
   const DOMAIN_ADDRESS = window.location.origin.replace(/^https?:\/\//, '');
+  console.log({DOMAIN_ADDRESS, 'DOMAIN_ADDRESS.includes("-2.akwaabasoftware.com")': DOMAIN_ADDRESS.includes("-2.akwaabasoftware.com")})
 
   const BaseUrl = "akwaabasoftware.com/";
   _API_BASE_URL = "https://db-api.akwaabasoftware.com/";
