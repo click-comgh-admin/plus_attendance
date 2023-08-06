@@ -3,9 +3,9 @@
 	if (IN_PRODUCTION_MODE) {
 
 		if (strpos($_SERVER['HTTP_HOST'], "-2.akwaabasoftware.com")) {
-			define('CLIENT_BASE_URL', "https://database-2.akwaabasoftware.com/");
+			define('DATABASE_BASE_URL', "https://database-2.akwaabasoftware.com/");
 		} else {
-			define('CLIENT_BASE_URL', "https://database.akwaabasoftware.com/");
+			define('DATABASE_BASE_URL', "https://database.akwaabasoftware.com/");
 		}
 		
 	} else {
