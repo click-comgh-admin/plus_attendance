@@ -21,6 +21,8 @@ import { SelectInputProcessedAjaxResponse_I, SelectInputProcessedAjaxUrlParam_I 
 //@ts-ignore
 import { QueryOptions } from 'select2';
 import '../edit/location/multiple';
+import '../edit/location/edit';
+import { MeetingLocationFormInputValues } from '../edit/location/edit';
 
 
 @customElement("attendance-setup-form-location")
@@ -83,6 +85,9 @@ export class AttendanceSetupFormLocation extends LitElement {
 
   @query('[show-locationField="all"]')
   private showLocationFieldAllSelector: Element;
+
+  @property({ attribute: false })
+  private inputValues?: MeetingLocationFormInputValues = null;
 
   async connectedCallback() {
     super.connectedCallback();
@@ -245,15 +250,16 @@ export class AttendanceSetupFormLocation extends LitElement {
               ${item.locationName}
             </th>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${item.latitude}
+              ${item.latitude} <small><span class="text-yellow-600 text-xs">Kilometers</span></small>
             </td>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${item.longitude}
+              ${item.longitude} <small><span class="text-yellow-600 text-xs">Kilometers</span></small>
             </td>
             <td class="mdc-data-table__cell whitespace-pre-line" scope="row">
-              ${item.radius}
+              ${item.radius} <small><span class="text-yellow-600 text-xs">Kilometers</span></small>
             </td>
             <td class="mdc-data-table__cell mdc-data-table__cell--numeric !py-1" scope="row">
+              <mwc-icon-button class="ml-1 success" icon="edit" @click="${(e: PointerEvent) => this.editThisLocation(e, item)}"></mwc-icon-button>
               <mwc-icon-button class="ml-1 danger" icon="delete_forever" delete-this-item="${item.id}" @click="${this.deleteQuestionnaireMeetingAttendanceLocation}"></mwc-icon-button>
             </td>
           </tr>
@@ -305,7 +311,11 @@ export class AttendanceSetupFormLocation extends LitElement {
           </div>
         </div>
       </div>
+      <div class="p-2 block">
+        <meeting-location-edit-component .inputValues="${this.inputValues}"></meeting-location-edit-component>
+      </div>
     `;
+     
   }
 
   firstUpdated() {
@@ -313,6 +323,19 @@ export class AttendanceSetupFormLocation extends LitElement {
       const dataTable = new MDCDataTable(selector);
 
       // console.log({ dataTable: dataTable })
+    });
+  }
+
+  async editThisLocation(e: PointerEvent, item: MeetingEventScheduleLocation_I) {
+    e.preventDefault();
+    // console.log({ e });
+    
+    this.inputValues = MeetingLocationFormInputValues.setValues({
+      locationId: item.id,
+      locationNameValue: item.locationName,
+      radiusValue: String(item.radius),
+      latitudeValue: String(item.latitude),
+      longitudeValue: String(item.longitude),
     });
   }
 

@@ -314,25 +314,25 @@ export class AttendanceSetupFormMember extends LitElement {
           <div class="md:hidden block">
             <mwc-tab-bar activeIndex="${this.currentIndex.valueOf()}">
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="album" id="allStatusDisplayBtn"
-                label="Status" @click="${this.displayAllStatus}"></mwc-tab>
+                label="All" @click="${this.displayAllStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="check_circle" id="assignedStatusDisplayBtn"
-                label="Status" @click="${this.displayAssignedStatus}"></mwc-tab>
+                label="Assigned" @click="${this.displayAssignedStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="circle" id="unassignedStatusDisplayBtn"
-                label="Status" @click="${this.displayUnassignedStatus}"></mwc-tab>
+                label="Unassigned" @click="${this.displayUnassignedStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="timer" id="pendingStatusDisplayBtn"
-                label="Status" @click="${this.displayPendingStatus}"></mwc-tab>
+                label="Pending" @click="${this.displayPendingStatus}"></mwc-tab>
             </mwc-tab-bar>
           </div>
           <div class="md:block hidden">
             <mwc-tab-bar activeIndex="${this.currentIndex.valueOf()}">
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="album" id="allStatusDisplayBtn"
-                label="Status :: All" @click="${this.displayAllStatus}"></mwc-tab>
+                label="All" @click="${this.displayAllStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="check_circle" id="assignedStatusDisplayBtn"
-                label="Status :: Assigned" @click="${this.displayAssignedStatus}"></mwc-tab>
+                label="Assigned" @click="${this.displayAssignedStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="circle" id="unassignedStatusDisplayBtn"
-                label="Status :: Unassigned" @click="${this.displayUnassignedStatus}"></mwc-tab>
+                label="Unassigned" @click="${this.displayUnassignedStatus}"></mwc-tab>
               <mwc-tab stacked isMinWidthIndicator isFadingIndicator minWidth icon="timer" id="pendingStatusDisplayBtn"
-                label="Status :: Pending" @click="${this.displayPendingStatus}"></mwc-tab>
+                label="Pending" @click="${this.displayPendingStatus}"></mwc-tab>
             </mwc-tab-bar>
           </div>
           <hr class="mt-3 mb-2"/>

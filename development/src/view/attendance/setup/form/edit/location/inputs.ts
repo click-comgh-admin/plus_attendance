@@ -37,7 +37,7 @@ export class MeetingLocationInputsComponent extends LitElement {
       <div class="container my-4" id="form_input--${this.inputId}">
         <div class="row justify-center">
           <div class="col-md-6 col-lg-4">
-            <h4 class="font-semibold my-2">Select Location Name</h4>
+            <h4 class="font-semibold my-2">Enter Location Name</h4>
             <mwc-textfield name="locationName" type="text" class="w-full"
               id="locationName--${this.inputId}" label="Enter Location Name" outlined required
               @change="${this.handleLocationNameChange}">
@@ -47,19 +47,19 @@ export class MeetingLocationInputsComponent extends LitElement {
             <div class="container px-0">
               <div class="row justify-center">
                 <div class="col-md-12 col-lg-4">
-                  <h4 class="font-semibold my-2">Select Radius</h4>
+                  <h4 class="font-semibold my-2">Enter Radius <small><span class="text-yellow-600 text-xs">Kilometers</span></small></h4>
                   <mwc-textfield name="radius" type="number" step="0.01" class="w-full" id="radius--${this.inputId}"
                     label="Enter Radius" outlined required @change="${this.handleRadiusChange}">
                   </mwc-textfield>
                 </div>
                 <div class="col-md-12 col-lg-4">
-                  <h4 class="font-semibold my-2">Select Latitude</h4>
+                  <h4 class="font-semibold my-2">Enter Latitude <small><span class="text-yellow-600 text-xs">Kilometers</span></small></h4>
                   <mwc-textfield name="latitude" type="number" step="0.01" class="w-full"
                     id="latitude--${this.inputId}" label="Enter Latitude" outlined required @change="${this.handleLatitudeChange}">
                   </mwc-textfield>
                 </div>
                 <div class="col-md-12 col-lg-4">
-                  <h4 class="font-semibold my-2">Select Longitude</h4>
+                  <h4 class="font-semibold my-2">Enter Longitude <small><span class="text-yellow-600 text-xs">Kilometers</span></small></h4>
                   <mwc-textfield name="longitude" type="number" step="0.01" class="w-full"
                     id="longitude--${this.inputId}" label="Enter Longitude" outlined required @change="${this.handleLongitudeChange}">
                   </mwc-textfield>
