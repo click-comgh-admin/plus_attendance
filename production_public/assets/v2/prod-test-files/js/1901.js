@@ -87,6 +87,9 @@
       <link-button isblockcontent="false" aClass="" bClass="button danger mr-2"
         href="${r.t.URLS.PDB_CLIENT}settings/edit/sms?meeting-event-id=${this.meetingEventId}"
         label="Edit SMS"></link-button>
+      <link-button isblockcontent="false" aClass="" bClass="button warning mr-2"
+        href="${r.t.URLS.PDB_CLIENT}settings/categories?meeting-event-id=${this.meetingEventId}"
+        label="Edit Categories"></link-button>
     `}firstUpdated(){}getMeetingEventId(){let e=(0,s.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}createRenderRoot(){return this}};c.styles=[i.iv`
    :host { display: block; }
   `],a([(0,o.Cb)({type:Number}),l("design:type",Number)],c.prototype,"meetingEventId",void 0),c=a([(0,o.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],c)}}]);

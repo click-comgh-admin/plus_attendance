@@ -88,6 +88,9 @@
       <link-button isblockcontent="false" aClass="" bClass="button danger mr-2"
         href="${o.t.URLS.PDB_CLIENT}settings/edit/sms?meeting-event-id=${this.meetingEventId}"
         label="Edit SMS"></link-button>
+      <link-button isblockcontent="false" aClass="" bClass="button warning mr-2"
+        href="${o.t.URLS.PDB_CLIENT}settings/categories?meeting-event-id=${this.meetingEventId}"
+        label="Edit Categories"></link-button>
     `}firstUpdated(){}getMeetingEventId(){let t=(0,a.Jx)("meeting-event-id"),e=null!==t?Number(t):null;this.meetingEventId=Number.isNaN(e)?null:e}createRenderRoot(){return this}};c.styles=[n.iv`
    :host { display: block; }
   `],r([(0,s.Cb)({type:Number}),d("design:type",Number)],c.prototype,"meetingEventId",void 0),c=r([(0,s.Mo)("attendance-setup-form-edit-links"),d("design:paramtypes",[])],c)},4232:(t,e,i)=>{"use strict";i.d(e,{OR:()=>a,hl:()=>d,pt:()=>o});var n=i(3692);const{I:s}=n.Al,o=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a=t=>void 0===t.strings,r={},d=(t,e=r)=>t._$AH=e},8082:(t,e,i)=>{"use strict";i.d(e,{XM:()=>n.XM,Xe:()=>n.Xe,pX:()=>n.pX});var n=i(875)},3669:(t,e,i)=>{"use strict";i.d(e,{a:()=>a});var n=i(3692),s=i(875),o=i(4232);const a=(0,s.XM)(class extends s.Xe{constructor(t){if(super(t),t.type!==s.pX.PROPERTY&&t.type!==s.pX.ATTRIBUTE&&t.type!==s.pX.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!(0,o.OR)(t))throw Error("`live` bindings can only contain a single expression")}render(t){return t}update(t,[e]){if(e===n.Jb||e===n.Ld)return e;const i=t.element,a=t.name;if(t.type===s.pX.PROPERTY){if(e===i[a])return n.Jb}else if(t.type===s.pX.BOOLEAN_ATTRIBUTE){if(!!e===i.hasAttribute(a))return n.Jb}else if(t.type===s.pX.ATTRIBUTE&&i.getAttribute(a)===e+"")return n.Jb;return(0,o.hl)(t),e}})}}]);

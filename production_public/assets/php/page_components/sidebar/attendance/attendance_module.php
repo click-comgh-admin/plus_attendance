@@ -1,11 +1,11 @@
 <li>
     <a href="<?= CLIENT_BASE_URL; ?>settings/schedules" mm-active="schedules|schedule">
-        <i class="metismenu-icon pe-7s-check"></i> Scheduled Meetings/Events
+        <i class="metismenu-icon pe-7s-check"></i> Schedules/ Events
     </a>
 </li>
 <li>
     <a href="<?= CLIENT_BASE_URL; ?>settings/schedule-form" mm-active="schedule-form">
-        <i class="metismenu-icon pe-7s-check"></i> Create Meetings/Events
+        <i class="metismenu-icon pe-7s-check"></i> Create Schedules/ Events
     </a>
 </li>
 <li>

@@ -546,6 +546,16 @@
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\4351.js.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/4351.js.map"
     },
+    "../../production_public/assets/v2/prod-test-files/js/4735.js": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/4735.js",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\4735.js",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/4735.js"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/4735.js.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/4735.js.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\4735.js.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/4735.js.map"
+    },
     "../../production_public/assets/v2/prod-test-files/js/5703.js": {
       "name": "../../production_public/assets/v2/prod-test-files/js/5703.js",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\5703.js",
@@ -1610,6 +1620,7 @@
       "../../production_public/assets/v2/prod-test-files/js/6069.js",
       "../../production_public/assets/v2/prod-test-files/css/214.css",
       "../../production_public/assets/v2/prod-test-files/css/3901.css",
+      "../../production_public/assets/v2/prod-test-files/js/4735.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/setup-form/edit-agenda.css",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/edit-agenda.js"
     ],
@@ -1876,6 +1887,7 @@
       "../../production_public/assets/v2/prod-test-files/js/6069.js",
       "../../production_public/assets/v2/prod-test-files/css/214.css",
       "../../production_public/assets/v2/prod-test-files/css/3901.css",
+      "../../production_public/assets/v2/prod-test-files/js/4735.js",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/view-agenda.js"
     ],
     "attendance/setup-view": [
