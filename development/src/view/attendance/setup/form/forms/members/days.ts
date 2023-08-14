@@ -1,7 +1,6 @@
 import '@@assets/styles/views/widget/simple-table/main.scss';
 import { LitElement, html, css, TemplateResult } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
-import { until } from 'lit/directives/until.js';
 import '@material/mwc-button';
 import '@material/mwc-circular-progress';
 import '@@addons/widgets/form/new/switch';

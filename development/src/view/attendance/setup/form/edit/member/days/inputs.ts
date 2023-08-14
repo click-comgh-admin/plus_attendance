@@ -26,6 +26,9 @@ export class MemberDayInputsComponent extends LitElement {
   @property({ type: String })
   public endDateValue?: string;
 
+  @property({ type: Boolean })
+  public smallView: boolean = false;
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -49,7 +52,7 @@ export class MemberDayInputsComponent extends LitElement {
     return html`
       <div class="container my-4" id="form_input--${this.inputId}">
         <div class="row justify-center">
-          <div class="col-md-6 col-lg-4">
+          <div class="${this.smallView? 'col-md-12': 'col-md-6 col-lg-4'}">
             <h4 class="font-semibold my-2">Select Day</h4>
             <mwc-select name="dayId" class="w-full" id="dayId--${this.inputId}" label="Select Day" outlined
               required @change="${this.handleDayChange}">
@@ -57,16 +60,16 @@ export class MemberDayInputsComponent extends LitElement {
               ${html`${meetingDays__}`}
             </mwc-select>
           </div>
-          <div class="col-md-6 col-lg-8">
+          <div class="${this.smallView? 'col-md-12': 'col-md-6 col-lg-8'}">
             <div class="container px-0">
               <div class="row justify-center">
-                <div class="col-md-12 col-lg-6">
+                <div class="${this.smallView? 'col-md-12': 'col-md-12 col-lg-6'}">
                   <h4 class="font-semibold my-2">Select Start Date</h4>
                   <mwc-textfield name="startDate" multiple type="date" class="w-full" id="startDate--${this.inputId}"
                     label="Select Date" outlined required @change="${this.handleStartDateChange}" disabled>
                   </mwc-textfield>
                 </div>
-                <div class="col-md-12 col-lg-6">
+                <div class="${this.smallView? 'col-md-12': 'col-md-12 col-lg-6'}">
                   <h4 class="font-semibold my-2">Select End Date</h4>
                   <mwc-textfield name="endDate" multiple type="date" class="w-full" id="endDate--${this.inputId}"
                     label="Select Date" outlined required @change="${this.handleEndDateChange}" disabled>

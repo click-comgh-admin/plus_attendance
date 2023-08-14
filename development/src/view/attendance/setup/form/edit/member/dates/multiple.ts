@@ -37,6 +37,9 @@ export class MemberDateMultipleInputsComponent extends LitElement {
   @property({ type: Array })
   public meetingDates: MeetingEventScheduleDate_I[] = [];
 
+  @property({ type: Boolean })
+  public smallView: boolean = false;
+
   private _inputs: Array<TemplateResult> = [];
 
   private set inputs(value: Array<TemplateResult>) {
@@ -73,7 +76,9 @@ export class MemberDateMultipleInputsComponent extends LitElement {
 
   addInput(event: Event) {
     this.currentObjectCount = this.currentObjectCount + 1;
-    let newInput = html`<member-date-inputs-component date-inputs-component--object="${this.currentObjectCount}" 
+    let newInput = this.smallView? html`<member-date-inputs-component date-inputs-component--object="${this.currentObjectCount}" 
+      .meetingDates="${this.meetingDates}" smallView>
+    </member-date-inputs-component>`: html`<member-date-inputs-component date-inputs-component--object="${this.currentObjectCount}" 
       .meetingDates="${this.meetingDates}" >
     </member-date-inputs-component>`;
     // newInput.meetingDates = this.meetingDates;

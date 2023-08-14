@@ -41,6 +41,9 @@ export class MemberDayMultipleInputsComponent extends LitElement {
   @property({ type: Array })
   public daysOfWeek: DayOfWeek_I[] = [];
 
+  @property({ type: Boolean })
+  public smallView: boolean = false;
+
   // @property({ type: Array })
   // private inputs: Array<MemberDayInputsComponent> = [];
 
@@ -112,8 +115,10 @@ export class MemberDayMultipleInputsComponent extends LitElement {
 
   addInput(event: Event) {
     this.currentObjectCount = this.currentObjectCount + 1;
-    let newInput = html`<member-day-inputs-component day-inputs-component--object="${this.currentObjectCount}" 
-      .meetingDays="${this.meetingDays}" .daysOfWeek="${this.daysOfWeek}" >
+    let newInput = this.smallView? html`<member-day-inputs-component day-inputs-component--object="${this.currentObjectCount}" 
+      .meetingDays="${this.meetingDays}" .daysOfWeek="${this.daysOfWeek}" smallView>
+    </member-day-inputs-component>`: html`<member-day-inputs-component day-inputs-component--object="${this.currentObjectCount}" 
+      .meetingDays="${this.meetingDays}" .daysOfWeek="${this.daysOfWeek}">
     </member-day-inputs-component>`;
     // newInput.meetingDays = this.meetingDays;
     // console.log({ "newInput-newInput": newInput });

@@ -44,6 +44,15 @@ import "./members/columns/three";
 import "./members/columns/four";
 import { PUT_AttendanceScheduleMemberStatusBulk } from "@@addons/network/attendance/setup/member/update_status_bulk";
 import { RemoveAdminMember } from "@@addons/network/attendance/setup/admin/member/delete";
+import { GET_AttendanceScheduleMemberDownload } from "@@addons/network/attendance/setup/member/download";
+import "./members/days/index";
+import "./members/dates/index";
+import { MeetingEventScheduleDate_I } from "@@addons/interfaces/attendance/meeting_event/dates";
+import { MeetingEventScheduleDay_I } from "@@addons/interfaces/attendance/meeting_event/day";
+import { DayOfWeek_I } from "@@addons/interfaces/attendance/day_of_week";
+import { GET_AttendanceScheduleDay } from "@@addons/network/attendance/setup/day";
+import { GET_DayOfWeek } from "@@addons/network/attendance/day_of_week";
+import { GET_AttendanceScheduleDate } from "@@addons/network/attendance/setup/date";
 
 
 
@@ -114,6 +123,9 @@ export class AttendanceSetupFormMember extends LitElement {
     return this.__scheduleMembers;
   }
 
+  @property({ type: Boolean })
+  private downloadingFile: boolean = false;
+
   @property({ type: Number })
   private activeStatus: AttendanceMemberStatus = AttendanceMemberStatus.None;
 
@@ -146,6 +158,37 @@ export class AttendanceSetupFormMember extends LitElement {
 
   @property({ type: Array })
   private _subgroups: MeetingAttendanceMemberSubGroupModel[] = [];
+
+  @property({ type: Array })
+  private attendanceMembers: MeetingAttendanceMemberModel[] = [];
+
+  @property({ type: Array })
+  private selectedAttendanceMembers: MeetingAttendanceMemberModel[] = [];
+
+  private __scheduleDays: Array<MeetingEventScheduleDay_I> = [];
+
+  public set _scheduleDays(value: Array<MeetingEventScheduleDay_I>) {
+    this.__scheduleDays = value;
+    this.requestUpdate();
+  }
+
+  public get _scheduleDays(): Array<MeetingEventScheduleDay_I> {
+    return this.__scheduleDays;
+  }
+
+  @property({ type: Array })
+  private _daysOfWeek: DayOfWeek_I[] = [];
+
+  private __scheduleDates: Array<MeetingEventScheduleDate_I> = [];
+
+  public set _scheduleDates(value: Array<MeetingEventScheduleDate_I>) {
+    this.__scheduleDates = value;
+    this.requestUpdate();
+  }
+
+  public get _scheduleDates(): Array<MeetingEventScheduleDate_I> {
+    return this.__scheduleDates;
+  }
 
   @query('[show-memberField="all"]')
   private showMemberFieldAllSelector: Element;
@@ -180,6 +223,12 @@ export class AttendanceSetupFormMember extends LitElement {
 
     await this.getSubGroups();
     // console.log({"this._subgroups": this._subgroups});
+    await this.getDaysOfWeek();
+    // console.log({ "_daysOfWeek": this._daysOfWeek });
+
+    await this.getAttendanceScheduleDay();
+
+    await this.getAttendanceScheduleDate();
   }
 
   disconnectedCallback() { }
@@ -264,24 +313,28 @@ export class AttendanceSetupFormMember extends LitElement {
   private displayAllStatus(e: any) {
     e.preventDefault();
     this.statusDisplay = 1;
+    this.downloadingFile = false;
     this.updateQueryParam(AttendanceMemberStatus.None.valueOf().toString());
   }
 
   private displayAssignedStatus(e: any) {
     e.preventDefault();
     this.statusDisplay = 2;
+    this.downloadingFile = false;
     this.updateQueryParam(AttendanceMemberStatus.Assigned.valueOf().toString());
   }
 
   private displayUnassignedStatus(e: any) {
     e.preventDefault();
     this.statusDisplay = 3;
+    this.downloadingFile = false;
     this.updateQueryParam(AttendanceMemberStatus.Unassigned.valueOf().toString());
   }
 
   private displayPendingStatus(e: any) {
     e.preventDefault();
     this.statusDisplay = 4;
+    this.downloadingFile = false;
     this.updateQueryParam(AttendanceMemberStatus.Pending.valueOf().toString());
   }
 
@@ -374,6 +427,7 @@ export class AttendanceSetupFormMember extends LitElement {
       return html`
         <div>
           ${this.groupsAndSubgroups}
+          ${this.downloadBtns}
           ${this.table}
         </div>
       `;
@@ -462,6 +516,19 @@ export class AttendanceSetupFormMember extends LitElement {
       }, unmutableInputNames: [{ name: "meeting-event-id", value: String(this.meetingEventId) }]
     });
     // console.log({ "this.filterBox--2": this.filterBox });
+  }
+
+  private get downloadBtns() {
+    const inputId = Math.random().toString(36).substring(2, 22);
+    // console.log({ "this.downloadingFile--downloadBtns": this.downloadingFile, inputId });
+    return html`
+      <div class="flex mb-4" id="inputId-${inputId}-inputId">
+        <mwc-button icon="download" class="success mr-2" 
+          label="Download Excel File" raised @click="${this.downloadMemberExcel}">
+        </mwc-button> 
+        ${this.downloadingFile ? html`<mwc-circular-progress indeterminate></mwc-circular-progress>` : nothing}
+      </div>
+    `
   }
 
   private get filterForm() {
@@ -660,9 +727,9 @@ export class AttendanceSetupFormMember extends LitElement {
   private get table_header() {
     // <div class="flex flex-col md:flex-row p-2 mb-2 pb-5">
     return html`
-      <div class="p-2 mb-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 grid-flow-row gap-4 pb-5">
+      <div class="p-2 mb-2 grid grid-cols-1 md:grid-cols-2 md:grid-cols-2 grid-flow-row gap-4 pb-5">
         <div
-          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2">
+          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2 h-[50px]">
           <label class="flex justify-between items-stretch px-4 my-2">
             <b>CHECK ALL: </b>
             <input id="meeting_member_info_all" name="meeting_member_info_all" type="checkbox"
@@ -678,48 +745,74 @@ export class AttendanceSetupFormMember extends LitElement {
   private get table_header_buttons() {
     const viewParam = this.getCurrentTabFromQueryParam;
     // console.log({viewParam});
-    
+
     if (viewParam === AttendanceMemberStatus.None.valueOf().toString()) {
-      return html``;
+      return html` ${this.table_header_day_dates_buttons} `;
     } else if (viewParam === AttendanceMemberStatus.Assigned.valueOf().toString()) {
       return html`
-        <div
-          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
-          <mwc-button class="danger" raised meeting_member_info_all="unassign"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 2)}">Unassign Selected</mwc-button>
-          <div class="w-4 h-4"></div>
-          <mwc-button class="info" raised meeting_member_info_all="pending"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 3)}">Set Pending To Selected</mwc-button>  
+        <div>
+          <div
+            class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+            <mwc-button class="danger" raised meeting_member_info_all="unassign"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 2)}">Unassign Selected</mwc-button>
+            <div class="w-4 h-4"></div>
+            <mwc-button class="info" raised meeting_member_info_all="pending"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 3)}">Set Pending To Selected</mwc-button>  
+          </div>
+          ${this.table_header_day_dates_buttons} 
         </div>
       `;
     } else if (viewParam === AttendanceMemberStatus.Unassigned.valueOf().toString()) {
       return html`
-        <div
-          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
-          <mwc-button class="success" raised meeting_member_info_all="assign"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 1)}">Assign Selected</mwc-button>
-          <div class="w-4 h-4"></div>
-          <mwc-button class="info" raised meeting_member_info_all="unassign"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 3)}">Set Pending To Selected</mwc-button>  
+        <div>
+          <div
+            class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+            <mwc-button class="success" raised meeting_member_info_all="assign"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 1)}">Assign Selected</mwc-button>
+            <div class="w-4 h-4"></div>
+            <mwc-button class="info" raised meeting_member_info_all="unassign"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 3)}">Set Pending To Selected</mwc-button>  
+          </div>
+          ${this.table_header_day_dates_buttons} 
         </div>
       `;
     } else {
       return html`
-        <div
-          class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
-          <mwc-button class="success" raised meeting_member_info_all="assign"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 1)}">Assign Selected</mwc-button>
-          <div class="w-4 h-4"></div>
-          <mwc-button class="danger" raised meeting_member_info_all="pending"
-            @click="${(e:Event) => this.updateBulkStatusID(e, 2)}">Unassign Selected</mwc-button>  
+        <div>
+          <div
+            class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+            <mwc-button class="success" raised meeting_member_info_all="assign"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 1)}">Assign Selected</mwc-button>
+            <div class="w-4 h-4"></div>
+            <mwc-button class="danger" raised meeting_member_info_all="pending"
+              @click="${(e: Event) => this.updateBulkStatusID(e, 2)}">Unassign Selected</mwc-button> 
+          </div>
+          ${this.table_header_day_dates_buttons} 
         </div>
       `;
     }
   }
 
+  private get table_header_day_dates_buttons() {
+    return html`
+      <div
+        class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 p-2 border-b-2 mb-2 flex sm:flex-row flex-col justify-center items-stretch">
+        <attendance-setup-multiple-member-days-btn-component .selectedAttendanceMembers="${this.selectedAttendanceMembers}"
+          @click="${this.set_selected_members_on_dialog_btn_click}" .meetingDays="${this._scheduleDays}"
+          .daysOfWeek="${this._daysOfWeek}" clientId="${this.CLIENT_ID}" meetingEventId="${this.meetingEventId}">
+        </attendance-setup-multiple-member-days-btn-component>
+        <div class="w-2 h-2"></div>
+        <attendance-setup-multiple-member-dates-btn-component .selectedAttendanceMembers="${this.selectedAttendanceMembers}"
+          @click="${this.set_selected_members_on_dialog_btn_click}" .meetingDates="${this._scheduleDates}" 
+          clientId="${this.CLIENT_ID}" meetingEventId="${this.meetingEventId}">
+        </attendance-setup-multiple-member-dates-btn-component>
+      </div>
+    `;
+  }
+
   private rowOneRender(data: any) {
     // console.log({"data-data--data::One": data});
-    
+
     const attendanceMember = MeetingAttendanceMemberModel.fromJson(data);
     // console.log({ attendanceMember });
 
@@ -733,7 +826,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
   private rowTwoRender(data: any) {
     // console.log({"data-data--data::Two": data});
-    
+
     const attendanceMember = MeetingAttendanceMemberModel.fromJson(data);
     // console.log({ attendanceMember });
 
@@ -746,7 +839,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
   private rowThreeRender(data: any) {
     // console.log({"data-data--data::Three": data});
-    
+
     const attendanceMember = MeetingAttendanceMemberModel.fromJson(data);
     // console.log({ attendanceMember });
 
@@ -759,7 +852,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
   private rowFourRender(data: any) {
     // console.log({"data-data--data::Four": data});
-    
+
     const attendanceMember = MeetingAttendanceMemberModel.fromJson(data);
     // console.log({ attendanceMember });
 
@@ -839,7 +932,7 @@ export class AttendanceSetupFormMember extends LitElement {
       'lengthMenu': [10, 25, 50, 100, 500, 1000],
       "drawCallback": async function (e) {
         const aoData = e.aoData;
-        // console.log({ aoData })
+        __this.getCurrentList(aoData);
       },
       "responsive": true,
       "dom": 'Blfrtip',
@@ -862,6 +955,23 @@ export class AttendanceSetupFormMember extends LitElement {
       // },
     };
     return dataTable;
+  }
+
+  getCurrentList(aoData: DataTables_RowLegacy_I[]) {
+    this.attendanceMembers = [];
+    let attendanceMembers: Array<MeetingAttendanceMemberModel> = [];
+    aoData.forEach((data) => {
+      const aData = data._aData;
+      const attendanceMember = MeetingAttendanceMemberModel.fromJson(aData);
+
+      if (!attendanceMembers.includes(attendanceMember)) {
+        attendanceMembers.push(attendanceMember);
+      }
+    });
+
+    setTimeout(() => {
+      this.attendanceMembers = attendanceMembers;
+    }, 100);
   }
 
   async submitForm(e: PointerEvent) {
@@ -937,6 +1047,113 @@ export class AttendanceSetupFormMember extends LitElement {
     }
   }
 
+  private async getDaysOfWeek() {
+    const _networkResponse = await GET_DayOfWeek<DayOfWeek_I>();
+    let __daysOfWeek: DayOfWeek_I[] = [];
+
+    if (_networkResponse === null) {
+      __daysOfWeek.push({ id: 0, day: "**NOT FOUND**", date: new Date() });
+    } else {
+      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
+        const DATA: DayOfWeek_I[] = _networkResponse.response.data;
+        // console.log({DATA});
+        __daysOfWeek = DATA;
+      }
+    }
+
+    const new_data: Array<DayOfWeek_I> = [];
+    new_data.push(...this._daysOfWeek, ...__daysOfWeek);
+    this._daysOfWeek = new_data;
+  }
+
+  private async getAttendanceScheduleDay() {
+    const _networkResponse = await GET_AttendanceScheduleDay<MeetingEventScheduleDay_I>(
+      null, "?meetingEventId=" + this.meetingEventId + "&length=1000"
+    );
+    let __scheduleDays: MeetingEventScheduleDay_I[] = [];
+
+    if (_networkResponse === null) {
+      __scheduleDays.push({ id: 0, dayId: 0, endDate: new Date() });
+    } else {
+      if ((_networkResponse.response.success === true) && ('length' in _networkResponse.response.data)) {
+        const DATA: MeetingEventScheduleDay_I[] = _networkResponse.response.data;
+        // console.log({DATA});
+        __scheduleDays = DATA;
+      }
+    }
+
+    const new_data: Array<MeetingEventScheduleDay_I> = [];
+    new_data.push(...this._scheduleDays, ...__scheduleDays);
+    this._scheduleDays = new_data;
+  }
+
+  private async getAttendanceScheduleDate() {
+    const _networkResponse = await GET_AttendanceScheduleDate<MeetingEventScheduleDate_I>(
+      null, "?meetingEventId=" + this.meetingEventId + "&length=1000"
+    );
+    let __scheduleDates: MeetingEventScheduleDate_I[] = [];
+
+    if (_networkResponse === null) {
+      __scheduleDates.push({ id: 0, date:  new Date() });
+    } else {
+      if ((_networkResponse.paginResponse.count > 0) && ('results' in _networkResponse.paginResponse)) {
+        const DATA: MeetingEventScheduleDate_I[] = _networkResponse.paginResponse.results;
+        // console.log({DATA});
+        __scheduleDates = DATA;
+      }
+    }
+
+    const new_data: Array<MeetingEventScheduleDate_I> = [];
+    new_data.push(...this._scheduleDates, ...__scheduleDates);
+    this._scheduleDates = new_data;
+  }
+
+  private set_selected_members_on_dialog_btn_click(e: PointerEvent) {
+    // open-dialog-btn
+    e.preventDefault();
+
+    // @ts-ignore
+    if (e.target.hasAttribute('open-dialog-btn')) {
+      // console.log({ "e.target": e.target })
+
+      let ids: Array<number> = [];
+
+      document.querySelectorAll('[id="meeting_member_info"][name="meeting_member_info"]').forEach((input: HTMLInputElement) => {
+        if (input.checked) {
+          if (!Number.isNaN(input.value)) {
+            const value = Number(input.value);
+            if (!ids.includes(value)) {
+              ids.push(value)
+            }
+          }
+        }
+      });
+
+      let attendanceMembers: MeetingAttendanceMemberModel[] = [];
+
+      // console.log({"this.attendanceMembers": this.attendanceMembers});
+
+
+      this.selectedAttendanceMembers = [];
+      this.attendanceMembers.forEach(attendanceMember => {
+        const amId = attendanceMember.id;
+        if (ids.includes(amId)) {
+          if (!attendanceMembers.includes(attendanceMember)) {
+            attendanceMembers.push(attendanceMember);
+          }
+        }
+      });
+
+
+      setTimeout(() => {
+        this.selectedAttendanceMembers = attendanceMembers;
+
+        // console.log({ "ids--ids": ids, attendanceMembers });
+      }, 100);
+
+    }
+  }
+
   private async check_all_meeting_members(e: any) {
     e.preventDefault();
 
@@ -973,6 +1190,24 @@ export class AttendanceSetupFormMember extends LitElement {
       return { id: id };
     });
     await PUT_AttendanceScheduleMemberStatusBulk(removeInfos, statusId);;
+  }
+
+  private async downloadMemberExcel(e: PointerEvent) {
+    e.preventDefault();
+    const statusIdFilter = this.currentIndex === 0 ? "" : `&statusId=${this.currentIndex}`;
+    let URL = "?datatable_plugin&meetingEventId=" + this.meetingEventId + statusIdFilter;
+    // console.log({URL});
+
+    const _urlQueryString = this.urlQueryString;
+    // console.log({_urlQueryString});
+    URL = URL + _urlQueryString;
+    // console.log({URL});
+    // console.log({ "this.downloadingFile--downloadMemberExcel": this.downloadingFile, URL });
+
+    this.downloadingFile = true;
+    // console.log({ "this.downloadingFile--downloadingFile": this.downloadingFile });
+    await GET_AttendanceScheduleMemberDownload<any>(URL);
+    this.downloadingFile = false;
   }
 
   createRenderRoot() {

@@ -16,6 +16,9 @@ export class MemberDateInputsComponent extends LitElement {
   @property({ type: String })
   public dateValue?: string;
 
+  @property({ type: Boolean })
+  public smallView: boolean = false;
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -39,7 +42,7 @@ export class MemberDateInputsComponent extends LitElement {
     return html`
       <div class="container my-4" id="form_input--${this.inputId}">
         <div class="row justify-center">
-          <div class="col-md-6 col-lg-4">
+          <div class="${this.smallView? 'col-md-12': 'col-md-6 col-lg-4'}">
             <h4 class="font-semibold my-2">Select Date</h4>
             <mwc-select name="dateId" class="w-full" id="dateId--${this.inputId}" label="Select Date" outlined
               required @change="${this.handleDateChange}">

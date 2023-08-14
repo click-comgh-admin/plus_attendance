@@ -61,6 +61,16 @@
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\6236.css.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/6236.css.map"
     },
+    "../../production_public/assets/v2/prod-test-files/css/6652.css": {
+      "name": "../../production_public/assets/v2/prod-test-files/css/6652.css",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\6652.css",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/6652.css"
+    },
+    "../../production_public/assets/v2/prod-test-files/css/6652.css.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/css/6652.css.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\6652.css.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/6652.css.map"
+    },
     "../../production_public/assets/v2/prod-test-files/css/751.css": {
       "name": "../../production_public/assets/v2/prod-test-files/css/751.css",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\751.css",
@@ -70,16 +80,6 @@
       "name": "../../production_public/assets/v2/prod-test-files/css/751.css.map",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\751.css.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/751.css.map"
-    },
-    "../../production_public/assets/v2/prod-test-files/css/9967.css": {
-      "name": "../../production_public/assets/v2/prod-test-files/css/9967.css",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\9967.css",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/9967.css"
-    },
-    "../../production_public/assets/v2/prod-test-files/css/9967.css.map": {
-      "name": "../../production_public/assets/v2/prod-test-files/css/9967.css.map",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\css\\9967.css.map",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/css/9967.css.map"
     },
     "../../production_public/assets/v2/prod-test-files/css/attendance/absent-leave/assignment/add.css": {
       "name": "../../production_public/assets/v2/prod-test-files/css/attendance/absent-leave/assignment/add.css",
@@ -461,16 +461,6 @@
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\1354.js.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/1354.js.map"
     },
-    "../../production_public/assets/v2/prod-test-files/js/1710.js": {
-      "name": "../../production_public/assets/v2/prod-test-files/js/1710.js",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\1710.js",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/1710.js"
-    },
-    "../../production_public/assets/v2/prod-test-files/js/1710.js.map": {
-      "name": "../../production_public/assets/v2/prod-test-files/js/1710.js.map",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\1710.js.map",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/1710.js.map"
-    },
     "../../production_public/assets/v2/prod-test-files/js/1901.js": {
       "name": "../../production_public/assets/v2/prod-test-files/js/1901.js",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\1901.js",
@@ -495,6 +485,16 @@
       "name": "../../production_public/assets/v2/prod-test-files/js/1952.js.map",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\1952.js.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/1952.js.map"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/2617.js": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/2617.js",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\2617.js",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/2617.js"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/2617.js.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/2617.js.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\2617.js.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/2617.js.map"
     },
     "../../production_public/assets/v2/prod-test-files/js/2921.js": {
       "name": "../../production_public/assets/v2/prod-test-files/js/2921.js",
@@ -621,6 +621,26 @@
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\6581.js.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/6581.js.map"
     },
+    "../../production_public/assets/v2/prod-test-files/js/6652.js": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/6652.js",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\6652.js",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/6652.js"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/6652.js.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/6652.js.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\6652.js.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/6652.js.map"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/6680.js": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/6680.js",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\6680.js",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/6680.js"
+    },
+    "../../production_public/assets/v2/prod-test-files/js/6680.js.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/6680.js.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\6680.js.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/6680.js.map"
+    },
     "../../production_public/assets/v2/prod-test-files/js/712.js": {
       "name": "../../production_public/assets/v2/prod-test-files/js/712.js",
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\712.js",
@@ -676,15 +696,15 @@
       "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\8644.js.map",
       "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/8644.js.map"
     },
-    "../../production_public/assets/v2/prod-test-files/js/9967.js": {
-      "name": "../../production_public/assets/v2/prod-test-files/js/9967.js",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\9967.js",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/9967.js"
+    "../../production_public/assets/v2/prod-test-files/js/9450.js": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/9450.js",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\9450.js",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/9450.js"
     },
-    "../../production_public/assets/v2/prod-test-files/js/9967.js.map": {
-      "name": "../../production_public/assets/v2/prod-test-files/js/9967.js.map",
-      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\9967.js.map",
-      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/9967.js.map"
+    "../../production_public/assets/v2/prod-test-files/js/9450.js.map": {
+      "name": "../../production_public/assets/v2/prod-test-files/js/9450.js.map",
+      "path": "C:\\xampp\\htdocs\\AMG\\plus_db\\client_dashboards\\version_one\\plus_attendance\\production_public\\assets\\v2\\prod-test-files\\js\\9450.js.map",
+      "publicPath": "https://clock-2.akwaabasoftware.com/../../production_public/assets/v2/prod-test-files/js/9450.js.map"
     },
     "../../production_public/assets/v2/prod-test-files/js/attendance/absent-leave/assignment/add.js": {
       "name": "../../production_public/assets/v2/prod-test-files/js/attendance/absent-leave/assignment/add.js",
@@ -1360,6 +1380,7 @@
       "../../production_public/assets/v2/prod-test-files/css/6236.css",
       "../../production_public/assets/v2/prod-test-files/js/6069.js",
       "../../production_public/assets/v2/prod-test-files/css/2585.css",
+      "../../production_public/assets/v2/prod-test-files/js/9450.js",
       "../../production_public/assets/v2/prod-test-files/js/2921.js",
       "../../production_public/assets/v2/prod-test-files/js/6399.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/absent-leave/assignment/view.css",
@@ -1413,8 +1434,9 @@
       "../../production_public/assets/v2/prod-test-files/css/2585.css",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
       "../../production_public/assets/v2/prod-test-files/js/3934.js",
-      "../../production_public/assets/v2/prod-test-files/css/9967.css",
-      "../../production_public/assets/v2/prod-test-files/js/9967.js",
+      "../../production_public/assets/v2/prod-test-files/js/9450.js",
+      "../../production_public/assets/v2/prod-test-files/css/6652.css",
+      "../../production_public/assets/v2/prod-test-files/js/6652.js",
       "../../production_public/assets/v2/prod-test-files/js/6581.js",
       "../../production_public/assets/v2/prod-test-files/js/attendance/clocking/absentees.js"
     ],
@@ -1432,8 +1454,9 @@
       "../../production_public/assets/v2/prod-test-files/css/2585.css",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
       "../../production_public/assets/v2/prod-test-files/js/3934.js",
-      "../../production_public/assets/v2/prod-test-files/css/9967.css",
-      "../../production_public/assets/v2/prod-test-files/js/9967.js",
+      "../../production_public/assets/v2/prod-test-files/js/9450.js",
+      "../../production_public/assets/v2/prod-test-files/css/6652.css",
+      "../../production_public/assets/v2/prod-test-files/js/6652.js",
       "../../production_public/assets/v2/prod-test-files/js/6581.js",
       "../../production_public/assets/v2/prod-test-files/js/attendance/clocking/attendees.js"
     ],
@@ -1451,8 +1474,8 @@
       "../../production_public/assets/v2/prod-test-files/css/2585.css",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
       "../../production_public/assets/v2/prod-test-files/js/3934.js",
-      "../../production_public/assets/v2/prod-test-files/css/9967.css",
-      "../../production_public/assets/v2/prod-test-files/js/9967.js",
+      "../../production_public/assets/v2/prod-test-files/css/6652.css",
+      "../../production_public/assets/v2/prod-test-files/js/6652.js",
       "../../production_public/assets/v2/prod-test-files/js/6581.js",
       "../../production_public/assets/v2/prod-test-files/js/attendance/clocking/clocker.js"
     ],
@@ -1492,8 +1515,9 @@
       "../../production_public/assets/v2/prod-test-files/js/7719.js",
       "../../production_public/assets/v2/prod-test-files/css/2585.css",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
-      "../../production_public/assets/v2/prod-test-files/css/9967.css",
-      "../../production_public/assets/v2/prod-test-files/js/9967.js",
+      "../../production_public/assets/v2/prod-test-files/js/9450.js",
+      "../../production_public/assets/v2/prod-test-files/css/6652.css",
+      "../../production_public/assets/v2/prod-test-files/js/6652.js",
       "../../production_public/assets/v2/prod-test-files/js/2921.js",
       "../../production_public/assets/v2/prod-test-files/js/attendance/clocking/history.js"
     ],
@@ -1606,7 +1630,6 @@
       "../../production_public/assets/v2/prod-test-files/js/7719.js",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
       "../../production_public/assets/v2/prod-test-files/js/1952.js",
-      "../../production_public/assets/v2/prod-test-files/js/1710.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/setup-form/edit-admin-members.css",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/edit-admin-members.js"
     ],
@@ -1739,8 +1762,10 @@
       "../../production_public/assets/v2/prod-test-files/css/214.css",
       "../../production_public/assets/v2/prod-test-files/js/7719.js",
       "../../production_public/assets/v2/prod-test-files/css/751.css",
+      "../../production_public/assets/v2/prod-test-files/js/9450.js",
       "../../production_public/assets/v2/prod-test-files/js/1952.js",
-      "../../production_public/assets/v2/prod-test-files/js/1710.js",
+      "../../production_public/assets/v2/prod-test-files/js/6680.js",
+      "../../production_public/assets/v2/prod-test-files/js/2617.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/setup-form/edit-member.css",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/edit-member.js"
     ],
@@ -1759,6 +1784,7 @@
       "../../production_public/assets/v2/prod-test-files/js/7719.js",
       "../../production_public/assets/v2/prod-test-files/css/3901.css",
       "../../production_public/assets/v2/prod-test-files/js/1952.js",
+      "../../production_public/assets/v2/prod-test-files/js/2617.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/setup-form/edit-member-dates.css",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/edit-member-dates.js"
     ],
@@ -1777,6 +1803,7 @@
       "../../production_public/assets/v2/prod-test-files/js/7719.js",
       "../../production_public/assets/v2/prod-test-files/css/3901.css",
       "../../production_public/assets/v2/prod-test-files/js/1952.js",
+      "../../production_public/assets/v2/prod-test-files/js/6680.js",
       "../../production_public/assets/v2/prod-test-files/css/attendance/setup-form/edit-member-days.css",
       "../../production_public/assets/v2/prod-test-files/js/attendance/setup-form/edit-member-days.js"
     ],
