@@ -116,6 +116,8 @@ export class AttendanceSetupViewCategories extends LitElement {
       this.displayAssignedCategories(new Event('click'));
     } else if (viewParam === 'unassigned') {
       this.displayUnassignedCategories(new Event('click'));
+    } else {
+      this.displayAssignedCategories(new Event('click'));
     }
   }
 

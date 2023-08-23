@@ -82,20 +82,7 @@
                       </mwc-select>
                     `} -->
                   </div>
-                  <div class="col-md-6 col-lg-6">
-                    <h4 class="font-semibold my-2">Select Memeber Category</h4>
-                    ${void 0===e.memberCategoryId?l.html`
-                      <mwc-select name="memberCategoryId" class="w-full" id="memberCategoryId" label="Select Memeber Category" outlined required>
-                        <mwc-list-item value="0">Select Memeber Category</mwc-list-item>
-                        ${this._memberCategories.map((e=>l.html`<mwc-list-item value="${e.id}">${e.category}</mwc-list-item>`))}
-                      </mwc-select>
-                    `:l.html`
-                      <mwc-select name="memberCategoryId" class="w-full" id="memberCategoryId" label="Select Memeber Category" outlined required>
-                        <mwc-list-item value="0">Select Memeber Category</mwc-list-item>
-                        ${this._memberCategories.map((t=>e.memberCategoryId.id===t.id?l.html`<mwc-list-item value="${t.id}" selected>${t.category}</mwc-list-item>`:l.html`<mwc-list-item value="${t.id}">${t.category}</mwc-list-item>`))}
-                      </mwc-select>
-                    `}
-                  </div>
+                  ${""}
                   <div class="col-md-6 col-lg-6">
                     <h4 class="font-semibold my-2">Select Meeting Span (in days) <span class="text-xs text-akwaaba-orange-light">How long the meeting/ event will last (default is 1 day)</span></h4> 
                     <mwc-textfield name="meetingSpan" type="number" min="1" class="w-full" id="meetingSpan" value="${void 0===e.id?"1":String(e.meetingSpan)}" label="Select Meeting Span" outlined required>

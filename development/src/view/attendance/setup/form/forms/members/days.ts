@@ -457,7 +457,8 @@ export class AttendanceSetupFormEditMemberDaysContent extends LitElement {
 
   private async getAttendanceScheduleMemberDay() {
     const _networkResponse = await GET_AttendanceScheduleMemberDay<MemberMeetingEventDayModel>(
-      null, "?memberId=" + this.meetingMemberId + "&length=1000"
+      null, "?memberId=" + this.meetingMemberId + "&meetingEventId=" + this.meetingEventId +
+      "&dayId__meetingEventId=" + this.meetingEventId + "&length=1000"
     );
     let __memberDays: MemberMeetingEventDayModel[] = [];
 

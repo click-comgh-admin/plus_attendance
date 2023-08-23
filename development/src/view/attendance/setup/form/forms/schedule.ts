@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
 import '@material/mwc-textfield';
 import '@material/mwc-select';
@@ -6,6 +6,7 @@ import '@material/mwc-textarea';
 import '@material/mwc-button';
 import '@@addons/widgets/form/new/switch';
 import '@@addons/widgets/form/new/file-select';
+import '@@addons/widgets/form/new/select';
 import { GET_MeetingEventTypes } from '@@addons/network/attendance/meeting_event_types';
 import { MeetingEventType_I } from '@@addons/interfaces/attendance/meeting_event_types';
 import { GET_ClientBranches } from '@@addons/network/clients/branches';
@@ -26,7 +27,7 @@ import { MeetingEventMemberType_I } from '@@addons/interfaces/attendance/meeting
 import { UserLoginInfo_I } from '@@addons/interfaces/network_calls/login';
 import { getUserLoginInfoCookie } from '@@addons/functions/login';
 import { getActiveBranchIdCookie } from '@@addons/functions/views/home/branch';
-
+import '@@views/membership/members/select-member-type';
 
 @customElement("attendance-setup-form-schedule")
 export class AttendanceSetupFormSchedule extends LitElement {
@@ -220,7 +221,7 @@ export class AttendanceSetupFormSchedule extends LitElement {
                         })}
                       `}
                     </mwc-select>
-                    <!-- ${(schedule.branchId === undefined) ? html`
+                    ${ "" /** (schedule.branchId === undefined) ? html`
                       <mwc-select name="branchId" class="w-full" id="branchId" label="Select Branch" outlined required>
                         <mwc-list-item value="0">Select Branch</mwc-list-item>
                         ${this._branches.map((value) => {
@@ -239,32 +240,10 @@ export class AttendanceSetupFormSchedule extends LitElement {
                             return html`<mwc-list-item value="${value.id}">${value.name}</mwc-list-item>`;
                           }
                         })}
-                      </mwc-select>
-                    `} -->
+                      </mwc-select> `*/}
                   </div>
-                  <div class="col-md-6 col-lg-6">
-                    <h4 class="font-semibold my-2">Select Memeber Category</h4>
-                    ${(schedule.memberCategoryId === undefined) ? html`
-                      <mwc-select name="memberCategoryId" class="w-full" id="memberCategoryId" label="Select Memeber Category" outlined required>
-                        <mwc-list-item value="0">Select Memeber Category</mwc-list-item>
-                        ${this._memberCategories.map((value) => {
-                          // console.log({ "schedule.type": schedule.type, "value.id": value.id });
-                          return html`<mwc-list-item value="${value.id}">${value.category}</mwc-list-item>`;
-                        })}
-                      </mwc-select>
-                    `: html`
-                      <mwc-select name="memberCategoryId" class="w-full" id="memberCategoryId" label="Select Memeber Category" outlined required>
-                        <mwc-list-item value="0">Select Memeber Category</mwc-list-item>
-                        ${this._memberCategories.map((value) => {
-                          if (schedule.memberCategoryId.id === value.id) {
-                            return html`<mwc-list-item value="${value.id}" selected>${value.category}</mwc-list-item>`;
-                          } else {
-                            return html`<mwc-list-item value="${value.id}">${value.category}</mwc-list-item>`;
-                          }
-                        })}
-                      </mwc-select>
-                    `}
-                  </div>
+                  ${this.categoriesFormField}
+          
                   <div class="col-md-6 col-lg-6">
                     <h4 class="font-semibold my-2">Select Meeting Span (in days) <span class="text-xs text-akwaaba-orange-light">How long the meeting/ event will last (default is 1 day)</span></h4> 
                     <mwc-textfield name="meetingSpan" type="number" min="1" class="w-full" id="meetingSpan" value="${schedule.id === undefined ? "1": String(schedule.meetingSpan)}" label="Select Meeting Span" outlined required>
@@ -390,6 +369,34 @@ export class AttendanceSetupFormSchedule extends LitElement {
             </div>
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  get categoriesFormField(){
+    let schedule: MeetingEventSchedule_I = null;
+    // console.log({"this._schedule": this._schedule})
+    if (this._schedule !== null) {
+      if (this._schedule.data !== undefined) {
+        if (Array.isArray(this._schedule.data)) {
+          schedule = this._schedule.data.length > 0 ? this._schedule.data[0] : {};
+        } else {
+          schedule = this._schedule.data;
+        }
+      } else {
+        schedule = null;
+      }
+    } else {
+      schedule = null;
+    }
+    if (schedule == null) return nothing;
+    return html`
+      <div class="col-md-6 col-lg-6">
+        <h4 class="font-semibold my-2">Select Category</h4>
+          <pdb-membership-select-member-type material="false" multiple
+            name="meetingCategories" id="meetingCategories"
+            label="Select Member Category" outlined required>
+          </pdb-membership-select-member-type>
       </div>
     `;
   }

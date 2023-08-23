@@ -288,9 +288,9 @@ export class AttendanceSetupFormMember extends LitElement {
 
   private handleQueryParam() {
     const viewParam = this.getCurrentTabFromQueryParam;
-    // console.log({viewParam});
+    console.log({viewParam});
 
-    if (viewParam === AttendanceMemberStatus.None.valueOf().toString()) {
+    if (viewParam === AttendanceMemberStatus.None.valueOf().toString() || viewParam === null) {
       this.displayAllStatus(new Event('click'));
     } else if (viewParam === AttendanceMemberStatus.Assigned.valueOf().toString()) {
       this.displayAssignedStatus(new Event('click'));
