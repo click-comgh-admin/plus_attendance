@@ -41,7 +41,7 @@ export class MemberColThreeComponent extends LitElement {
 
   render() {
     if (this.attendanceMember === null) {
-      return html`<b class="text-red-500">UNKOWN MEMBER</b>`;
+      return html`<b class="text-red-500">UNKNOWN MEMBER</b>`;
     } else {
       const member = this.attendanceMember!.memberInfo;
       const meetingCategoryId = this.attendanceMember!.meetingCategoryId;

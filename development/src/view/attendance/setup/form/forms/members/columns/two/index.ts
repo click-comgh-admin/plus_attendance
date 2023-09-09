@@ -56,7 +56,7 @@ export class MemberColTwoComponent extends LitElement {
   render() {
     // console.log({"this.attendanceMember": this.attendanceMember});
     if (this.attendanceMember === null) {
-      return html`<b class="text-red-500">UNKOWN MEMBER</b><b class="w-1/6"></b>`;
+      return html`<b class="text-red-500">UNKNOWN MEMBER</b><b class="w-1/6"></b>`;
     } else {
       const statusId = this.attendanceMember!.statusId;
       // console.log({"this.memberActiveStatus": this.memberActiveStatus});

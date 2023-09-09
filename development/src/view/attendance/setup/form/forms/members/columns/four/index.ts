@@ -58,7 +58,7 @@ export class MemberColFourComponent extends LitElement {
 
   render() {
     if (this.attendanceMember === null) {
-      return html`<b class="text-red-500">UNKOWN MEMBER</b>`;
+      return html`<b class="text-red-500">UNKNOWN MEMBER</b>`;
     } else {
       if (this.memberActiveStatus === AttendanceMemberStatus.Assigned) {
         return html`

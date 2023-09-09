@@ -37,12 +37,12 @@ export class AdminMemberRow1Component extends LitElement {
 
   render() {
     if (this.adminMember === null) {
-      return html`<b class="text-red-500">UNKOWN MEMBER</b>`;
+      return html`<b class="text-red-500">UNKNOWN MEMBER</b>`;
     } else {
       const member = this.adminMember!.memberInfo;
   
       if (member === null) {
-        return html`<b class="text-red-500">UNKOWN MEMBER</b>`;
+        return html`<b class="text-red-500">UNKNOWN MEMBER</b>`;
       } else {
         if (this.isAssigned) {
           return html`

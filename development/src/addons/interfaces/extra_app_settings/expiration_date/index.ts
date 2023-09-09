@@ -10,6 +10,7 @@
 export interface EASExpirationDateInterface {
     expiration?: Date;
     expired?:    boolean;
+    nonExpiry?:  boolean;
     entryDate?:  Date;
 }
 
@@ -161,6 +162,7 @@ export const typeMap: any = {
     "EASExpirationDateInterface": o([
         { json: "expiration", js: "expiration", typ: u(null, Date) },
         { json: "expired", js: "expired", typ: u(null, true) },
+        { json: "non_expiry", js: "nonExpiry", typ: u(null, true) },
         { json: "entryDate", js: "entryDate", typ: u(null, Date) },
     ], false),
 };

@@ -116,7 +116,7 @@ export class PdbDashboardIndex extends LitElement {
 
         const _dashboardMetrics: ClientUserDashboardAttendanceMetricModel = cudammConvert.toClientUserDashboardAttendanceMetricModel(JSON.stringify(_networkResponse.response.data));
         this._dashboardMetrics = [_dashboardMetrics];
-        console.log({_dashboardMetrics, "this._dashboardMetrics": this._dashboardMetrics});
+        // console.log({_dashboardMetrics, "this._dashboardMetrics": this._dashboardMetrics});
       } else {
         this._dashboardMetrics = [];
       }

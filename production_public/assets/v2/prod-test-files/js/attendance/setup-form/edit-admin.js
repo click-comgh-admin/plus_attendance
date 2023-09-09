@@ -262,5 +262,5 @@
         label="Edit Categories"></link-button>
     `}firstUpdated(){}getMeetingEventId(){let e=(0,a.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}createRenderRoot(){return this}};c.styles=[i.iv`
    :host { display: block; }
-  `],r([(0,s.Cb)({type:Number}),l("design:type",Number)],c.prototype,"meetingEventId",void 0),c=r([(0,s.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],c)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,6031,1109,6236,6069,214,7719,3901,3712],(()=>(1899,e(e.s=1899)))),e.O())])));
+  `],r([(0,s.Cb)({type:Number}),l("design:type",Number)],c.prototype,"meetingEventId",void 0),c=r([(0,s.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],c)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,6031,1109,6236,6069,7719,214,3901,3712],(()=>(1899,e(e.s=1899)))),e.O())])));
 //# sourceMappingURL=edit-admin.js.map

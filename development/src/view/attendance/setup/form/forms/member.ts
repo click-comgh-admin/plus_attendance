@@ -45,6 +45,7 @@ import "./members/columns/four";
 import { PUT_AttendanceScheduleMemberStatusBulk } from "@@addons/network/attendance/setup/member/update_status_bulk";
 import { RemoveAdminMember } from "@@addons/network/attendance/setup/admin/member/delete";
 import { GET_AttendanceScheduleMemberDownload } from "@@addons/network/attendance/setup/member/download";
+import { POST_AttendanceAddScheduleMemberListReset } from "@@addons/network/attendance/setup/member/reset-member-list";
 import "./members/days/index";
 import "./members/dates/index";
 import { MeetingEventScheduleDate_I } from "@@addons/interfaces/attendance/meeting_event/dates";
@@ -251,6 +252,12 @@ export class AttendanceSetupFormMember extends LitElement {
         </div>
         <div class="block my-1">
           ${this.filterForm}
+          
+          <div class="my-1 flex flex-col items-end">
+            <div class="col-md-6 col-lg-4 flex flex-col items-end">
+              <mwc-button raised label="Refresh Member List" class="success" @click="${this.resetMemberList}"></mwc-button>
+            </div>
+          </div>
           <schedule-title-card meetingEventId="${this.meetingEventId}" CLIENT_ID="${this.CLIENT_ID}">
           </schedule-title-card>
         </div>
@@ -288,7 +295,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
   private handleQueryParam() {
     const viewParam = this.getCurrentTabFromQueryParam;
-    console.log({viewParam});
+    console.log({ viewParam });
 
     if (viewParam === AttendanceMemberStatus.None.valueOf().toString() || viewParam === null) {
       this.displayAllStatus(new Event('click'));
@@ -818,7 +825,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
     return `
       <member-col-one-component activeStatus="${this.activeStatus}"
-        attendanceMemberString='${attendanceMember.toString()}'>
+        attendanceMemberString='${attendanceMember.toString().replace("'", "&#39;")}'>
       </member-col-one-component>
     `;
 
@@ -832,7 +839,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
     return `
       <member-col-two-component activeStatus="${this.activeStatus}"
-      attendanceMemberString='${attendanceMember.toString()}'>
+      attendanceMemberString='${attendanceMember.toString().replace("'", "&#39;")}'>
     </member-col-two-component>
     `;
   }
@@ -845,7 +852,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
     return `
       <member-col-three-component activeStatus="${this.activeStatus}"
-      attendanceMemberString='${attendanceMember.toString()}'>
+      attendanceMemberString='${attendanceMember.toString().replace("'", "&#39;")}'>
     </member-col-three-component>
     `;
   }
@@ -858,7 +865,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
     return `
       <member-col-four-component activeStatus="${this.activeStatus}"
-      attendanceMemberString='${attendanceMember.toString()}'>
+      attendanceMemberString='${attendanceMember.toString().replace("'", "&#39;")}'>
     </member-col-four-component>
     `;
   }
@@ -869,7 +876,7 @@ export class AttendanceSetupFormMember extends LitElement {
 
   //   return `
   //     <member-col-one-component activeStatus="${this.activeStatus}"
-  //     attendanceMemberString='${attendanceMember.toString()}'>
+  //     attendanceMemberString='${attendanceMember.toString().replace("'", "&#39;")}'>
   //   </member-col-one-component>
   //   `;
   // }
@@ -1094,7 +1101,7 @@ export class AttendanceSetupFormMember extends LitElement {
     let __scheduleDates: MeetingEventScheduleDate_I[] = [];
 
     if (_networkResponse === null) {
-      __scheduleDates.push({ id: 0, date:  new Date() });
+      __scheduleDates.push({ id: 0, date: new Date() });
     } else {
       if ((_networkResponse.paginResponse.count > 0) && ('results' in _networkResponse.paginResponse)) {
         const DATA: MeetingEventScheduleDate_I[] = _networkResponse.paginResponse.results;
@@ -1208,6 +1215,12 @@ export class AttendanceSetupFormMember extends LitElement {
     // console.log({ "this.downloadingFile--downloadingFile": this.downloadingFile });
     await GET_AttendanceScheduleMemberDownload<any>(URL);
     this.downloadingFile = false;
+  }
+
+  async resetMemberList(e: any) {
+    e.preventDefault();
+
+    await POST_AttendanceAddScheduleMemberListReset();
   }
 
   createRenderRoot() {

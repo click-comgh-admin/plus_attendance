@@ -107,8 +107,8 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
       <link-button isblockcontent="false" aClass="" bClass="button primary mr-4"
         href="${CONSTANTS.URLS.PDB_CLIENT}settings/edit/schedule?meeting-event-id=${this.meetingEventId}"
         label="Edit Schedule"></link-button>
-      <mwc-icon-button class="ml-4 danger -mt-2 mb-2" icon="delete_forever" delete-this-item="${this.meetingEventId}"
-        @click="${this.deleteMeetingEvent}"></mwc-icon-button>
+      <!-- <mwc-icon-button class="ml-4 danger -mt-2 mb-2" icon="delete_forever" delete-this-item="${this.meetingEventId}"
+        @click="${this.deleteMeetingEvent}"></mwc-icon-button> -->
       ${this.table}
       <div class="row">
         <div class="col-md-6 my-2">

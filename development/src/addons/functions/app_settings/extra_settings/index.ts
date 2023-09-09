@@ -20,7 +20,7 @@ export const setAppSettingsExtraSettings = async (force = false) => {
   },
     getDashboardMetrics = async () => {
       const _networkResponse = await GET_ClientUserDashboardAttendanceMetrics<any>();
-      
+
       if (_networkResponse !== null) {
         if (_networkResponse.response.success && 'expiration_date' in _networkResponse.response.data) {
           return cudammConvert.toClientUserDashboardAttendanceMetricModel(
@@ -41,7 +41,7 @@ export const setAppSettingsExtraSettings = async (force = false) => {
             // console.log({
             //   access, "JSON.stringify(access)": JSON.stringify(access)
             // });
-            
+
             return cupamConvert.toClientUserPageAccessModel(
               JSON.stringify(access)
             );
@@ -55,16 +55,21 @@ export const setAppSettingsExtraSettings = async (force = false) => {
       // console.log({ "calling network_setter": true });
 
       const dashboardMetrics = await getDashboardMetrics(), userAccess = await getUserAccess(),
+        nonExpiry: boolean = dashboardMetrics === null ? false : dashboardMetrics.nonExpiry,
         expirationDate = dashboardMetrics === null ? null : dashboardMetrics.expirationDate;
 
       const settings: ExtraAppSettings_I = {
         expiration_date: {
           entryDate: new Date(),
           expiration: expirationDate,
-          expired: DateDifference(expirationDate, new Date()) < 24
+          nonExpiry: nonExpiry,
+          expired: nonExpiry == true ? false : DateDifference(expirationDate, new Date()) < 24
         },
         user_access: userAccess,
       }
+
+      // console.log({"--settings--": settings, nonExpiry, dashboardMetrics});
+      
 
       setter(settings);
     };

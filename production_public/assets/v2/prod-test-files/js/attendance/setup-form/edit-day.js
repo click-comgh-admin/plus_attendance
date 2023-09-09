@@ -330,5 +330,5 @@
         label="Edit Categories"></link-button>
     `}firstUpdated(){}getMeetingEventId(){let e=(0,o.Jx)("meeting-event-id"),t=null!==e?Number(e):null;this.meetingEventId=Number.isNaN(t)?null:t}createRenderRoot(){return this}};d.styles=[i.iv`
    :host { display: block; }
-  `],r([(0,a.Cb)({type:Number}),l("design:type",Number)],d.prototype,"meetingEventId",void 0),d=r([(0,a.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],d)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,7597,1109,6236,6069,214,7719,3901,3712],(()=>(4311,e(e.s=4311)))),e.O())])));
+  `],r([(0,a.Cb)({type:Number}),l("design:type",Number)],d.prototype,"meetingEventId",void 0),d=r([(0,a.Mo)("attendance-setup-form-edit-links"),l("design:paramtypes",[])],d)}},e=>(e.O(0,[5744,2185,9674,8820,1828,9564,4351,7597,1109,6236,6069,7719,214,3901,3712],(()=>(4311,e(e.s=4311)))),e.O())])));
 //# sourceMappingURL=edit-day.js.map
