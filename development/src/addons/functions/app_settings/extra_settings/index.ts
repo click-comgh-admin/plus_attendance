@@ -106,7 +106,9 @@ export const getAppSettingsExtraSettings = (): ExtraAppSettings_I => {
       settings = JSON.parse(_settings),
       xtraAppSettings = ExtraAppSettings_S(settings);
 
-    xtraAppSettings.expiration_date.expired = DateDifference(xtraAppSettings.expiration_date.expiration, new Date()) < 24;
+    // xtraAppSettings.expiration_date.expired = DateDifference(xtraAppSettings.expiration_date.expiration, new Date()) < 24;
+    xtraAppSettings.expiration_date.expired = xtraAppSettings.expiration_date.nonExpiry == true
+      ? false : DateDifference(xtraAppSettings.expiration_date.expiration, new Date()) < 24;
     // console.log({ xtraAppSettings });
 
     return xtraAppSettings;

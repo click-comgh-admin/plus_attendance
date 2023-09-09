@@ -163,6 +163,7 @@ export const typeMap: any = {
         { json: "expiration", js: "expiration", typ: u(null, Date) },
         { json: "expired", js: "expired", typ: u(null, true) },
         { json: "non_expiry", js: "nonExpiry", typ: u(null, true) },
+        { json: "nonExpiry", js: "nonExpiry", typ: u(null, true) },
         { json: "entryDate", js: "entryDate", typ: u(null, Date) },
     ], false),
 };
