@@ -31,7 +31,7 @@ export async function PUT_AttendanceScheduleMemberStatusBulk(dateInfos: Array<Re
     backdrop: true,
     preConfirm: async (login) => {
       return await http(url, {
-        method: "PATCH",
+        method: "PUT",
         body: formData,
         headers: {
           Authorization: "Token " + _get_cookie.token

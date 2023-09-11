@@ -30,7 +30,7 @@ export async function PUT_AttendanceUpdateScheduleMemberStatus(meetingMemberId: 
     backdrop: true,
     preConfirm: async (login) => {
       return await http(url, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(formData),
         headers: {
           Authorization: "Token " + _get_cookie.token
