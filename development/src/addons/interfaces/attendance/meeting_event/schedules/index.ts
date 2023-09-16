@@ -35,7 +35,7 @@ export interface MeetingEventSchedule_I {
 
 export function MeetingEventSchedule_S(data: any): MeetingEventSchedule_I {
   // console.log({data});
-  
+
   const meetingEventSchedule_S: MeetingEventSchedule_I = {
     id: Number(data['id']),
     type: Number(data['type']),
@@ -43,7 +43,7 @@ export function MeetingEventSchedule_S(data: any): MeetingEventSchedule_I {
     name: String(data['name']),
     clientId: ClientInfo_S(data['clientId']),
     branchId: ClientBranch_S(data['branchId']),
-    memberCategoryId: GroupingsMemberCategories_S(data['memberCategoryId']),
+    memberCategoryId: getCategory(),
     meetingSpan: Number(data['meetingSpan']),
     startTime: Time_I(data['startTime']),
     closeTime: Time_I(data['closeTime']),
@@ -65,4 +65,15 @@ export function MeetingEventSchedule_S(data: any): MeetingEventSchedule_I {
   };
 
   return meetingEventSchedule_S;
+
+  function getCategory(): GroupingsMemberCategories_I {
+    if (data['memberCategoryId'] == null) {
+      if (Array.isArray(data['meetingCategories']) && data['meetingCategories'].length > 0) {
+        return GroupingsMemberCategories_S(data['meetingCategories'][0]);
+      }
+      return null;
+    }
+    return GroupingsMemberCategories_S(data['memberCategoryId']);
+  }
 }
+
