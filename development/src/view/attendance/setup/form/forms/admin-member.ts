@@ -372,13 +372,13 @@ export class AttendanceSetupFormAdminMember extends LitElement {
     if (this.currentIndex == 0) {
       return `
         <admin-member-row1-component isAssigned class="p-0 m-0"
-          adminMemberString='${adminMember.toString()}'>
+          adminMemberString='${adminMember.toString().replace("'", "&#39;")}'>
         </admin-member-row1-component>
       `;
     } else {
       return `
         <admin-member-row1-component class="p-0 m-0"
-          adminMemberString='${adminMember.toString()}'>
+          adminMemberString='${adminMember.toString().replace("'", "&#39;")}'>
         </admin-member-row1-component>
       `;
     }
@@ -394,13 +394,13 @@ export class AttendanceSetupFormAdminMember extends LitElement {
     if (this.currentIndex == 0) {
       return `
         <admin-member-row2-component isAssigned class="p-0 m-0"
-          adminMemberString='${adminMember.toString()}'>
+          adminMemberString='${adminMember.toString().replace("'", "&#39;")}'>
         </admin-member-row2-component>
       `;
     } else {
       return `
         <admin-member-row2-component class="p-0 m-0"
-          adminMemberString='${adminMember.toString()}'>
+          adminMemberString='${adminMember.toString().replace("'", "&#39;")}'>
         </admin-member-row2-component>
       `;
     }
