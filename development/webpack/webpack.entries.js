@@ -31,6 +31,14 @@ module.exports = {
         import: './src/view/attendance/devices/settings/index.ts',
         dependOn: 'shared',
     },
+    "attendance/credit_earned/members": {
+        import: './src/view/attendance/credit_earned/members/index.ts',
+        dependOn: 'shared',
+    },
+    "attendance/credit_earned/settings": {
+        import: './src/view/attendance/credit_earned/settings/index.ts',
+        dependOn: 'shared',
+    },
     "attendance/clocking/clocker": {
         import: './src/view/attendance/clocking/clocker/index.ts',
         dependOn: 'shared',
@@ -157,6 +165,10 @@ module.exports = {
     },
     "attendance/setup-view/categories": {
         import: './src/view/attendance/setup/categories/index.ts',
+        dependOn: 'shared',
+    },
+    "attendance/setup-view/times": {
+        import: './src/view/attendance/setup/times/index.ts',
         dependOn: 'shared',
     },
 

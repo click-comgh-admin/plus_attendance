@@ -34,7 +34,7 @@ module.exports = [{
     devServer: {
         inline: true,
         hot: true,
-        port: 9001,
+        port: 9002,
         writeToDisk: true,
         headers: {
             "Access-Control-Allow-Origin": "*",

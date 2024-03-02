@@ -62,8 +62,8 @@ export class AssignedCategories extends LitElement {
 
   private get __tableHeaders(): DataTables_ColumnSettings_I[] {
     return [
-      { title: 'Schedule', },
-      { title: 'Type', },
+      { title: 'Category', },
+      { title: 'Action', },
     ];
   }
 

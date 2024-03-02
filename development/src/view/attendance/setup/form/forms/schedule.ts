@@ -250,12 +250,12 @@ export class AttendanceSetupFormSchedule extends LitElement {
                     </mwc-textfield>
                   </div>
                   <div class="col-md-6 col-lg-6">
-                    <h4 class="font-semibold my-2">Select Start Time</h4> 
+                    <h4 class="font-semibold my-2">Select Start Time <i class="text-xs text-akwaaba-orange-light">[If multiple times are required, set primary time here and extra times in <b>TIMES</b> page]</i></h4> 
                     <mwc-textfield name="startTime" type="time" class="w-full" id="startTime" value="${schedule.id === undefined ? "": String(schedule.startTime)}" label="Select Start Time" outlined required>
                     </mwc-textfield>
                   </div>
                   <div class="col-md-6 col-lg-6">
-                    <h4 class="font-semibold my-2">Select Close Time</h4> 
+                    <h4 class="font-semibold my-2">Select Close Time <i class="text-xs text-akwaaba-orange-light">[If multiple times are required, set primary time here and extra times in <b>TIMES</b> page]</i></h4> 
                     <mwc-textfield name="closeTime" type="time" class="w-full" id="closeTime" value="${schedule.id === undefined ? "": String(schedule.closeTime)}" label="Select Close Time" outlined required>
                     </mwc-textfield>
                   </div>
@@ -267,6 +267,11 @@ export class AttendanceSetupFormSchedule extends LitElement {
                   <div class="col-md-6 col-lg-6">
                     <h4 class="font-semibold my-2">Is It Recuring?</h4> 
                     <switch-input name="isRecuring" class="w-full" id="isRecuring" .selected="${schedule.id === undefined ? false: schedule.isRecuring}" label="Is It Recuring?" outlined required>
+                    </switch-input>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <h4 class="font-semibold my-2">Multiple Meeting Times?</h4> 
+                    <switch-input name="hasMultipleTimes" class="w-full" id="hasMultipleTimes" .selected="${schedule.id === undefined ? false: schedule.hasMultipleTimes}" label="Has Multiple Times?" outlined required>
                     </switch-input>
                   </div>
                   <div class="col-md-6 col-lg-6">

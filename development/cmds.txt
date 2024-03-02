@@ -3,7 +3,7 @@ cd /c/xampp/htdocs/AMG/plus_db/client_dashboards/version_one/plus_attendance/dev
 npm run watch-postcss-tailwind-all
 
 GIT
-cd /c/xampp/htdocs/AMG/plus_db/client_dashboards/version_one/plus_attendance/development
+cd C:\xampp\htdocs\AMG\plus_db\client_dashboards\version_one\plus_attendance\development
 npm run watch
 
 npm install --global pwa-asset-generator

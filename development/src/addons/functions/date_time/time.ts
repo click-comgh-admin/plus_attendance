@@ -1,7 +1,7 @@
 export const getTime = (time: Date) => {
   
   const __time = new Date(),
-    _DateString = `${__time.getFullYear()}/${__time.getMonth()}/${__time.getDate()} ${time}`;
+    _DateString = `${__time.getFullYear()}/${__time.getMonth()+1}/${__time.getDate()} ${time}`;
   
   console.log({time, __time, _DateString});
   

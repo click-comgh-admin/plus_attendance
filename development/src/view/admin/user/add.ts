@@ -33,7 +33,7 @@ export class PdbAdminUserAddForm extends LitElement {
     css`
    :host { display: block; }
   `
-  ];
+  ]; 
 
   render() {
     if (this._hasSetup) {

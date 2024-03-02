@@ -734,7 +734,7 @@ export class AttendanceSetupFormMember extends LitElement {
   private get table_header() {
     // <div class="flex flex-col md:flex-row p-2 mb-2 pb-5">
     return html`
-      <div class="p-2 mb-2 grid grid-cols-1 md:grid-cols-2 md:grid-cols-2 grid-flow-row gap-4 pb-5">
+      <div class="p-2 mb-2 grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4 pb-5">
         <div
           class="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col p-2 border-b-2 mb-2 h-[50px]">
           <label class="flex justify-between items-stretch px-4 my-2">

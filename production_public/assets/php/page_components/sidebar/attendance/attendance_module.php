@@ -82,3 +82,26 @@
         </li>
     </ul>
 </li>
+<li>
+    <a href="<?= CLIENT_BASE_URL; ?>settings/schedules" mm-active="schedules|schedule">
+        <i class="metismenu-icon pe-7s-check"></i> Credit Earned
+    </a>
+</li>
+<li>
+    <a href="#" mm-active="credit-earned-settings|credit-earned-members">
+        <i class="metismenu-icon pe-7s-cash"></i> Credit Earned
+        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+    </a>
+    <ul>
+        <li>
+            <a href="<?= CLIENT_BASE_URL; ?>credits/credit-earned-settings" mm-active="credit-earned-settings">
+                <i class="metismenu-icon pe-7s-cash"></i> Settings
+            </a>
+        </li>
+        <li>
+            <a href="<?= CLIENT_BASE_URL; ?>credits/credit-earned-members" mm-active="credit-earned-members">
+                <i class="metismenu-icon pe-7s-cash"></i> Members
+            </a>
+        </li>
+    </ul>
+</li>

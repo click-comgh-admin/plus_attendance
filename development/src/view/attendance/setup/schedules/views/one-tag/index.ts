@@ -250,9 +250,7 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
             Member Category
           </th>
           <td class="mdc-data-table__cell" scope="row">
-            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/categories?meeting-event-id=${this.meetingEventId}">
-              <mwc-button class="button warning mr-2">Categories</mwc-button>
-            </a>
+            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/categories?meeting-event-id=${this.meetingEventId}"><mwc-button class="button warning mr-2">Categories</mwc-button></a>
           </td>
         </tr>
         <tr class="mdc-data-table__row">
@@ -301,6 +299,15 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
           </th>
           <td class="mdc-data-table__cell" scope="row">
             ${DATA.hasBreakTime}
+          </td>
+        </tr>
+        <tr class="mdc-data-table__row">
+          <th class="mdc-data-table__cell whitespace-pre-line" scope="row">
+            Has Multiple Time
+          </th>
+          <td class="mdc-data-table__cell" scope="row">
+            ${DATA.hasMultipleTimes}
+            ${DATA.hasMultipleTimes? html`<hr class="m-0 p-0"/><a href="${CONSTANTS.URLS.PDB_CLIENT}settings/times?meeting-event-id=${this.meetingEventId}">Set Extra Times</a>`: ''}
           </td>
         </tr>
         <tr class="mdc-data-table__row">
@@ -357,9 +364,7 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
           </th>
           <td class="mdc-data-table__cell" scope="row">
             ${(DATA.agendaFile.length === 0) ? '-' :
-              html`<a href="${CONSTANTS.URLS.FILE_BUCKET_BASE_URL}files/${DATA.agendaFile}" target="_blank">Open File</a>
-              <mwc-icon-button class="ml-4 danger" icon="delete_forever" delete-this-item="${this.meetingEventId}"
-                @click="${this.deleteMeetingEventAgendaFile}"></mwc-icon-button>`}
+              html`<a href="${CONSTANTS.URLS.FILE_BUCKET_BASE_URL}files/${DATA.agendaFile}" target="_blank">Open File</a><mwc-icon-button class="ml-4 danger" icon="delete_forever" delete-this-item="${this.meetingEventId}" @click="${this.deleteMeetingEventAgendaFile}"></mwc-icon-button>`}
           </td>
         </tr>
         <tr class="mdc-data-table__row">
@@ -368,9 +373,7 @@ export class AttendanceSetupViewOneSchedule extends LitElement {
           </th>
           <td class="mdc-data-table__cell" scope="row">
                 
-            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}">
-              <mwc-button class="button success mr-2">Agenda(s)</mwc-button>
-            </a>
+            <a href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"><mwc-button class="button success mr-2">Agenda(s)</mwc-button></a>
             ${/** <link-button isblockcontent="false" aClass="" bClass="button success mr-2"
               href="${CONSTANTS.URLS.PDB_CLIENT}settings/meeting-agendas?meeting-event-id=${this.meetingEventId}"
                 label="Agenda(s)"></link-button> */ ""}
